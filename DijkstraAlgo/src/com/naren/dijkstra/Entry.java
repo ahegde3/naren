@@ -15,6 +15,7 @@ public class Entry {
     private static List<Edge> edges;
 
     public static void main(String[] args) {
+        System.out.println(System.currentTimeMillis());
         nodes = new ArrayList<Vertex>();
         edges = new ArrayList<Edge>();
         for (int i = 0; i < 11; i++) {
@@ -40,6 +41,7 @@ public class Entry {
         DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
         dijkstra.execute(nodes.get(0));
         LinkedList<Vertex> path = dijkstra.getPath(nodes.get(10));
+        System.out.println(System.currentTimeMillis());
         for (Vertex vertex : path) {
           System.out.println(vertex);
         }
