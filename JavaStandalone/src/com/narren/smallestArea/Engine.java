@@ -90,7 +90,13 @@ public class Engine {
             if (minMatches <= (cutOff - i)) {
                 computeInside(i);
             } else {
-                
+                if (cutOff < input.length) {
+                    i = cutOff - 1;
+                    cutOff = input.length;
+                } else {
+                    // End of Array
+                    break;
+                }
             }
             occurenceCount = new int[occurenceRequired.length];
         }
