@@ -10,12 +10,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Occurs;
+
 public class Engine {
 
     private int smallestArea = -1;
-    private Map<Integer, Integer> occurenceRequired = new HashMap<Integer, Integer>();
-    private Map<Integer, Integer> occurenceCount = new HashMap<Integer, Integer>();
+    private int[] occurenceRequired;
+    private int[] occurenceCount;
     private Entry[] input;
+    private int minMatches = 0;
+    private int cutOff = 0;
 
     public void solution (String inputFilePath, String usrOutputFilePath) throws IOException {
 
@@ -31,12 +35,15 @@ public class Engine {
                 String[] firstLine = stdin.readLine().split(" ");
                 int n = Integer.parseInt(firstLine[0]);
                 int k = Integer.parseInt(firstLine[1]);
-                int element = 1;
                 int smallestArea = -1;
                 engine.input = new Entry[n];
-                for (int j = 1; j <= k; j++) {
-                    engine.occurenceRequired.put(element++,
-                            Integer.parseInt(stdin.readLine()));
+                engine.cutOff = n;
+                engine.occurenceRequired = new int[k];
+                engine.occurenceCount = new int[k];
+                for (int j = 0; j < k; j++) {
+                    int matches = Integer.parseInt(stdin.readLine());
+                    engine.minMatches += matches;
+                    engine.occurenceRequired[j] = matches;
                 }
                 for (int j = 0; j < n; j++) {
                     String[] entry = stdin.readLine().split(" ");
@@ -79,40 +86,47 @@ public class Engine {
     }
 
     public int compute() {
-        for(int i = 0; i < input.length; i++) {
-            computeInside(input, i);
-            occurenceCount.clear();
+        for(int i = 0; i <= (input.length - minMatches); i++) {
+            if (minMatches <= (cutOff - i)) {
+                computeInside(i);
+            } else {
+                
+            }
+            occurenceCount = new int[occurenceRequired.length];
         }
         return smallestArea;
     }
 
-    private void computeInside(Entry[] input, int startFrom) {
+    private void computeInside(int startFrom) {
         int startIndex = input[startFrom].position;
         int occurence = 0;
-        for (int i = startFrom; i < input.length; i++ ) {
+        for (int i = startFrom; i < cutOff; i++ ) {
             occurence = 0;
-            if(occurenceCount.get(input[i].element) != null) {
-                occurence = occurenceCount.get(input[i].element);
+            if(occurenceCount[(input[i].element) - 1] != 0) {
+                occurence = occurenceCount[(input[i].element) - 1];
             }
-            occurenceCount.put(input[i].element, ++ occurence);
-            if (checkIfDone()) {
+            occurenceCount[(input[i].element) - 1] = ++ occurence;
+            if (minMatches <= (i - startFrom) && checkIfDone()) {
                 computeSmallestArea(startIndex, input[i].position);
+                cutOff = i + 1;
                 break;
             }
         }
     }
 
     private boolean checkIfDone() {
-        for (Map.Entry<Integer, Integer> entry : occurenceRequired.entrySet()) {
+        for (int i = 0; i < occurenceRequired.length; i++) {
             int ocurrences = 0;
-            if (occurenceCount.get(entry.getKey()) != null) {
-                ocurrences = occurenceCount.get(entry.getKey());
+            if (occurenceCount[i] != 0) {
+                ocurrences = occurenceCount[i];
             }
 
-            if ( ocurrences < entry.getValue()) {
+            if ( ocurrences < occurenceRequired[i]) {
                 return false;
             }
+
         }
+
         return true;
     }
 
