@@ -6,8 +6,8 @@ public class ShortestSubstring {
 		String str1 = "zebra";
 		String str2 = "bras";
 		String str3 = "ebbs";
-		System.out.println(str1.replaceAll("[" + str2 + "]", "").replaceAll("[" + str3 + "]", ""));
-		System.out.println(str2.replaceAll("[" + str3 + "]", "").replaceAll("[" + str1 + "]", ""));
-		System.out.println(str3.replaceAll("[" + str2 + "]", "").replaceAll("[" + str1 + "]", ""));
+		System.out.println(str1.replaceAll("[" + str2 + "]", ""));
+		System.out.println(str2.replaceAll("[" + str3 + "]", ""));
+		System.out.println(str3.replaceAll("[" + str2 + "]", ""));
 	}
 }

@@ -55,4 +55,8 @@ public class Algorithm{
         w.flush();
         w.close();
     }
+
+    public static void main(String[] args) {
+        
+    }
 }

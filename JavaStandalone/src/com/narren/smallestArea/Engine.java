@@ -7,10 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Occurs;
 
 public class Engine {
 
@@ -77,12 +73,14 @@ public class Engine {
     
     }
     public static void main(String[] args) {
+        System.out.println(System.currentTimeMillis());
         try {
             new Engine().solution("input", "output");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        System.out.println(System.currentTimeMillis());
     }
 
     public int compute() {
@@ -91,7 +89,7 @@ public class Engine {
                 computeInside(i);
             } else {
                 if (cutOff < input.length) {
-                    i = cutOff - 1;
+                    i = i - 1;
                     cutOff = input.length;
                 } else {
                     // End of Array
@@ -112,7 +110,7 @@ public class Engine {
                 occurence = occurenceCount[(input[i].element) - 1];
             }
             occurenceCount[(input[i].element) - 1] = ++ occurence;
-            if (minMatches <= (i - startFrom) && checkIfDone()) {
+            if (minMatches <= (i - startFrom + 1) && checkIfDone()) {
                 computeSmallestArea(startIndex, input[i].position);
                 cutOff = i + 1;
                 break;
@@ -140,6 +138,7 @@ public class Engine {
         int area = (t - s) + 1;
         smallestArea = (smallestArea == -1) ? area : smallestArea;
         smallestArea = (smallestArea > area) ? area : smallestArea;
+        System.out.println("Area Computed : " + smallestArea);
     }
 
     class Entry {

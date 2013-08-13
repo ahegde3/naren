@@ -1,6 +1,5 @@
 package com.narren.hackerMeter;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Palindrome {
@@ -14,7 +13,7 @@ public class Palindrome {
 	}
 	public static void run(Scanner scanner) {
 	    String str = scanner.next();
-	    String reverse = compute(str, str.length());
+	    String reverse = anotherWay(str, str.length());
 	    String result = (str.equals(reverse.toString())) ? "Y" : "N" ;
 	    System.out.println(result);
 	  }
@@ -29,5 +28,18 @@ public class Palindrome {
 			strArray[n - j] = temp;
 		}
 		return String.valueOf(strArray);
+	}
+
+	private static String anotherWay (String str, int length) {
+        int n = length - 1;
+        char []strArray = str.toCharArray();
+        for (int j = 0; j < n; j++) {
+            char temp = strArray[j];
+            char temp2 = strArray[n];
+            strArray[j] = temp2;
+            strArray[n] = temp;
+            n--;
+        }
+        return String.valueOf(strArray);
 	}
 }
