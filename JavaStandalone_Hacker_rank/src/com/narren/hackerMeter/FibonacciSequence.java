@@ -1,13 +1,23 @@
 package com.narren.hackerMeter;
 
+import java.util.Scanner;
+
 public class FibonacciSequence {
 
-    private long[] sequence = new long[2];
     public static void main(String[] args) {
-        new FibonacciSequence().compute(100);
+        Scanner scanner = new Scanner(System.in);
+        int cases = Integer.parseInt(scanner.nextLine());
+        for(int i = 0; i < cases; i++) {
+          run(scanner);
+        }
     }
-    private void compute(int n) {
-        sequence = new long[n];
+    public static void run(Scanner scanner) {
+        int sequence = scanner.nextInt();
+        generateFibonacciSequence(sequence);
+      }
+
+    private static void generateFibonacciSequence(int n) {
+        long[] sequence = new long[2];
         for (int i = 0; i < n; i++) {
             if(i == 0) {
                 sequence[0] = 0;
