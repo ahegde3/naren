@@ -8,16 +8,8 @@ import java.util.Stack;
 public class TowerOfHanoi {
     private ArrayList<Stack<Integer>> gameRepresentation = new ArrayList<Stack<Integer>>(3);
     private ArrayList<Stack<Integer>> thirdDayGame = new ArrayList<Stack<Integer>>(3);
-
-    // Recursive helper method that prints the instructions for
-    // moving numDisks from the fromPeg to the toPeg using the
-    // usingPeg.
     private int solveTower(int num, String from, 
 			    String to, String using) {
-
-    if (num > 11) {
-        return 0;
-    }
 	if (num == 1) {
 	    // Base Case: Move 1 disk...
 //	    System.out.println("Move disk from " + from +
@@ -52,27 +44,8 @@ public class TowerOfHanoi {
 	}
 	return 0;
     }
-
-    public static void move(int n, int startPole, int endPole) {
-        if (n== 0){
-          return; 
-        }
-        int intermediatePole = 6 - startPole - endPole;
-        move(n-1, startPole, intermediatePole);
-        System.out.println("Move " +n + " from " + startPole + " to " +endPole);
-        move(n-1, intermediatePole, endPole);
-      }
     
     public static void main(String[] args) {
-//	TowerOfHanoi tower = new TowerOfHanoi(4,"A", "B", "C");
-//	tower.solveTower();// C1
-        //move(4, 1, 2);
-/*        try {
-            new TowerOfHanoi().solution("input", "output");
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }*/
         Scanner sc = new Scanner(System.in);
         TowerOfHanoi tower = null;
         int result = 0;
