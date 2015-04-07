@@ -8,7 +8,7 @@ public class SherlockandTheBeast {
 	static BufferedReader in = new BufferedReader(new InputStreamReader(
 			System.in));
 	static StringBuilder out = new StringBuilder();
-	
+
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int T = sc.nextInt();
@@ -45,10 +45,24 @@ public class SherlockandTheBeast {
 				}
 				System.out.println(str);
 			} else {
-				System.out.println("-1");
+				int secThree = N/5;
+				if ((N%5) == 0) {
+					// All threes
+					//System.out.println(fives);
+					StringBuilder str = new StringBuilder();
+					for (int j = 0; j < (secThree)*5; j++) {
+						str.append("3");
+					}
+					System.out.println(str);
+					continue;
+				}
+				else {
+					System.out.println("-1");
+				}
+
 			}
-			
-			
+
+
 		}
 	}
 }
