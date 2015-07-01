@@ -97,7 +97,7 @@ class testGraph
         while (i < edges) {
             u = s.nextInt() - 1;
             v = s.nextInt() - 1;
-            weight= s.nextInt();
+            weight = s.nextInt();
              
             adjacencyList.addEdge(u, v, weight);
             ++i;
