@@ -136,15 +136,18 @@ public class DijsktraAlgo2 {
 	//The Dijkstra's Algorithm -> computes the shortest paths and fills them up in the shortestDistances array
 	void dijkstra(Node adjacencyList[], int vertices, int startVertex, Path shortestDistances[]) {
 		int i, j;
-		Vertex minVertex = null;
+		Vertex minVertex = new Vertex();
 		Vertex priorityQueue[] = new Vertex[vertices + 1];  // To use the array as 1-indexed
 
 		int hashTable[] = new int[vertices + 1];    // Stores the location of Vi in hashTable[i] 
 
 		// Initially no routes to vertices are know, so all are infinity
 		for (i = 0; i <= vertices; ++i) {
+			shortestDistances[i] = new Path();
 			shortestDistances[i].distance = Integer.MAX_VALUE;
 			shortestDistances[i].parent = -1;
+			
+			priorityQueue[i] = new Vertex();
 			priorityQueue[i].label = i;
 			priorityQueue[i].value = Integer.MAX_VALUE;
 			hashTable[i] = priorityQueue[i].label;
@@ -174,7 +177,7 @@ public class DijsktraAlgo2 {
 					shortestDistances[trav.vertex].distance = shortestDistances[minVertex.label].distance + trav.weight;
 					shortestDistances[trav.vertex].parent = minVertex.label;
 
-					Vertex changedVertex = null;
+					Vertex changedVertex = new Vertex();
 
 					changedVertex.label = trav.vertex;
 					changedVertex.value = shortestDistances[trav.vertex].distance;
