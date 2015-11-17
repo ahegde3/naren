@@ -22,63 +22,17 @@ public class PrimsSpecialSubtree {
 	}
 	
 	static AdjanceyList addToList (AdjanceyList node, int id, int weight) {
-		AdjanceyList tempNode = node;
 		AdjanceyList temp = new AdjanceyList();
 		temp.id = id;
 		temp.weight = weight;
-		if (tempNode != null) {
-			AdjanceyList p = node;
-			AdjanceyList q = p;
-			while (q != null && q.weight < weight) {
-				p = q;
-				q = q.next;
-			}
-			if (q == p) {
-				temp.next = p;
-				return temp;
-			}
-			AdjanceyList tempNode1 = p.next;
-			p.next = temp;
-			temp.next = tempNode1;
-			return p;
-		}
-		if (node == null) {
-			temp.next = node;
-			return temp;
-		} else {
-			node.next = temp;
-			return node;
-		}
+		temp.next = node;
+		return temp;
 	}
 	
 	static void swapEdges (EdgeQueue[] list, int i, int j) {
 		EdgeQueue temp = list[i];
 		list[i] = list[j];
 		list[j] = temp;
-	}
-	
-	static void addToEdgeQ(EdgeQueue[] edeges, int s, int e, int w) {
-		EdgeQueue edge = new EdgeQueue();
-		edge.start = s;
-		edge.end = e;
-		edge.weight = w;
-		int tempEdgeIndex = edgeQIndex;
-		if (edgeQIndex < 0) {
-			edeges[edgeQIndex + 1] = edge;
-			edgeQIndex++;
-		} else {
-			if (edeges[edgeQIndex].weight > w) {
-				while (tempEdgeIndex >= 0 && edeges[tempEdgeIndex].weight > w) {
-					edeges[tempEdgeIndex + 1] = edge;
-					swapEdges(edeges, tempEdgeIndex, tempEdgeIndex + 1); 
-					tempEdgeIndex--;
-				}
-				edgeQIndex ++;
-			} else {
-				edeges[edgeQIndex + 1] = edge;
-				edgeQIndex++;
-			}
-		}
 	}
 	
 	static EdgeQueue getLeast (EdgeQueue[] edeges, int start) {
@@ -95,22 +49,29 @@ public class PrimsSpecialSubtree {
 	}
 	
 	static void process (AdjanceyList[] list, EdgeQueue[] edeges, int start) {
-		EdgeQueue edge = getLeast(edeges, start);
-		visited[start] = true;
-		int totalWeight = 0;
-		while (edge != null) {
-			EdgeQueue edge1 = getLeast(edeges, edge.start);
-			EdgeQueue edge2 = getLeast(edeges, edge.end);
-			if (edge1.weight <= edge2.weight) {
-				visited[edge.start] = true;
-			} else {
-				visited[edge.end] = true;
+		AdjanceyList startIndex = list[start];
+		int totalCost = 0;
+		while (startIndex != null) {
+			visited[start] = true;
+			while (startIndex != null) {
+				if (!visited[startIndex.id]) {
+					EdgeQueue edge = new EdgeQueue();
+					edge.start = start;
+					edge.end = startIndex.id;
+					edge.weight = startIndex.weight;
+					BinaryMinHeap.enqueue(binaryMinHeap, edge);
+				}
+				startIndex = startIndex.next;
 			}
-			int next = edge.start == start ? edge.end : start;
-			totalWeight += edge.weight;
+			EdgeQueue edge = BinaryMinHeap.getMinimum(binaryMinHeap);
+			if (edge != null) {
+				if (!visited[edge.end]) 
+					totalCost += edge.weight;
+				startIndex = list[edge.end];
+				start = edge.end;
+			}
 		}
-		
-		
+		System.out.println(totalCost);
 	}
 	
 	public static void main(String[] args) {
@@ -118,28 +79,139 @@ public class PrimsSpecialSubtree {
 		int N = sc.nextInt();
 		int E = sc.nextInt();
 		AdjanceyList[] list = new AdjanceyList[N + 1];
-		EdgeQueue[] edeges = new EdgeQueue[N + 1];
+		binaryMinHeap = new EdgeQueue[N + 1];
 		while (E > 0) {
 			int n1 = sc.nextInt();
 			int n2 = sc.nextInt();
 			int w = sc.nextInt();
 			list[n1] = addToList(list[n1], n2, w); 
 			list[n2] = addToList(list[n2], n1, w);
-			addToEdgeQ(edeges, n1, n2, w);
+			//addToEdgeQ(edeges, n1, n2, w);
 			E--;
 		}
 		int start = sc.nextInt();
-		process(list, edeges, start);
+		process(list, binaryMinHeap, start);
 
 	}
 	
 	static class BinaryMinHeap {
+	
+		static void swap(EdgeQueue[] queue, int i, int j) {
+			EdgeQueue temp = queue[i];
+			queue[i] = queue[j];
+			queue[j] = temp;
+		}
 		
 		static void enqueue(EdgeQueue[] queue, EdgeQueue edge) {
+			binaryHeapIndex++;
 			queue[binaryHeapIndex] = edge;
+			int parent = binaryHeapIndex / 2;
+			int cur = binaryHeapIndex;
 			
-			while () {
+			while (parent > 0 && queue[parent].weight > edge.weight) {
+				swap(queue, parent, cur) ;
+				cur = parent;
+				parent = cur / 2;
+			}
+		}
+		
+		static EdgeQueue getMinimum(EdgeQueue[] queue) {
+			EdgeQueue edge = queue[1];
+			dequeue(queue, 1);
+			return edge;
+		}
+		
+		static void dequeue(EdgeQueue[] queue, int index) {
+			swap(queue, binaryHeapIndex, index);
+			queue[binaryHeapIndex] = null;
+			binaryHeapIndex--;
+			int parent = index / 2;
+			int child = index * 2;
+			while (child < binaryHeapIndex) {
+				//First if, if we almost reached the end of the heap.
+				if (binaryHeapIndex >= child + 1) {
+					if (queue[index].weight > queue[child].weight) {
+						swap(queue, index, child);
+						break;
+					}
+				}
 				
+				if (queue[index].weight > queue[child].weight ||
+						queue[index].weight > queue[child + 1].weight) {
+					if (queue[child].weight <= queue[child + 1].weight ) {
+						// If the left child is smaller or equals to the right child
+						swap(queue, index, child);
+						child = child * 2;
+					} else if (queue[child].weight > queue[child + 1].weight ) {
+						// if left is bigger
+						swap(queue, index, child + 1);
+						child = child * 2 + 1;
+					}
+					
+				} else {
+					break;
+				}
+			}
+			
+			
+			
+//			if (parent > 0 && queue[index].weight < queue[parent].weight) {
+//				//go upward
+//				while (queue[parent].weight > queue[index].weight) {
+//					swap(queue, parent, index) ;
+//					index = parent;
+//					parent = index/2;
+//				}
+//			} else if ((queue[child] != null && queue[index].weight > queue[child].weight) ||
+//					(queue[child + 1] != null && queue[index].weight > queue[child + 1].weight)) {
+//				// go downwards
+//				while ((queue[child] != null && queue[index].weight > queue[child].weight) ||
+//						(queue[child + 1] != null && queue[index].weight > queue[child + 1].weight)) {
+//					if (queue[child].weight < queue[index].weight) {
+//						swap(queue, child, index) ;
+//					} 
+//					if (queue[child + 1] != null && queue[index].weight > queue[child + 1].weight) {
+//						swap(queue, child + 1, index) ;
+//					}
+//					index = child;
+//					child = index * 2;
+//
+//				}
+//			}
+		}
+		
+		static void heapify(EdgeQueue[] queue, int index) {
+			int parent = index / 2;
+			int child = index * 2;
+			if (queue[index].weight < queue[parent].weight) {
+				//go upward
+				while (queue[parent].weight > queue[index].weight) {
+					swap(queue, parent, index) ;
+					index = parent;
+					parent = index/2;
+				}
+			} else if (queue[index].weight > queue[child].weight ||
+					queue[index].weight > queue[child + 1].weight) {
+				// go downwards
+				while (queue[child].weight < queue[index].weight ||
+						queue[index].weight > queue[child + 1].weight) {
+					if (queue[child].weight < queue[index].weight) {
+						swap(queue, child, index) ;
+						index = child;
+						child = index * 2;
+					} else if (queue[index].weight > queue[child + 1].weight) {
+						swap(queue, child + 1, index) ;
+						index = child + 1;
+						child = index * 2;
+					}
+
+				}
+			}
+		}
+		
+		static void buildHeap(EdgeQueue[] queue) {
+			for (int i = binaryHeapIndex / 2; i > 0; i--) {
+				heapify(queue, i);
 			}
 		}
 	}
