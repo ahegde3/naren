@@ -125,59 +125,28 @@ public class PrimsSpecialSubtree {
 			swap(queue, binaryHeapIndex, index);
 			queue[binaryHeapIndex] = null;
 			binaryHeapIndex--;
-			int parent = index / 2;
 			int child = index * 2;
-			while (child < binaryHeapIndex) {
-				//First if, if we almost reached the end of the heap.
-				if (binaryHeapIndex >= child + 1) {
-					if (queue[index].weight > queue[child].weight) {
-						swap(queue, index, child);
-						break;
-					}
-				}
-				
-				if (queue[index].weight > queue[child].weight ||
-						queue[index].weight > queue[child + 1].weight) {
-					if (queue[child].weight <= queue[child + 1].weight ) {
-						// If the left child is smaller or equals to the right child
-						swap(queue, index, child);
-						child = child * 2;
-					} else if (queue[child].weight > queue[child + 1].weight ) {
-						// if left is bigger
-						swap(queue, index, child + 1);
+			int tempIndex = index;
+			
+			while (child <= binaryHeapIndex) {
+				if (queue[tempIndex].weight > queue[child].weight ||
+						(child + 1 <= binaryHeapIndex && queue[tempIndex].weight > queue[child + 1].weight)) {
+					if (child + 1 <= binaryHeapIndex && queue[child].weight > queue[child + 1].weight) {
+						swap(queue, child + 1, tempIndex);
+						tempIndex = child + 1;
 						child = child * 2 + 1;
+						continue;
 					}
-					
-				} else {
-					break;
+					if (queue[tempIndex].weight > queue[child].weight) {
+						swap(queue, tempIndex, child);
+						tempIndex = child;
+						child = child * 2;
+						continue;
+					}
+
 				}
+				break;
 			}
-			
-			
-			
-//			if (parent > 0 && queue[index].weight < queue[parent].weight) {
-//				//go upward
-//				while (queue[parent].weight > queue[index].weight) {
-//					swap(queue, parent, index) ;
-//					index = parent;
-//					parent = index/2;
-//				}
-//			} else if ((queue[child] != null && queue[index].weight > queue[child].weight) ||
-//					(queue[child + 1] != null && queue[index].weight > queue[child + 1].weight)) {
-//				// go downwards
-//				while ((queue[child] != null && queue[index].weight > queue[child].weight) ||
-//						(queue[child + 1] != null && queue[index].weight > queue[child + 1].weight)) {
-//					if (queue[child].weight < queue[index].weight) {
-//						swap(queue, child, index) ;
-//					} 
-//					if (queue[child + 1] != null && queue[index].weight > queue[child + 1].weight) {
-//						swap(queue, child + 1, index) ;
-//					}
-//					index = child;
-//					child = index * 2;
-//
-//				}
-//			}
 		}
 		
 		static void heapify(EdgeQueue[] queue, int index) {
