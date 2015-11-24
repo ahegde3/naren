@@ -46,9 +46,15 @@ public class RustMurderer {
 		Node node = Queue.dequeue();
 		while (node != null) {
 			node = adjancyList[node.id];
-			enqueue(node, lev + 1);
-			node = node.next;
+			enqueue(node, level[node.id] + 1);
+			node = Queue.dequeue();
 
+		}
+		for (int i = 1; i <= level.length - 1; i++) {
+			if (i == start) {
+				continue;
+			}
+			System.out.print(level[i] + " ");
 		}
 	}
 
@@ -73,6 +79,7 @@ public class RustMurderer {
 			preProcess(array, N, M);
 			int s = sc.nextInt();
 			process(s);
+			System.out.println();
 			T--;
 		}
 	}
