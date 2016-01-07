@@ -4,6 +4,12 @@ public class BinarySearchTreeLowestCommonAncestor {
 
 	int height = -1;
 	Node[] array = new Node[10000];
+	static Node[] array1 = new Node[10000];
+	static Node[] array2 = new Node[10000];;
+	static boolean firstFound;
+	static boolean secondFound;
+	static int counter;
+	
 	
 	class Node {
 		Node left;
@@ -63,34 +69,39 @@ public class BinarySearchTreeLowestCommonAncestor {
 		}
 	}
 	
-//	static Node lca(Node root,int v1,int v2)
-//	{
-//	MyQueue queue = new MyQueue();
-//	queue.enqueue(root);
-//	boolean visited = false;
-//	while (!queue.isEmpty()) {
-//		Node node = queue.dequeue();
-//		if ((node.left != null && node.left.data == ) || (node.right != null) ) {
-//			
-//		}
-//	}
-//	
-//	}
-	private void dfs(Node root, int goal) {
-		MyQueue queue = new MyQueue();
-		queue.enqueue(root);
-		while (!queue.isEmpty()) {
-			Node node = queue.peek();
-			if (node.left != null) {
-				
-				queue.enqueue(node.left);
-			}
-			if (node.left == null) {
-				if (node.right != null) {
-					queue.enqueue(node.right);
-				}
+	static Node lca(Node root,int v1,int v2)
+	{
+		dfs(root, v1, v2);
+		int len = Math.min(array1.length, array2.length);
+		for (int i = 0; i < len; i++) {
+			if (array1[i] != array2[i]) {
+				return array1[i - 1];
 			}
 		}
+		return null;
+	}
+	
+	
+	static void dfs(Node root,int v1,int v2) {
+		if (root == null) {
+			return;
+		}
+		if (!firstFound) {
+			array1[counter] = root;
+		}
+		if(!secondFound) {
+			array2[counter] = root;
+		}
+		counter++;
+		if (root.data == v1) {
+			firstFound = true;
+		}
+		if (root.data == v2) {
+			secondFound = true;
+		}
+		dfs(root.left, v1, v2);
+		dfs(root.right, v1, v2);
+		counter--;
 	}
 	
 }
