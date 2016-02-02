@@ -17,7 +17,7 @@ public class BaseConversion {
 			i++;
 		}
 
-		basedInt += Math.pow(b1, (i + 1)) * input;
+		basedInt += Math.pow(b1, (i)) * input;
 
 		String res = "";
 		while (basedInt >= b2) {
