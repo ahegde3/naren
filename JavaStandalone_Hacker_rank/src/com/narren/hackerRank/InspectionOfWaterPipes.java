@@ -31,10 +31,10 @@ public class InspectionOfWaterPipes {
 			R = sc.nextInt();
 			C = sc.nextInt();
 			L = sc.nextInt();
-			arr = new int[M][N];
-			visited = new boolean[M][N];
-			for(int i = 0; i < M; i++) {
-				for(int j = 0; j < N; j++) {
+			arr = new int[N][M];
+			visited = new boolean[N][M];
+			for(int i = 0; i < N; i++) {
+				for(int j = 0; j < M; j++) {
 					arr[i][j] = sc.nextInt();
 				}
 			}
@@ -54,43 +54,45 @@ public class InspectionOfWaterPipes {
 			return 0;
 		}
 		//First move to left
-		c = canMove(r, c, r, c - 1) ? process(r, c - 1, lev--) : 0;
-		if(lev == 1) {
+		c = canMove(r, c, r, c - 1) ? process(r, c - 1, lev - 1) : 0;
+		if(!visited[r][c]) {
 			visited[r][c] = true;
 			count++;
-			return 0;
 		}
 
 		//Now move to up
-		r = canMove(r, c, r - 1, c) ? process(r - 1, c, lev--) : 0;
-		if(lev == 1) {
+		r = canMove(r, c, r - 1, c) ? process(r - 1, c, lev - 1) : 0;
+		if(!visited[r][c]) {
 			visited[r][c] = true;
 			count++;
-			return 0;
 		}
 
 		//Move right
-		c = canMove(r, c, r , c + 1) ? process(r, c + 1, lev--) : 0;
-		if(lev == 1) {
+		c = canMove(r, c, r , c + 1) ? process(r, c + 1, lev - 1) : 0;
+		if(!visited[r][c]) {
 			visited[r][c] = true;
 			count++;
-			return 0;
 		}
 
 		//Move down
-		c = canMove(r, c, r + 1 , c) ? process(r + 1, c, lev--) : 0;
-		if(lev == 1) {
+		c = canMove(r, c, r + 1 , c) ? process(r + 1, c, lev - 1) : 0;
+		if(!visited[r][c]) {
 			visited[r][c] = true;
 			count++;
-			return 0;
 		}
 
 		return r;
 	}
 
 	static boolean canMove(int cr, int cc, int nr, int nc) {
+		if (nr < 0 || nc < 0) {
+			return false;
+		}
 		int cp = arr[cr][cc];
 		int np = arr[nr][nc];
+		if(np == 0) {
+			return false;
+		}
 		switch (cp) {
 		case 1:
 			if(cr == nr && cc == nc + 1) {
