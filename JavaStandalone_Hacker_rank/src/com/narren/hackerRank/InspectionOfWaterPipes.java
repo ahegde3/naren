@@ -6,13 +6,19 @@ public class InspectionOfWaterPipes {
 
 	/**
 	 * 
-1
+2
 5 6 2 1 3
 0 0 5 3 6 0
 0 0 2 0 2 0
 3 3 1 3 7 0
 0 0 0 0 0 0
 0 0 0 0 0 0
+5 6 2 2 6
+3 0 0 0 0 3
+2 0 0 0 0 6
+1 3 1 1 3 1
+2 0 2 0 0 2
+0 0 4 3 1 1
 	 */
 	static boolean[][] visited;
 	static int[][] arr;
@@ -39,53 +45,62 @@ public class InspectionOfWaterPipes {
 				}
 			}
 			process(R, C, L);
+			System.out.println("# " + count);
+			count = 0;
 			T--;
 		}
 	}
 
-	static int process(int r, int c, int lev) {
-		if(r < 0 || c < 0) {
-			return 0;
+	static void process(int r, int c, int lev) {
+		if(r < 0 || c < 0 || r >= N || c >= M) {
+			return;
 		}
 		if(visited[r][c]) {
-			return 0;
+			return;
 		}
 		if(lev < 1) {
-			return 0;
+			return;
 		}
 		//First move to left
-		c = canMove(r, c, r, c - 1) ? process(r, c - 1, lev - 1) : 0;
-		if(!visited[r][c]) {
-			visited[r][c] = true;
-			count++;
+		if(canMove(r, c, r, c - 1)) {
+			if(!visited[r][c]) {
+				visited[r][c] = true;
+				count++;
+			}
+			process(r, c - 1, lev - 1);
 		}
 
+
 		//Now move to up
-		r = canMove(r, c, r - 1, c) ? process(r - 1, c, lev - 1) : 0;
-		if(!visited[r][c]) {
-			visited[r][c] = true;
-			count++;
+		if(canMove(r, c, r - 1, c)) {
+			if(!visited[r][c]) {
+				visited[r][c] = true;
+				count++;
+			}
+			process(r - 1, c, lev - 1);
 		}
 
 		//Move right
-		c = canMove(r, c, r , c + 1) ? process(r, c + 1, lev - 1) : 0;
-		if(!visited[r][c]) {
-			visited[r][c] = true;
-			count++;
+		if(canMove(r, c, r , c + 1)) {
+			if(!visited[r][c]) {
+				visited[r][c] = true;
+				count++;
+			}
+			process(r, c + 1, lev - 1);
 		}
 
 		//Move down
-		c = canMove(r, c, r + 1 , c) ? process(r + 1, c, lev - 1) : 0;
-		if(!visited[r][c]) {
-			visited[r][c] = true;
-			count++;
+		if(canMove(r, c, r + 1 , c)) {
+			if(!visited[r][c]) {
+				visited[r][c] = true;
+				count++;
+			}
+			process(r + 1, c, lev - 1);
 		}
-
-		return r;
 	}
 
 	static boolean canMove(int cr, int cc, int nr, int nc) {
-		if (nr < 0 || nc < 0) {
+		if (nr < 0 || nc < 0 || nr >= N || nc >= M) {
 			return false;
 		}
 		int cp = arr[cr][cc];
