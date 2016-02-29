@@ -6,7 +6,13 @@ public class InspectionOfWaterPipes {
 
 	/**
 	 * 
-2
+3
+5 6 2 1 1
+0 0 5 3 6 0
+0 0 2 0 2 0
+3 3 1 3 7 0
+0 0 0 0 0 0
+0 0 0 0 0 0
 5 6 2 1 3
 0 0 5 3 6 0
 0 0 2 0 2 0
@@ -19,6 +25,7 @@ public class InspectionOfWaterPipes {
 1 3 1 1 3 1
 2 0 2 0 0 2
 0 0 4 3 1 1
+	 Expected 1 5 15
 	 */
 	static boolean[][] visited;
 	static int[][] arr;
