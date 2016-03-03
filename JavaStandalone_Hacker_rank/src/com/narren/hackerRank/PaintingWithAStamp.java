@@ -74,8 +74,13 @@ public class PaintingWithAStamp {
 		for(int i = 0; i < R; i++) {
 			for(int j = 0; j < C; j++) {
 				int count = explore(i, j);
-				if(unexplored && (!onlyTwo))
+				if(unexplored && (!onlyTwo)) {
 					maxSquare = Math.min(count, maxSquare);
+					if(maxSquare == 1) {
+						return;
+					}
+				}
+				
 			}
 		}
 	}
