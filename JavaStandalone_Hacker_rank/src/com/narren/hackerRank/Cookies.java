@@ -6,10 +6,12 @@ public class Cookies {
 
 	static int[]arr;
 	static int count;
+	static boolean[] visited;
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
 		arr = new int[N];
+		visited = new boolean[N];
 		for(int i = 0; i < N; i++) {
 			arr[i] = sc.nextInt();
 		}
