@@ -8,7 +8,6 @@ public class RatInMaze {
 		{ 0, 0, 0, 1,0 },{ 0, 0,0, 1, 1 } };
 
 	public static void main(String[] args) {
-
 		process(0, 0);
 	}
 
@@ -42,7 +41,5 @@ public class RatInMaze {
 		//Go left
 		visited[i][j] = true;
 		process(i, j - 1);
-
-
 	}
 }
