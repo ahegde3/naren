@@ -1,19 +1,32 @@
+/*
+ * Copyright (C) 2012 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package sample.naren.com.fragmemtsample;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.FrameLayout;
 
-import butterknife.Bind;
+public class MainActivity extends FragmentActivity 
+        implements HeadlinesFragment.OnHeadlineSelectedListener {
 
-public class MainActivity extends FragmentActivity implements FirstFragment.OnHandleItemSelected {
-
-
+    /** Called when the activity is first created. */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.news_articles);
 
         // Check whether the activity is using the layout version with
         // the fragment_container FrameLayout. If so, we must add the first fragment
@@ -27,7 +40,7 @@ public class MainActivity extends FragmentActivity implements FirstFragment.OnHa
             }
 
             // Create an instance of ExampleFragment
-            FirstFragment firstFragment = new FirstFragment();
+            HeadlinesFragment firstFragment = new HeadlinesFragment();
 
             // In case this activity was started with special instructions from an Intent,
             // pass the Intent's extras to the fragment as arguments
@@ -39,48 +52,36 @@ public class MainActivity extends FragmentActivity implements FirstFragment.OnHa
         }
     }
 
-    @Override
-    public void onButtonSelected(int index) {
+    public void onArticleSelected(int position) {
+        // The user selected the headline of an article from the HeadlinesFragment
+
         // Capture the article fragment from the activity layout
-        FirstFragment articleFrag = (FirstFragment)
-                getSupportFragmentManager().findFragmentById(R.id.first_fragment);
-        switch (index) {
-            case 0: {
-                SecondFragment newFragment = new SecondFragment();
-                Bundle args = new Bundle();
-                newFragment.setArguments(args);
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ArticleFragment articleFrag = (ArticleFragment)
+                getSupportFragmentManager().findFragmentById(R.id.article_fragment);
 
-                transaction.replace(R.id.fragment_container, newFragment);
-                transaction.addToBackStack(null);
+        if (articleFrag != null) {
+            // If article frag is available, we're in two-pane layout...
 
-                transaction.commit();
-            }
-                break;
-            case 1: {
-                ThirdFragment newFragment = new ThirdFragment();
-                Bundle args = new Bundle();
-                newFragment.setArguments(args);
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            // Call a method in the ArticleFragment to update its content
+            articleFrag.updateArticleView(position);
 
-                transaction.replace(R.id.fragment_container, newFragment);
-                transaction.addToBackStack(null);
+        } else {
+            // If the frag is not available, we're in the one-pane layout and must swap frags...
 
-                transaction.commit();
-            }
-                break;
-            case 2: {
-                ForthFragment newFragment = new ForthFragment();
-                Bundle args = new Bundle();
-                newFragment.setArguments(args);
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            // Create fragment and give it an argument for the selected article
+            ArticleFragment newFragment = new ArticleFragment();
+            Bundle args = new Bundle();
+            args.putInt(ArticleFragment.ARG_POSITION, position);
+            newFragment.setArguments(args);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-                transaction.replace(R.id.fragment_container, newFragment);
-                transaction.addToBackStack(null);
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            transaction.replace(R.id.fragment_container, newFragment);
+            transaction.addToBackStack(null);
 
-                transaction.commit();
-            }
-            break;
-            }
+            // Commit the transaction
+            transaction.commit();
         }
     }
+}
