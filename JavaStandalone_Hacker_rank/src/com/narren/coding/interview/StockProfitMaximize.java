@@ -1,5 +1,10 @@
 package com.narren.coding.interview;
 
+/**
+ *  Buy and sell stocks for K times for maximum profit
+ * @author nsbisht
+ *
+ */
 public class StockProfitMaximize {
 
     static int noOfStocks = 8;
