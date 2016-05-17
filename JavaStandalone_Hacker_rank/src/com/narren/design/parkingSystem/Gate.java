@@ -10,4 +10,8 @@ public class Gate {
 	protected void generateToken(){
 		
 	}
+	
+	protected void processToken(Token token){
+		
+	}
 }
