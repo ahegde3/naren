@@ -31,7 +31,7 @@ public class PermutationOfStringSelf {
 	public static void main(String[] args) {
 		PermutationOfStringSelf self = new PermutationOfStringSelf();
 		
-		String s = "aacd";
+		String s = "baca";
 		self.result = new char[s.length()];
 		int[] count = new int[123];
 		for(int i= 0; i < s.length(); i++){
