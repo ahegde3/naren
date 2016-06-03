@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.samsung.android.email.R;
 import com.samsung.android.email.model.Email;
+import com.samsung.android.email.utils.Ulitily;
 
 /**
  * Created by nsbisht on 5/31/16.
@@ -40,10 +41,10 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mFromAddressView.setText(dataSource[position].getmFromAddress());
-        holder.mDateView.setText(dataSource[position].getmDate().toString());
-        holder.mTimeView.setText(dataSource[position].getmDate().toString());
+        holder.mDateView.setText(Ulitily.getTime(dataSource[position].getmDate()));
+        holder.mTimeView.setText(Ulitily.getTime(dataSource[position].getmDate()));
         holder.mSubjectView.setText(dataSource[position].getmSubject());
-        holder.mSubjectView.setText(dataSource[position].getmBody());
+        holder.mBodyView.setText(dataSource[position].getmBody());
     }
 
     @Override

@@ -12,7 +12,7 @@ public class SampleData {
         Email email1 = new Email();
         email1.setmFromAddress("sta.snc.ac@gmail.com");
         email1.setmSubject("First Mail");
-        email1.setmBody("o compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
+        email1.setmBody("compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
                 "\n" +
                 "Then set the JDK version in Android Studio as follows:\n" +
                 "\n" +
@@ -24,7 +24,7 @@ public class SampleData {
         Email email2 = new Email();
         email2.setmFromAddress("sta.snc.ac@gmail.com");
         email2.setmSubject("Second Mail");
-        email2.setmBody("o compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
+        email2.setmBody("compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
                 "\n" +
                 "Then set the JDK version in Android Studio as follows:\n" +
                 "\n" +
@@ -36,7 +36,7 @@ public class SampleData {
         Email email3 = new Email();
         email3.setmFromAddress("sta.snc.ac@gmail.com");
         email3.setmSubject("Third Mail");
-        email3.setmBody("o compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
+        email3.setmBody("compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
                 "\n" +
                 "Then set the JDK version in Android Studio as follows:\n" +
                 "\n" +
