@@ -1,4 +1,4 @@
-package com.narren.coding.interview;
+package com.narren.dp;
 
 /**
  *  Buy and sell stocks for K times for maximum profit

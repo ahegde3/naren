@@ -1,4 +1,4 @@
-package com.narren.coding.interview;
+package com.narren.dp;
 
 /**
  * Find minimum no. of coins to make a total
