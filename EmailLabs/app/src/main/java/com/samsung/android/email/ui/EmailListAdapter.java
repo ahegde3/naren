@@ -24,7 +24,6 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
         protected TextView mFromAddressView;
         protected TextView mDateView;
-        protected TextView mTimeView;
         protected TextView mSubjectView;
         protected TextView mBodyView;
 
@@ -32,7 +31,6 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
             super(itemView);
             mFromAddressView = (TextView) itemView.findViewById(R.id.from_address_label);
             mDateView = (TextView) itemView.findViewById(R.id.date_label);
-            mTimeView = (TextView) itemView.findViewById(R.id.time_label);
             mSubjectView = (TextView) itemView.findViewById(R.id.subject_label);
             mBodyView = (TextView) itemView.findViewById(R.id.body_label);
         }
@@ -42,7 +40,6 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mFromAddressView.setText(dataSource[position].getmFromAddress());
         holder.mDateView.setText(Ulitily.getTime(dataSource[position].getmDate()));
-        holder.mTimeView.setText(Ulitily.getTime(dataSource[position].getmDate()));
         holder.mSubjectView.setText(dataSource[position].getmSubject());
         holder.mBodyView.setText(dataSource[position].getmBody());
     }

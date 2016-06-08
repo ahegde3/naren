@@ -29,20 +29,13 @@
             android:text="date"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true" />
-        <TextView
-            android:id="@+id/time_label"
-            android:layout_width="wrap_content"
-            android:paddingRight="5dp"
-            android:layout_height="wrap_content"
-            android:text="time"
-            android:layout_below="@+id/date_label"
-            android:layout_alignParentEnd="true" />
+
         <TextView
             android:id="@+id/subject_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
-            android:layout_below="@id/time_label"
+            android:layout_below="@id/date_label"
             android:text="subject"/>
 
         <TextView

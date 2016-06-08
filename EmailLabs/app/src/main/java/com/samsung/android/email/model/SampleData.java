@@ -30,7 +30,7 @@ public class SampleData {
                 "\n" +
                 "Open an Android project in Android Studio, then open the Project Structure dialog by selecting File > Project Structure. (Alternatively, you can set the default for all projects by selecting File > Other Settings > Default Project Structure.)\n" +
                 "In the left panel of the dialog, click SDK Location.");
-        email2.setmDate(new Date(System.currentTimeMillis()));
+        email2.setmDate(new Date(System.currentTimeMillis() - 60*1000));
         emails[1] = email2;
 
         Email email3 = new Email();
@@ -42,7 +42,7 @@ public class SampleData {
                 "\n" +
                 "Open an Android project in Android Studio, then open the Project Structure dialog by selecting File > Project Structure. (Alternatively, you can set the default for all projects by selecting File > Other Settings > Default Project Structure.)\n" +
                 "In the left panel of the dialog, click SDK Location.");
-        email3.setmDate(new Date(System.currentTimeMillis()));
+        email3.setmDate(new Date(System.currentTimeMillis() - 5*60*60*1000));
         emails[2] = email3;
 
         Email email4 = new Email();
@@ -54,7 +54,7 @@ public class SampleData {
                 "\n" +
                 "Open an Android project in Android Studio, then open the Project Structure dialog by selecting File > Project Structure. (Alternatively, you can set the default for all projects by selecting File > Other Settings > Default Project Structure.)\n" +
                 "In the left panel of the dialog, click SDK Location.");
-        email4.setmDate(new Date(System.currentTimeMillis()));
+        email4.setmDate(new Date(System.currentTimeMillis() - 24*60*60*1000));
         emails[3] = email4;
 
         Email email5 = new Email();
@@ -66,7 +66,7 @@ public class SampleData {
                 "\n" +
                 "Open an Android project in Android Studio, then open the Project Structure dialog by selecting File > Project Structure. (Alternatively, you can set the default for all projects by selecting File > Other Settings > Default Project Structure.)\n" +
                 "In the left panel of the dialog, click SDK Location.");
-        email5.setmDate(new Date(System.currentTimeMillis()));
+        email5.setmDate(new Date(System.currentTimeMillis() - 48*60*60*1000));
         emails[4] = email5;
 
         Email email6 = new Email();
@@ -78,7 +78,7 @@ public class SampleData {
                 "\n" +
                 "Open an Android project in Android Studio, then open the Project Structure dialog by selecting File > Project Structure. (Alternatively, you can set the default for all projects by selecting File > Other Settings > Default Project Structure.)\n" +
                 "In the left panel of the dialog, click SDK Location.");
-        email6.setmDate(new Date(System.currentTimeMillis()));
+        email6.setmDate(new Date(System.currentTimeMillis() - 72*60*60*1000));
         emails[5] = email6;
 
         Email email7 = new Email();
