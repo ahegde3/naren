@@ -22,7 +22,7 @@ public class SampleData {
         emails[0] = email1;
 
         Email email2 = new Email();
-        email2.setmFromAddress("sta.snc.ac@gmail.com");
+        email2.setmFromAddress("newuser@gmail.com");
         email2.setmSubject("Second Mail");
         email2.setmBody("compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
                 "\n" +
@@ -34,7 +34,7 @@ public class SampleData {
         emails[1] = email2;
 
         Email email3 = new Email();
-        email3.setmFromAddress("sta.snc.ac@gmail.com");
+        email3.setmFromAddress("dacvi@gmail.com");
         email3.setmSubject("Third Mail");
         email3.setmBody("compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
                 "\n" +
@@ -46,7 +46,7 @@ public class SampleData {
         emails[2] = email3;
 
         Email email4 = new Email();
-        email4.setmFromAddress("sta.snc.ac@gmail.com");
+        email4.setmFromAddress("susan@gmail.com");
         email4.setmSubject("Fourth Mail");
         email4.setmBody("o compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
                 "\n" +
@@ -58,7 +58,7 @@ public class SampleData {
         emails[3] = email4;
 
         Email email5 = new Email();
-        email5.setmFromAddress("sta.snc.ac@gmail.com");
+        email5.setmFromAddress("mat@gmail.com");
         email5.setmSubject("Five Mail");
         email5.setmBody("o compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
                 "\n" +
@@ -82,7 +82,7 @@ public class SampleData {
         emails[5] = email6;
 
         Email email7 = new Email();
-        email7.setmFromAddress("sta.snc.ac@gmail.com");
+        email7.setmFromAddress("sonia@gmail.com");
         email7.setmSubject("Seven Mail");
         email7.setmBody("o compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
                 "\n" +
@@ -94,7 +94,7 @@ public class SampleData {
         emails[6] = email7;
 
         Email email8 = new Email();
-        email8.setmFromAddress("sta.snc.ac@gmail.com");
+        email8.setmFromAddress("elsa@gmail.com");
         email8.setmSubject("Eight Mail");
         email8.setmBody("o compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
                 "\n" +
@@ -106,7 +106,7 @@ public class SampleData {
         emails[7] = email8;
 
         Email email9 = new Email();
-        email9.setmFromAddress("sta.snc.ac@gmail.com");
+        email9.setmFromAddress("naren@gmail.com");
         email9.setmSubject("Nine Mail");
         email9.setmBody("o compile your app against the Android N platform and use some tools with Android Studio 2.1, you need to install the Java 8 Developer Kit (JDK 8). So, if you don't already have the latest version, download JDK 8 now.\n" +
                 "\n" +
