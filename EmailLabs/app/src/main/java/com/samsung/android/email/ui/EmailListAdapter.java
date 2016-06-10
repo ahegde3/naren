@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.samsung.android.email.R;
 import com.samsung.android.email.model.Email;
 import com.samsung.android.email.ui.letterInIcon.util.ColorGenerator;
-import com.samsung.android.email.ui.letterInIcon.util.TextDrawable;
+import com.samsung.android.email.ui.letterInIcon.util.TextShapeDrawable;
 import com.samsung.android.email.utils.Ulitily;
 
 /**
@@ -19,7 +19,7 @@ import com.samsung.android.email.utils.Ulitily;
 public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.ViewHolder> {
 
     private Email[] dataSource;
-    private TextDrawable.IBuilder mDrawableBuilder;
+    private TextShapeDrawable.IBuilder mDrawableBuilder;
     private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
 
     public EmailListAdapter(Email[] emails) {
@@ -46,7 +46,7 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        TextDrawable drawable = mDrawableBuilder.
+        TextShapeDrawable drawable = mDrawableBuilder.
                 build(String.valueOf(dataSource[position].getmFromAddress().charAt(0)),
                         mColorGenerator.getColor(dataSource[position].getmFromAddress()));
         holder.mFromAddressIcon.setImageDrawable(drawable);
@@ -66,7 +66,7 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activity_list_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
-        mDrawableBuilder = TextDrawable.builder().round();
+        mDrawableBuilder = TextShapeDrawable.builder().round();
         return viewHolder;
     }
 }

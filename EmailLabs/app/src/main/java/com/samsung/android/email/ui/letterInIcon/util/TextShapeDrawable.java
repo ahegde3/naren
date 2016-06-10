@@ -6,7 +6,7 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RectShape;
 import android.graphics.drawable.shapes.RoundRectShape;
 
-public class TextDrawable extends ShapeDrawable {
+public class TextShapeDrawable extends ShapeDrawable {
 
     private final Paint textPaint;
     private final Paint borderPaint;
@@ -20,7 +20,7 @@ public class TextDrawable extends ShapeDrawable {
     private final float radius;
     private final int borderThickness;
 
-    private TextDrawable(Builder builder) {
+    private TextShapeDrawable(Builder builder) {
         super(builder.shape);
 
         // shape properties
@@ -232,16 +232,16 @@ public class TextDrawable extends ShapeDrawable {
 
 
         @Override
-        public TextDrawable buildRound(String text, int color) {
+        public TextShapeDrawable buildRound(String text, int color) {
             round();
             return build(text, color);
         }
 
         @Override
-        public TextDrawable build(String text, int color) {
+        public TextShapeDrawable build(String text, int color) {
             this.color = color;
             this.text = text;
-            return new TextDrawable(this);
+            return new TextShapeDrawable(this);
         }
     }
 
@@ -267,7 +267,7 @@ public class TextDrawable extends ShapeDrawable {
 
     public static interface IBuilder {
 
-        public TextDrawable build(String text, int color);
+        public TextShapeDrawable build(String text, int color);
     }
 
     public static interface IShapeBuilder {
@@ -278,6 +278,6 @@ public class TextDrawable extends ShapeDrawable {
         public IBuilder round();
 
 
-        public TextDrawable buildRound(String text, int color);
+        public TextShapeDrawable buildRound(String text, int color);
     }
 }
