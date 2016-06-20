@@ -17,6 +17,7 @@ public class Locust {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
+		int maxH = N;
 		int[][] arr = new int[N][100000000];
 		int maxRight = 0;
 		for(int i = 0; i < N; i++) {
@@ -25,18 +26,20 @@ public class Locust {
 				int start = sc.nextInt();
 				int end = sc.nextInt();
 				for(int k = start ; k <= end ; k++) {
-					arr[j - 1][k] = 1;
+					arr[maxH - 1][k] = 1;
 				}
 				maxRight = Math.max(end, maxRight);
 			}
+			maxH--;
 		}
 		process(arr, maxRight);
 	}
 	
 	static void process(int[][] arr, int maxRight) {
+		int count = 0;
 		for(int row = arr.length - 1; row >= 0; row-- )
 		for(int col = 0; col < maxRight; col++) {
-			int count = getJumpCount(arr, col, row, 0);
+			count = Math.max(count, getJumpCount(arr, col, row, 0));
 			System.out.println(count);
 		}
 	}
@@ -58,7 +61,11 @@ public class Locust {
 		if(curRow == -1) {
 			return jump;
 		}
-		int jumpCount = getJumpCount(arr, curCol, nextStep(arr, curRow, curCol), jump + 1);
+		int next = nextStep(arr, curRow - 1, curCol);
+		if(next == -1) {
+			return -1;
+		}
+		int jumpCount = getJumpCount(arr, curCol, next, jump + 1);
 		return jumpCount;
 	}
 }
