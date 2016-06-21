@@ -15,6 +15,7 @@ public class Locust {
 2 4 6 15 16
 	 * @param args
 	 */
+	static int count = Integer.MAX_VALUE;
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int T = sc.nextInt();
@@ -44,7 +45,6 @@ public class Locust {
 	}
 	
 	static int process(int[][] arr, int maxRight) {
-		int count = Integer.MAX_VALUE;
 		//for(int row = arr.length - 1; row >= 0; row-- )
 		for(int col = 0; col < maxRight; col++) {
 			if(arr[0][col] != 0) {
@@ -71,6 +71,9 @@ public class Locust {
 	static int getJumpCount(int arr[][], int curCol, int curRow, int jump) {
 		if(curRow == -1) {
 			return jump;
+		}
+		if(jump > count) {
+			return Integer.MAX_VALUE;
 		}
 		int next = nextStep(arr, curRow + 1, curCol);
 		if(next == -1) {
