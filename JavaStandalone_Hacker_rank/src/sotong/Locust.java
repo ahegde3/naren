@@ -47,7 +47,9 @@ public class Locust {
 		int count = Integer.MAX_VALUE;
 		//for(int row = arr.length - 1; row >= 0; row-- )
 		for(int col = 0; col < maxRight; col++) {
-			count = Math.min(count, getJumpCount(arr, col, arr.length - 1, 0));
+			if(arr[0][col] != 0) {
+				count = Math.min(count, getJumpCount(arr, col, 0, 0));	
+			}
 		}
 		return count;
 	}
@@ -56,27 +58,25 @@ public class Locust {
 		if(row < 0) {
 			return -1;
 		}
-		if(arr[0][col] != 1) {
-			return -1;
-		}
-		while(!(row < 0)) {
+		
+		while(row < arr.length) {
 			if(arr[row][col] == 1) {
 				return row;
 			}
-			row--;
+			row++;
 		}
-		return -1;
+		return arr.length;
 	}
 	
 	static int getJumpCount(int arr[][], int curCol, int curRow, int jump) {
 		if(curRow == -1) {
 			return jump;
 		}
-		int next = nextStep(arr, curRow - 1, curCol);
+		int next = nextStep(arr, curRow + 1, curCol);
 		if(next == -1) {
 			return Integer.MAX_VALUE;
 		}
-		if(next == 0) {
+		if(next == arr.length) {
 			return jump + 1;
 		}
 		int jumpCount = getJumpCount(arr, curCol, next, jump + 1);
