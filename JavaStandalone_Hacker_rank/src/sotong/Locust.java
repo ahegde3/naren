@@ -6,6 +6,7 @@ public class Locust {
 
 	/**
 	 * 
+1
 5
 3 0 2 7 10 13 17
 2 1 5 9 11
@@ -16,32 +17,38 @@ public class Locust {
 	 */
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt();
-		int maxH = N;
-		int[][] arr = new int[N][100000000];
-		int maxRight = 0;
-		for(int i = 0; i < N; i++) {
-			int intervals = sc.nextInt();
-			for(int j = 1; j <=intervals; j++) {
-				int start = sc.nextInt();
-				int end = sc.nextInt();
-				for(int k = start ; k <= end ; k++) {
-					arr[maxH - 1][k] = 1;
+		int T = sc.nextInt();
+		int C = 1;
+		while(C <= T) {
+			int N = sc.nextInt();
+			int maxH = N;
+			int[][] arr = new int[N][100000000];
+			int maxRight = 0;
+			for(int i = 0; i < N; i++) {
+				int intervals = sc.nextInt();
+				for(int j = 1; j <=intervals; j++) {
+					int start = sc.nextInt();
+					int end = sc.nextInt();
+					for(int k = start ; k <= end ; k++) {
+						arr[maxH - 1][k] = 1;
+					}
+					maxRight = Math.max(end, maxRight);
 				}
-				maxRight = Math.max(end, maxRight);
+				maxH--;
 			}
-			maxH--;
+			int res = process(arr, maxRight);
+			System.out.println("#" + C + " " + res);
+			C++;
 		}
-		process(arr, maxRight);
 	}
 	
-	static void process(int[][] arr, int maxRight) {
+	static int process(int[][] arr, int maxRight) {
 		int count = Integer.MAX_VALUE;
 		//for(int row = arr.length - 1; row >= 0; row-- )
 		for(int col = 0; col < maxRight; col++) {
 			count = Math.min(count, getJumpCount(arr, col, arr.length - 1, 0));
 		}
-		System.out.println(count);
+		return count;
 	}
 	
 	static int nextStep(int[][] arr, int row, int col) {
