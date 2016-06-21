@@ -3,6 +3,7 @@ package com.narren.coding.interview;
 public class PermutationOfStringSelf {
 
 	char[] result;
+	
 	void process(String s, int[] count, int level) {
 		for(int i= 0; i < count.length; i++){
 			if(count[i] > 0) {

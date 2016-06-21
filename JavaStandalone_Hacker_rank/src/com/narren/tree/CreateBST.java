@@ -8,11 +8,6 @@ package com.narren.tree;
 public class CreateBST {
 
 	int[] arr;
-	class Node {
-		Node left;
-		Node right;
-		int data;
-	}
 	
 	Node create(int i, int j) {
 		if(j < i) {
@@ -20,7 +15,7 @@ public class CreateBST {
 		}
 		int m = i + (j - i)/2;
 		
-		Node node = new Node();
+		Node node = new Node(arr[m]);
 		node.data = arr[m];
 		
 		node.left = create(i, m - 1);
