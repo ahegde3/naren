@@ -37,7 +37,8 @@ public class Locust {
 				maxH--;
 			}
 			int res = process(arr, maxRight);
-			System.out.println("#" + C + " " + res);
+			System.out.println("Case #" + C);
+			System.out.println(res);
 			C++;
 		}
 	}
@@ -53,6 +54,9 @@ public class Locust {
 	
 	static int nextStep(int[][] arr, int row, int col) {
 		if(row < 0) {
+			return -1;
+		}
+		if(arr[0][col] != 1) {
 			return -1;
 		}
 		while(!(row < 0)) {
