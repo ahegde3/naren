@@ -25,11 +25,13 @@ public class Locust {
 			int maxH = N;
 			int[][] arr = new int[N][100000000];
 			int maxRight = 0;
-			for(int i = 0; i < N; i++) {
+			Cost[][] mainArr = new Cost[N][1001];
+			for(int i = N - 1; i >= 0; i--) {
 				int intervals = sc.nextInt();
 				for(int j = 1; j <=intervals; j++) {
 					int start = sc.nextInt();
 					int end = sc.nextInt();
+					mainArr[i][j - 1] = new Cost(start, end, Integer.MAX_VALUE);
 					for(int k = start ; k <= end ; k++) {
 						arr[maxH - 1][k] = 1;
 					}
@@ -84,5 +86,25 @@ public class Locust {
 		}
 		int jumpCount = getJumpCount(arr, curCol, next, jump + 1);
 		return jumpCount;
+	}
+	
+	static void processJumps(Cost[][] arr) {
+		for(int i = 1; i < arr.length - 1; i++) {
+//			for(int j = ) {
+//				
+//			}
+		}
+	}
+	
+	static class Cost {
+		int start;
+		int end;
+		int jumps;
+		
+		public Cost(int s, int e, int j) {
+			this.start = s;
+			this.end = e;
+			this.jumps = j;
+		}
 	}
 }
