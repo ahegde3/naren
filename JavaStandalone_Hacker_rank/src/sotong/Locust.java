@@ -16,6 +16,7 @@ public class Locust {
 	 * @param args
 	 */
 	static int count = Integer.MAX_VALUE;
+	static int topFloorInterval = 0;
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int T = sc.nextInt();
@@ -25,13 +26,17 @@ public class Locust {
 			int maxH = N;
 			int[][] arr = new int[N][100000000];
 			int maxRight = 0;
-			Cost[][] mainArr = new Cost[N][1001];
+			Cost[][] mainArr = new Cost[N][1002];
 			for(int i = N - 1; i >= 0; i--) {
 				int intervals = sc.nextInt();
+				if(i == 0) {
+					topFloorInterval = intervals;
+				}
+				mainArr[i][0] = new Cost(0, 0, intervals);
 				for(int j = 1; j <=intervals; j++) {
 					int start = sc.nextInt();
 					int end = sc.nextInt();
-					mainArr[i][j - 1] = new Cost(start, end, Integer.MAX_VALUE);
+					mainArr[i][j] = new Cost(start, end, Integer.MAX_VALUE);
 					for(int k = start ; k <= end ; k++) {
 						arr[maxH - 1][k] = 1;
 					}
@@ -90,9 +95,13 @@ public class Locust {
 	
 	static void processJumps(Cost[][] arr) {
 		for(int i = 1; i < arr.length - 1; i++) {
-//			for(int j = ) {
-//				
-//			}
+			for(int j = i - 1; j < arr[j][0].jumps; j++) {
+				for(int k = 1; k <= arr[i][0].jumps; k++) {
+//					if(arr[i][k].end < arr[j][]) {
+//						
+//					}
+				}
+			}
 		}
 	}
 	
