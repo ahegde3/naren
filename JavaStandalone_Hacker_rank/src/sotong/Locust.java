@@ -25,7 +25,7 @@ public class Locust {
 		while(C <= T) {
 			int N = sc.nextInt();
 			int maxH = N;
-			int[][] arr = new int[N][100000000];
+			//int[][] arr = new int[N][100000000];
 			costArr = new Cost[N][50];
 			int maxRight = 0;
 			Cost[][] mainArr = new Cost[N][1002];
@@ -39,14 +39,14 @@ public class Locust {
 					int start = sc.nextInt();
 					int end = sc.nextInt();
 					mainArr[i][j] = new Cost(start, end, Integer.MAX_VALUE);
-					for(int k = start ; k <= end ; k++) {
-						arr[maxH - 1][k] = 1;
-					}
+//					for(int k = start ; k <= end ; k++) {
+//						arr[maxH - 1][k] = 1;
+//					}
 					maxRight = Math.max(end, maxRight);
 				}
 				maxH--;
 			}
-			int res = processJumps(mainArr, maxRight, arr);
+			int res = processJumps(mainArr, maxRight);
 			//int res = process(arr, maxRight);
 			System.out.println("Case #" + C);
 			System.out.println(res);
@@ -96,7 +96,7 @@ public class Locust {
 		return jumpCount;
 	}
 
-	static int processJumps(Cost[][] arr, int maxRight, int[][] mainArr) {
+	static int processJumps(Cost[][] arr, int maxRight) {
 		for(int i = 0; i < arr.length - 1; i ++) {
 			for(int j = 1; j <= arr[i][0].jumps; j++) {
 				if(i == 0) {
@@ -149,17 +149,15 @@ public class Locust {
 			}
 			boolean oneFound = false;
 			for(int k = row - 1; k >= 0; k--) {
-				if(mainArr[k][i] == 1) {
-					oneFound = true;
-					for(int l = 1; l < arr[k][0].jumps; l++) {
-						if(arr[k][l].start <= i && arr[k][l].end >= i) {
-							minStep = Math.min(minStep, tempStep + arr[k][l].jumps);
-							break;
-						}
-					}
-					if(oneFound) {
+				for(int l = 1; l <= arr[k][0].jumps; l++) {
+					if(arr[k][l].start <= i && arr[k][l].end >= i) {
+						minStep = Math.min(minStep, tempStep + arr[k][l].jumps);
+						oneFound = true;
 						break;
 					}
+				}
+				if(oneFound) {
+					break;
 				}
 			}
 		}
