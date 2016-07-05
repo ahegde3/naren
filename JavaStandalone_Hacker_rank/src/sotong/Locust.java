@@ -16,7 +16,6 @@ public class Locust {
 	 * @param args
 	 */
 	static int count = Integer.MAX_VALUE;
-	static int topFloorInterval = 0;
 	static Cost[][] costArr;
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -24,29 +23,28 @@ public class Locust {
 		int C = 1;
 		while(C <= T) {
 			int N = sc.nextInt();
-			int maxH = N;
 			//int[][] arr = new int[N][100000000];
 			costArr = new Cost[N][50];
 			int maxRight = 0;
 			Cost[][] mainArr = new Cost[N][1002];
 			for(int i = N - 1; i >= 0; i--) {
 				int intervals = sc.nextInt();
-				if(i == 0) {
-					topFloorInterval = intervals;
-				}
 				mainArr[i][0] = new Cost(0, 0, intervals);
 				for(int j = 1; j <=intervals; j++) {
 					int start = sc.nextInt();
 					int end = sc.nextInt();
-					mainArr[i][j] = new Cost(start, end, Integer.MAX_VALUE);
-//					for(int k = start ; k <= end ; k++) {
-//						arr[maxH - 1][k] = 1;
-//					}
+					if(i == 0) {
+						mainArr[i][j] = new Cost(start, end, 1);
+					} else {
+						mainArr[i][j] = new Cost(start, end, Integer.MAX_VALUE);	
+					}
 					maxRight = Math.max(end, maxRight);
 				}
-				maxH--;
 			}
+			long startTime = System.currentTimeMillis();
 			int res = processJumps(mainArr, maxRight);
+			long endTime = System.currentTimeMillis();
+			System.out.println("time taken=" + (endTime - startTime));
 			//int res = process(arr, maxRight);
 			System.out.println("Case #" + C);
 			System.out.println(res);
@@ -97,40 +95,36 @@ public class Locust {
 	}
 
 	static int processJumps(Cost[][] arr, int maxRight) {
-		for(int i = 0; i < arr.length - 1; i ++) {
+		for(int i = 1; i < arr.length - 1; i ++) {
 			for(int j = 1; j <= arr[i][0].jumps; j++) {
-				if(i == 0) {
-					arr[i][j].jumps = 1;
-				} else {
-					boolean overlap = false;
-					int start = arr[i][j].start;
-					int end = arr[i][j].end;
-					for(int k = i - 1; k >= 0; k--) {
-						for(int l = 1; l <= arr[k][0].jumps; l++) {
-							if(start <= arr[k][l].end &&
-									end >= arr[k][l].start) {
-								arr[i][j].jumps = Math.min(arr[i][j].jumps, arr[k][l].jumps + 1);
-								//System.out.println(arr[i][j].start + "-" + arr[i][j].end + "->" + arr[i][j].jumps);
-								if(start >= arr[k][l].start && end <= arr[k][l].end) {
-									overlap = true;
-									break;
-								} else {
-									if(start < arr[k][l].start && end < arr[k][l].end) {
-										// left
-										end = end - arr[k][l].start;
-									} else if (start > arr[k][l].start && end > arr[k][l].end ) {
-										// right 
-										start = arr[k][l].end - start;
-									}
-								}
-							} else if(end < arr[k][l].start) {
-								// break
+				boolean overlap = false;
+				int start = arr[i][j].start;
+				int end = arr[i][j].end;
+				for(int k = i - 1; k >= 0; k--) {
+					for(int l = 1; l <= arr[k][0].jumps; l++) {
+						if(start <= arr[k][l].end &&
+								end >= arr[k][l].start) {
+							arr[i][j].jumps = Math.min(arr[i][j].jumps, arr[k][l].jumps + 1);
+							//System.out.println(arr[i][j].start + "-" + arr[i][j].end + "->" + arr[i][j].jumps);
+							if(start >= arr[k][l].start && end <= arr[k][l].end) {
+								overlap = true;
 								break;
-							} 
-						}
-						if(overlap) {
+							} else {
+								if(start < arr[k][l].start && end < arr[k][l].end) {
+									// left
+									end = end - arr[k][l].start;
+								} else if (start > arr[k][l].start && end > arr[k][l].end ) {
+									// right 
+									start = arr[k][l].end - start;
+								}
+							}
+						} else if(end < arr[k][l].start) {
+							// break
 							break;
-						}
+						} 
+					}
+					if(overlap) {
+						break;
 					}
 				}
 
