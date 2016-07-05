@@ -139,6 +139,7 @@ public class Locust {
 			for(int j = 1; j < arr[row][0].jumps; j++) {
 				if(arr[row][j].start <= i && arr[row][j].end >= i) {
 					tempStep++;
+					break;
 				}
 			}
 			boolean oneFound = false;
