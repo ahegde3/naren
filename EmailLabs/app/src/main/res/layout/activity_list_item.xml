@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="100dp"
     android:layout_gravity="center"
     android:layout_marginTop="15dp"
     android:layout_marginLeft="5dp"
@@ -40,7 +40,9 @@
                 android:layout_height="wrap_content"
                 android:text="address"
                 android:paddingLeft="5dp"
+                android:textSize="18dp"
                 android:paddingTop="5dp"
+                android:textColor="@color/cardview_dark_background"
                 android:gravity="left"/>
             <TextView
                 android:id="@+id/date_label"
@@ -67,7 +69,16 @@
                 android:paddingRight="5dp"
                 android:paddingLeft="5dp"
                 android:layout_height="wrap_content"
-                android:text="body"/>
+                android:text="body"
+                android:ellipsize="end"
+                android:maxLines="3"/>
+
+            <ListView
+                android:id="@+id/attachment_list_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/body_label">
+            </ListView>
         </RelativeLayout>
     </LinearLayout>
 
