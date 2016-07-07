@@ -1,5 +1,7 @@
 package sotong;
 
+import java.util.Scanner;
+
 /**
  * 
 There is a mobile piece and a stationary piece on the N×M chessboard.
@@ -12,9 +14,12 @@ Write a program to find out the minimum number moves to catch a piece.
 Time limit:1 second (java: 2 seconds)
 
 [Input]
-Several test cases can be included in the inputs. T, the number of cases is given in the first row of the inputs. After that, the test cases as many as T (T = 20) are given in a row. 
+Several test cases can be included in the inputs. T, the number of cases is given in the first row of the inputs.
+After that, the test cases as many as T (T = 20) are given in a row. 
 N, the numbers of the rows and M, the number of columns of the chessboard are given in the first row of each test case. 
-R & C is the location information of the attacking piece and S & K is the location of the defending pieces and are given in the row at the second line. However, the location of the uppermost end of the left end is (1, 1)
+R & C is the location information of the attacking piece and S & K is the location of the defending pieces and are
+given in the row at the second line.
+However, the location of the uppermost end of the left end is (1, 1)
 
 [Output]
 Output the minimum number of movements to catch a defending piece at the first line of each test case. If not moveable, output equals -1. 
@@ -51,4 +56,124 @@ Sample input
  */
 public class Chess {
 
+	static int startR;
+	static int startC;
+	static int endR;
+	static int endC;
+	static int N;
+	static int M;
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		int testCase = 1;
+		while(testCase <= T) {
+			N = sc.nextInt();
+			M = sc.nextInt();
+			int[][] arr = new int[N + 1][M + 1];
+			startR = sc.nextInt();
+			startC = sc.nextInt();
+			endR = sc.nextInt();
+			endC = sc.nextInt();
+			System.out.println(minimumSteps(startR, startC, 0, false));
+			testCase++;
+		}
+	}
+
+	static int minimumSteps(int curR, int curC, int steps, boolean isGoingFar) {
+		if(curR < 1 || curC < 1 || curR > N || curC > M) {
+			return -1;
+		}
+		if(curR == endR && curC == endC) {
+			return steps;
+		}
+		if(Math.abs(curR - endR) >=2 || Math.abs(curC - endC) >= 2) {
+			if(isGoingFar) {
+				return -1;
+			}
+			// Do in a certain direction
+			if(curR == endR && curC < endC) {
+				// Go right
+				int a = minimumSteps(curR - 1 , curC + 2, steps + 1, isGoingFar);
+				int b = minimumSteps(curR + 1 , curC + 2, steps + 1, isGoingFar);
+				int c = minimumSteps(curR + 2 , curC + 1, steps + 1, isGoingFar);
+				int d = minimumSteps(curR - 2 , curC + 1, steps + 1, isGoingFar);
+
+				int e = Math.min(a, b);
+				int f = Math.min(c, d);
+				return Math.min(e, f);
+
+			} else if(curR > endR && curC < endC) {
+				// Go right top
+				int a = minimumSteps(curR - 2 , curC + 1, steps + 1, isGoingFar);
+				int b = minimumSteps(curR - 1 , curC + 2, steps + 1, isGoingFar);
+				return Math.min(a, b);
+			} else if(curR < endR && curC < endC) {
+				// Go right down
+				int a = minimumSteps(curR + 1 , curC + 2, steps + 1, isGoingFar);
+				int b = minimumSteps(curR + 2 , curC + 1, steps + 1, isGoingFar);
+				return Math.min(a, b);
+			} else if(curC == endC && curR > endR) {
+				// Go right and left up
+				int a = minimumSteps(curR - 1 , curC + 2, steps + 1, isGoingFar);
+				int b = minimumSteps(curR - 2 , curC + 1, steps + 1, isGoingFar);
+				int c = minimumSteps(curR - 2 , curC - 1, steps + 1, isGoingFar);
+				int d = minimumSteps(curR - 1 , curC - 2, steps + 1, isGoingFar);
+				int e = Math.min(a, b);
+				int f = Math.min(c, d);
+				return Math.min(e, f);
+			} else if(curC > endC && curR > endR) {
+				// Go left up
+				int a = minimumSteps(curR - 2 , curC - 1, steps + 1, isGoingFar);
+				int b = minimumSteps(curR - 1 , curC - 2, steps + 1, isGoingFar);
+				return Math.min(a, b);
+			} else if(curR == endR && curC > endC) {
+				// Go left
+				int a = minimumSteps(curR - 2 , curC - 1, steps + 1, isGoingFar);
+				int b = minimumSteps(curR - 1 , curC - 2, steps + 1, isGoingFar);
+				int c = minimumSteps(curR + 1 , curC - 2, steps + 1, isGoingFar);
+				int d = minimumSteps(curR + 2 , curC - 1, steps + 1, isGoingFar);
+				int e = Math.min(a, b);
+				int f = Math.min(c, d);
+				return Math.min(e, f);
+			} else if(curR < endR && curC > endC) {
+				// Go left down
+				int a = minimumSteps(curR + 1 , curC - 2, steps + 1, isGoingFar);
+				int b = minimumSteps(curR + 2 , curC - 1, steps + 1, isGoingFar);
+				return Math.min(a, b);
+			} else if(curC == endC && curR < endR) {
+				// Go down
+				int a = minimumSteps(curR + 1 , curC - 2, steps + 1, isGoingFar);
+				int b = minimumSteps(curR + 2 , curC - 1, steps + 1, isGoingFar);
+				int c = minimumSteps(curR + 1 , curC + 2, steps + 1, isGoingFar);
+				int d = minimumSteps(curR + 2 , curC + 1, steps + 1, isGoingFar);
+				int e = Math.min(a, b);
+				int f = Math.min(c, d);
+				return Math.min(e, f);
+			}
+
+		} else {
+			// Go any direction
+			int a = minimumSteps(curR - 1 , curC + 2, steps + 1, true);
+			int b = minimumSteps(curR + 1 , curC + 2, steps + 1, true);
+			int c = minimumSteps(curR + 2 , curC + 1, steps + 1, true);
+			int d = minimumSteps(curR - 2 , curC + 1, steps + 1, true);
+
+			int e = minimumSteps(curR - 2 , curC - 1, steps + 1, true);
+			int f = minimumSteps(curR - 1 , curC - 2, steps + 1, true);
+			int g = minimumSteps(curR + 1 , curC - 2, steps + 1, true);
+			int h = minimumSteps(curR + 2 , curC - 1, steps + 1, true);
+
+			int i = Math.min(a, b);
+			int j = Math.min(c, d);
+			int k = Math.min(e, f);
+			int l = Math.min(g, h);
+
+			int m = Math.min(i, j);
+			int n = Math.min(k, l);
+
+			return Math.min(m, n);
+
+		}
+		return 0;
+	}
 }
