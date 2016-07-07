@@ -1,5 +1,9 @@
 package com.samsung.android.email.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
+
 import java.util.Date;
 
 /**

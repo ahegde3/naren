@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new EmailListAdapter(SampleData.getSampleData());
+        mAdapter = new EmailListAdapter(this, SampleData.getSampleData());
         mRecyclerView.setAdapter(mAdapter);
     }
 }

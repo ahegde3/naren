@@ -73,12 +73,23 @@
                 android:ellipsize="end"
                 android:maxLines="3"/>
 
-            <ListView
-                android:id="@+id/attachment_list_view"
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/body_label">
-            </ListView>
+                android:scrollbars="none">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <GridView
+                        android:id="@+id/horizontalGridView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+                    </GridView>
+                </LinearLayout>
+            </HorizontalScrollView>
         </RelativeLayout>
     </LinearLayout>
 

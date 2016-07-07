@@ -1,10 +1,14 @@
 package com.samsung.android.email.ui;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,7 +40,7 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         protected TextView mDateView;
         protected TextView mSubjectView;
         protected TextView mBodyView;
-        protected ListView mAttachmentThumbnailListView;
+        protected GridView mAttachmentThumbnailView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -45,7 +49,7 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
             mDateView = (TextView) itemView.findViewById(R.id.date_label);
             mSubjectView = (TextView) itemView.findViewById(R.id.subject_label);
             mBodyView = (TextView) itemView.findViewById(R.id.body_label);
-            mAttachmentThumbnailListView = (ListView) itemView.findViewById(R.id.attachment_list_view);
+            mAttachmentThumbnailView = (GridView) itemView.findViewById(R.id.horizontalGridView);
 
         }
     }
@@ -60,9 +64,23 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         holder.mDateView.setText(Ulitily.getTime(dataSource[position].getmDate()));
         holder.mSubjectView.setText(dataSource[position].getmSubject());
         holder.mBodyView.setText(dataSource[position].getmBody());
-        AttachmentListAdapter attachmentListAdapter =
-                new AttachmentListAdapter(mContext, dataSource[position].getmAttachmentthumbnails());
-        holder.mAttachmentThumbnailListView.setAdapter(attachmentListAdapter);
+        if(position == 4) {
+            Bitmap thumbImage =
+                    ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile("/UT_Device_nPass.png"), 64, 64);
+            Bitmap[] bitmap = new Bitmap[1];
+            bitmap[0] = thumbImage;
+            dataSource[position].setmAttachmentthumbnails(bitmap);
+        }
+        if(dataSource[position].getmAttachmentthumbnails() != null &&
+                dataSource[position].getmAttachmentthumbnails().length > 0) {
+            AttachmentListAdapter attachmentListAdapter =
+                    new AttachmentListAdapter(mContext, dataSource[position].getmAttachmentthumbnails());
+            holder.mAttachmentThumbnailView.setNumColumns(dataSource[position].getmAttachmentthumbnails().length);
+            holder.mAttachmentThumbnailView.setAdapter(attachmentListAdapter);
+        } else {
+            holder.mAttachmentThumbnailView.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
