@@ -1,10 +1,12 @@
 package com.samsung.android.email.ui;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.samsung.android.email.R;
@@ -21,8 +23,10 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
     private Email[] dataSource;
     private TextShapeDrawable.IBuilder mDrawableBuilder;
     private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
+    private Context mContext;
 
-    public EmailListAdapter(Email[] emails) {
+    public EmailListAdapter(Context context, Email[] emails) {
+        mContext = context;
         dataSource = emails;
     }
 
@@ -32,6 +36,7 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         protected TextView mDateView;
         protected TextView mSubjectView;
         protected TextView mBodyView;
+        protected ListView mAttachmentThumbnailListView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -40,6 +45,7 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
             mDateView = (TextView) itemView.findViewById(R.id.date_label);
             mSubjectView = (TextView) itemView.findViewById(R.id.subject_label);
             mBodyView = (TextView) itemView.findViewById(R.id.body_label);
+            mAttachmentThumbnailListView = (ListView) itemView.findViewById(R.id.attachment_list_view);
 
         }
     }
@@ -54,6 +60,9 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         holder.mDateView.setText(Ulitily.getTime(dataSource[position].getmDate()));
         holder.mSubjectView.setText(dataSource[position].getmSubject());
         holder.mBodyView.setText(dataSource[position].getmBody());
+        AttachmentListAdapter attachmentListAdapter =
+                new AttachmentListAdapter(mContext, dataSource[position].getmAttachmentthumbnails());
+        holder.mAttachmentThumbnailListView.setAdapter(attachmentListAdapter);
     }
 
     @Override

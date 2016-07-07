@@ -1,5 +1,7 @@
 package com.samsung.android.email.model;
 
+import android.graphics.Bitmap;
+
 import java.util.Date;
 
 /**
@@ -17,6 +19,15 @@ public class Email {
     private String mSubject;
     private String mBody;
     private Date mDate;
+    private Bitmap[] mAttachmentthumbnails;
+
+    public Bitmap[] getmAttachmentthumbnails() {
+        return mAttachmentthumbnails;
+    }
+
+    public void setmAttachmentthumbnails(Bitmap[] mAttachmentthumbnails) {
+        this.mAttachmentthumbnails = mAttachmentthumbnails;
+    }
 
     public String getmFromAddress() {
         return mFromAddress;
