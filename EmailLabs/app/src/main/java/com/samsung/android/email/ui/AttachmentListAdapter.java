@@ -2,6 +2,7 @@ package com.samsung.android.email.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +26,17 @@ public class AttachmentListAdapter extends ArrayAdapter<Bitmap> {
     }
 
     @Override
+    public int getCount() {
+        return mBitmaps.length;
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.attachment_thumbnail, parent, false);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.attachment_thumbview);
         imageView.setImageBitmap(mBitmaps[position]);
+        Log.d("BindView****", "getCView");
         return rowView;
     }
 }

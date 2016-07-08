@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         protected TextView mDateView;
         protected TextView mSubjectView;
         protected TextView mBodyView;
-        protected GridView mAttachmentThumbnailView;
+        protected ListView mAttachmentThumbnailView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -49,7 +50,7 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
             mDateView = (TextView) itemView.findViewById(R.id.date_label);
             mSubjectView = (TextView) itemView.findViewById(R.id.subject_label);
             mBodyView = (TextView) itemView.findViewById(R.id.body_label);
-            mAttachmentThumbnailView = (GridView) itemView.findViewById(R.id.horizontalGridView);
+            mAttachmentThumbnailView = (ListView) itemView.findViewById(R.id.horizontalListView);
 
         }
     }
@@ -66,7 +67,8 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         holder.mBodyView.setText(dataSource[position].getmBody());
         if(position == 4) {
             Bitmap thumbImage =
-                    ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile("/UT_Device_nPass.png"), 64, 64);
+                    ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile("/sdcard/UT_Device_nPass.png"), 64, 64);
+            Log.d("BindView$$$", "thumbImage=" + thumbImage);
             Bitmap[] bitmap = new Bitmap[1];
             bitmap[0] = thumbImage;
             dataSource[position].setmAttachmentthumbnails(bitmap);
@@ -75,8 +77,9 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
                 dataSource[position].getmAttachmentthumbnails().length > 0) {
             AttachmentListAdapter attachmentListAdapter =
                     new AttachmentListAdapter(mContext, dataSource[position].getmAttachmentthumbnails());
-            holder.mAttachmentThumbnailView.setNumColumns(dataSource[position].getmAttachmentthumbnails().length);
+            //holder.mAttachmentThumbnailView.setNumColumns(dataSource[position].getmAttachmentthumbnails().length);
             holder.mAttachmentThumbnailView.setAdapter(attachmentListAdapter);
+            Log.d("BindView$$$", "added to the attachmentViewer=" + position);
         } else {
             holder.mAttachmentThumbnailView.setVisibility(View.GONE);
         }
