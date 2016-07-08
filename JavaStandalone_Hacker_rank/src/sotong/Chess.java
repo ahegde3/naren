@@ -62,6 +62,7 @@ public class Chess {
 	static int endC;
 	static int N;
 	static int M;
+	static boolean started;
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int T = sc.nextInt();
@@ -74,12 +75,22 @@ public class Chess {
 			startC = sc.nextInt();
 			endR = sc.nextInt();
 			endC = sc.nextInt();
-			System.out.println(minimumSteps(startR, startC, 0, false));
+			int res = minimumSteps(startR, startC, 0, false);
+			if(res == Integer.MAX_VALUE) {
+				res = -1;
+			}
+			System.out.println(res);
 			testCase++;
 		}
 	}
 
 	static int minimumSteps(int curR, int curC, int steps, boolean isGoingFar) {
+		if(started) {
+			if(curR == startR && curC == startC) {
+				return Integer.MAX_VALUE;
+			}
+		}
+		started = true;
 		if(curR < 1 || curC < 1 || curR > N || curC > M) {
 			return Integer.MAX_VALUE;
 		}
@@ -88,7 +99,7 @@ public class Chess {
 		}
 		if(Math.abs(curR - endR) >=2 || Math.abs(curC - endC) >= 2) {
 			if(isGoingFar) {
-				return -1;
+				return Integer.MAX_VALUE;
 			}
 			// Do in a certain direction
 			if(curR == endR && curC < endC) {
@@ -151,29 +162,70 @@ public class Chess {
 				return Math.min(e, f);
 			}
 
-		} /*else {
+		} else {
 			// Go any direction
-			int a = minimumSteps(curR - 1 , curC + 2, steps + 1, true);
-			int b = minimumSteps(curR + 1 , curC + 2, steps + 1, true);
-			int c = minimumSteps(curR + 2 , curC + 1, steps + 1, true);
-			int d = minimumSteps(curR - 2 , curC + 1, steps + 1, true);
+			// Do in a certain direction
+			if(curR == endR && curC < endC) {
+				// Go right
+				int a = minimumSteps(curR - 1 , curC + 2, steps + 1, true);
+				int b = minimumSteps(curR + 1 , curC + 2, steps + 1, true);
+				int c = minimumSteps(curR + 2 , curC + 1, steps + 1, true);
+				int d = minimumSteps(curR - 2 , curC + 1, steps + 1, true);
 
-			int e = minimumSteps(curR - 2 , curC - 1, steps + 1, true);
-			int f = minimumSteps(curR - 1 , curC - 2, steps + 1, true);
-			int g = minimumSteps(curR + 1 , curC - 2, steps + 1, true);
-			int h = minimumSteps(curR + 2 , curC - 1, steps + 1, true);
+				int e = Math.min(a, b);
+				int f = Math.min(c, d);
+				return Math.min(e, f);
 
-			int i = Math.min(a, b);
-			int j = Math.min(c, d);
-			int k = Math.min(e, f);
-			int l = Math.min(g, h);
+			} else if(curR > endR && curC < endC) {
+				// Go right top
+				int a = minimumSteps(curR - 2 , curC + 1, steps + 1, true);
+				int b = minimumSteps(curR - 1 , curC + 2, steps + 1, true);
+				return Math.min(a, b);
+			} else if(curR < endR && curC < endC) {
+				// Go right down
+				int a = minimumSteps(curR + 1 , curC + 2, steps + 1, true);
+				int b = minimumSteps(curR + 2 , curC + 1, steps + 1, true);
+				return Math.min(a, b);
+			} else if(curC == endC && curR > endR) {
+				// Go right and left up
+				int a = minimumSteps(curR - 1 , curC + 2, steps + 1, true);
+				int b = minimumSteps(curR - 2 , curC + 1, steps + 1, true);
+				int c = minimumSteps(curR - 2 , curC - 1, steps + 1, true);
+				int d = minimumSteps(curR - 1 , curC - 2, steps + 1, true);
+				int e = Math.min(a, b);
+				int f = Math.min(c, d);
+				return Math.min(e, f);
+			} else if(curC > endC && curR > endR) {
+				// Go left up
+				int a = minimumSteps(curR - 2 , curC - 1, steps + 1, true);
+				int b = minimumSteps(curR - 1 , curC - 2, steps + 1, true);
+				return Math.min(a, b);
+			} else if(curR == endR && curC > endC) {
+				// Go left
+				int a = minimumSteps(curR - 2 , curC - 1, steps + 1, true);
+				int b = minimumSteps(curR - 1 , curC - 2, steps + 1, true);
+				int c = minimumSteps(curR + 1 , curC - 2, steps + 1, true);
+				int d = minimumSteps(curR + 2 , curC - 1, steps + 1, true);
+				int e = Math.min(a, b);
+				int f = Math.min(c, d);
+				return Math.min(e, f);
+			} else if(curR < endR && curC > endC) {
+				// Go left down
+				int a = minimumSteps(curR + 1 , curC - 2, steps + 1, true);
+				int b = minimumSteps(curR + 2 , curC - 1, steps + 1, true);
+				return Math.min(a, b);
+			} else if(curC == endC && curR < endR) {
+				// Go down
+				int a = minimumSteps(curR + 1 , curC - 2, steps + 1, true);
+				int b = minimumSteps(curR + 2 , curC - 1, steps + 1, true);
+				int c = minimumSteps(curR + 1 , curC + 2, steps + 1, true);
+				int d = minimumSteps(curR + 2 , curC + 1, steps + 1, true);
+				int e = Math.min(a, b);
+				int f = Math.min(c, d);
+				return Math.min(e, f);
+			}
 
-			int m = Math.min(i, j);
-			int n = Math.min(k, l);
-
-			return Math.min(m, n);
-
-		}*/
+		}
 		return Integer.MAX_VALUE;
 	}
 }
