@@ -81,7 +81,7 @@ public class Chess {
 
 	static int minimumSteps(int curR, int curC, int steps, boolean isGoingFar) {
 		if(curR < 1 || curC < 1 || curR > N || curC > M) {
-			return -1;
+			return Integer.MAX_VALUE;
 		}
 		if(curR == endR && curC == endC) {
 			return steps;
@@ -151,7 +151,7 @@ public class Chess {
 				return Math.min(e, f);
 			}
 
-		} else {
+		} /*else {
 			// Go any direction
 			int a = minimumSteps(curR - 1 , curC + 2, steps + 1, true);
 			int b = minimumSteps(curR + 1 , curC + 2, steps + 1, true);
@@ -173,7 +173,7 @@ public class Chess {
 
 			return Math.min(m, n);
 
-		}
-		return 0;
+		}*/
+		return Integer.MAX_VALUE;
 	}
 }
