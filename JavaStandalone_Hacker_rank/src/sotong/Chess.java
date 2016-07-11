@@ -63,6 +63,7 @@ public class Chess {
 	static int N;
 	static int M;
 	static boolean started;
+	static boolean[][] visited;
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int T = sc.nextInt();
@@ -71,6 +72,7 @@ public class Chess {
 			N = sc.nextInt();
 			M = sc.nextInt();
 			int[][] arr = new int[N + 1][M + 1];
+			visited = new boolean[N + 1][M + 1];
 			startR = sc.nextInt();
 			startC = sc.nextInt();
 			endR = sc.nextInt();
@@ -85,6 +87,9 @@ public class Chess {
 	}
 
 	static int minimumSteps(int curR, int curC, int steps, boolean isGoingFar) {
+		if(visited[curR][curC]) {
+			return Integer.MAX_VALUE;
+		}
 		if(started) {
 			if(curR == startR && curC == startC) {
 				return Integer.MAX_VALUE;
@@ -97,6 +102,7 @@ public class Chess {
 		if(curR == endR && curC == endC) {
 			return steps;
 		}
+		visited[curR][curC] = true;
 		if(Math.abs(curR - endR) >=2 || Math.abs(curC - endC) >= 2) {
 			if(isGoingFar) {
 				return Integer.MAX_VALUE;
@@ -185,7 +191,9 @@ public class Chess {
 				// Go right down
 				int a = minimumSteps(curR + 1 , curC + 2, steps + 1, true);
 				int b = minimumSteps(curR + 2 , curC + 1, steps + 1, true);
-				return Math.min(a, b);
+				int c = minimumSteps(curR + 1 , curC - 2, steps + 1, true);
+				int d = minimumSteps(curR + 2 , curC - 1, steps + 1, true);
+				return Math.min(Math.min(a, b), Math.min(c, d));
 			} else if(curC == endC && curR > endR) {
 				// Go right and left up
 				int a = minimumSteps(curR - 1 , curC + 2, steps + 1, true);
