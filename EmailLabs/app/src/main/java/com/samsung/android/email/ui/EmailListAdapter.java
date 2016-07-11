@@ -69,7 +69,7 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         holder.mBodyView.setText(dataSource[position].getmBody());
         if(position == 4) {
             Bitmap thumbImage =
-                    ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile("/sdcard/UT_Device_nPass.png"), 64, 64);
+                    ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile("/sdcard/UT_Device_nPass.png"), 500, 500);
             Log.d("BindView$$$", "thumbImage=" + thumbImage);
             Bitmap[] bitmap = new Bitmap[1];
             bitmap[0] = thumbImage;
