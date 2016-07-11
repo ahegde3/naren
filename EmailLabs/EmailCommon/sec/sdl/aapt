@@ -1,0 +1,81 @@
+#!/usr/bin/env python
+
+import sys
+import os.path
+import ConfigParser
+from subprocess import call
+
+# Config
+AAPT_INI_FILE_NAME = "aapt.ini"
+ORIGINAL_AAPT_FILE_NAME = "aapt_real"
+
+TAG_AAPT_CONFIG = "aapt_config"
+TAG_ANDROID_JAR = "android_jar"
+TAG_EXTERNAL_JARS = "external_jars"
+
+# get current directory
+curDir = os.path.dirname(os.path.abspath(__file__))
+
+# defualt ini value setting
+default = {TAG_ANDROID_JAR:"",
+           TAG_EXTERNAL_JARS:""}
+
+# ini file existence check
+iniFile = os.path.join(curDir, AAPT_INI_FILE_NAME)
+if not os.path.isfile(iniFile):
+    sys.stderr.write("INI file does not exist.")
+    exit(1)
+
+# ini file parsing
+config = ConfigParser.SafeConfigParser(default)
+config.read(iniFile)
+androidJar = config.get(TAG_AAPT_CONFIG, TAG_ANDROID_JAR)
+externalJars = config.get(TAG_AAPT_CONFIG, TAG_EXTERNAL_JARS).split(",")
+
+# original aapt path check
+originalAapt = os.path.join(curDir, ORIGINAL_AAPT_FILE_NAME)
+if not os.path.isfile(originalAapt):
+    sys.stderr.write("Original aapt file (" + originalAapt + ") does not exists.")
+    exit(2)
+
+# if there is no argument, print help page.
+if len(sys.argv) == 1:
+    call([originalAapt])
+    exit(0)
+
+# android.jar path check
+if len(androidJar) != 0 and not os.path.isfile(androidJar):
+    sys.stderr.write("android.jar (" + androidJar + ") does not exists.")
+    exit(2)
+
+# external path check
+for jar in externalJars:
+    if len(jar) != 0 and not os.path.isfile(jar):
+        sys.stderr.write(jar + " file does not exists.")
+        exit(2)
+
+# extract arguments
+arguments = sys.argv[1:]
+
+# if user set the android.jar path, change android.jar
+if len(androidJar) != 0:
+    for (i, arg) in enumerate(arguments):
+        if(arg.find("android.jar") != -1):
+            arguments[i] = androidJar
+
+# make command
+command = [originalAapt]
+command += arguments
+for jar in externalJars:
+    if(len(jar) != 0):
+        command.append('-I')
+        command.append(jar)
+
+# write log
+# f = file(os.path.join(curDir, "aapt.log"), "a")
+# f.write(" ".join(command) + "\n")
+# f.close()
+
+# execute command
+call(command)
+

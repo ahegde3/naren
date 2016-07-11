@@ -1,0 +1,70 @@
+buildscript {
+    dependencies {
+        project.ext.set("apiCode","")
+        apiCode = ((project.hasProperty('API'))?API:'23.2')
+        classpath "com.android.tools.build:gradle:1.3.+"
+        classpath "spde.build:sdl-pack:" + apiCode + ".+"
+        classpath "spde.build:galaxy-pack:" + apiCode + ".+"
+        classpath "spde.build:galaxy-plugin:" + apiCode + ".+"
+    }
+}
+
+apply plugin: 'android-library'
+project.ext.set("archivesBaseName", "EmailCommon");
+ 
+apply plugin: 'galaxy'
+star.packageID = 'EmailCommon'
+star.version.major = 3
+star.version.minor = 0
+star.version.patch = 00
+apply from: 'sec/common.gradle'
+ 
+android {
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+        }
+    }
+}
+
+android {
+    dependencies {
+        compile files('src/main/libs/CscFeatureTag_intermediates.jar')
+        //compile files('src/main/libs/gnumail.jar')
+        //compile files('src/main/libs/activation.jar')
+        //compile files('src/main/libs/additionnal.jar')
+    }
+}
+
+android {
+    packagingOptions {
+		exclude 'META-INF/COPYING'
+		}
+    }
+android {
+    lintOptions {
+        abortOnError false
+    }
+}
+
+android { 
+    signingConfigs {
+        platform {
+            storeFile file("samsung_test.keystore")
+            storePassword "android"
+            keyAlias "platform"
+            keyPassword "android"
+        }
+    } 
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.platform
+            }
+        release {
+            // LOCAL_CERTIFICATE
+            signingConfig signingConfigs.platform
+            }
+    }			
+}
+

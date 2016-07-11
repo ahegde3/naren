@@ -105,7 +105,10 @@ public class Chess {
 		visited[curR][curC] = true;
 		if(Math.abs(curR - endR) >=2 || Math.abs(curC - endC) >= 2) {
 			if(isGoingFar) {
-				return Integer.MAX_VALUE;
+				if(Math.abs(curC - endC) > 1) {
+					return Integer.MAX_VALUE;	
+				}
+				
 			}
 			// Do in a certain direction
 			if(curR == endR && curC < endC) {

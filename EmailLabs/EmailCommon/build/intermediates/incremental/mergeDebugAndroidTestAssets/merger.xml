@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="debug"><source path="/home/nsbisht/Git/AndroidSamples/EmailLabs/EmailCommon/build/intermediates/bundles/debug/assets"/></dataSet><dataSet config="main"><source path="/home/nsbisht/Git/AndroidSamples/EmailLabs/EmailCommon/src/androidTest/assets"/><source path="/home/nsbisht/Git/AndroidSamples/EmailLabs/EmailCommon/build/generated/assets/shaders/androidTest/debug"/></dataSet></merger>

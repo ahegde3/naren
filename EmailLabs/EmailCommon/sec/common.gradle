@@ -1,0 +1,233 @@
+/**********************************************************************************************************************
+    WARNING : This file is NOT editable, since it is overwritten by the latest one in the beginning of every build.
+***********************************************************************************************************************/
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.3'
+
+    // Refer the following signing config as needed
+    // NOTE : The keystore files are provided by sec-pack through online, and located in sec folder
+    signingConfigs {
+        debug {
+            storeFile file(star.secPath + "/debug.keystore")
+        }
+        platform {
+            storeFile file(star.secPath + "/samsung_test.keystore")
+            storePassword "android"
+            keyAlias "platform"
+            keyPassword "android"
+        }
+        shared {
+            storeFile file(star.secPath + "/samsung_test.keystore")
+            storePassword "android"
+            keyAlias "shared"
+            keyPassword "android"
+        }
+        media {
+            storeFile file(star.secPath + "/samsung_test.keystore")
+            storePassword "android"
+            keyAlias "media"
+            keyPassword "android"
+        }
+        release {
+            storeFile file(star.secPath + "/samsung_test.keystore")
+            storePassword "android"
+            keyAlias "testkey"
+            keyPassword "android"
+        }
+    }
+
+    buildTypes {
+        // Signing for debug build type is configured
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        // Proguard is ON by default for release build type (It can be reset in build.gradle)
+        release {
+            minifyEnabled true
+            proguardFiles star.secPath + "/proguard-android.txt"
+        }
+    }
+    defaultConfig {
+        // star.appVer has higher precedence over versionName in AndroidManifest.xml
+        if (star.appVer != "") {
+            versionName star.appVer
+        }
+    }
+}
+
+/**********************************************************************************************************************
+ Global Configuration
+**********************************************************************************************************************/
+
+// The following configuration can be used with resConfigs ( e.g. resConfigs secConf.locale.full )
+project.ext.secConf = [
+    // screensize
+    'screensize': [
+        'normal' : [ 'normal' ],
+        'large' : [ 'large' ],
+        'xlarge' : [ 'xlarge' ]
+    ],
+
+    // dpi 
+    // Note that each configuration has nodpi by default
+    'dpi': [
+        'ldpi' : [ 'ldpi','nodpi' ],
+        'mdpi' : [ 'mdpi','nodpi' ],
+        'tvdpi' : [ 'tvdpi','nodpi' ],
+        'hdpi' : [ 'hdpi','nodpi' ],
+        'xhdpi' : [ 'xhdpi','nodpi' ],
+        'xxhdpi' : [ 'xxhdpi','nodpi' ],
+        'xxxhdpi' : [ 'xxxhdpi','nodpi' ]
+    ],
+
+    // Locale
+    // Caution : It may not be coincide with the product command. 
+    //      i.e. while apk with chn locale can be used in trlte_chn_cmcc, 
+    //           apk with full locale may need to be used in tblte_chn_hk
+    'locale': [
+        'full' : [ 'ar_AE','ar_IL','as_IN','az_AZ','bg_BG','bn_IN','ca_ES','cs_CZ','da_DK','de_AT', \
+                   'de_CH','de_DE','el_GR','en_AU','en_CA','en_GB','en_IE','en_NZ','en_PH','en_US', \
+                   'en_ZA','es_ES','es_US','et_EE','eu_ES','fa_IR','fi_FI','fr_BE','fr_CA','fr_CH', \
+                   'fr_FR','ga_IE','gl_ES','gu_IN','hi_IN','hr_HR','hu_HU','hy_AM','in_ID','is_IS', \
+                   'it_IT','iw_IL','ja_JP','ka_GE','kk_KZ','km_KH','kn_IN','ko_KR','ky_KG','lo_LA', \
+                   'lt_LT','lv_LV','mk_MK','ml_IN','mn_MN','mr_IN','ms_MY','my_MM','nb_NO','ne_IN', \
+                   'nl_BE','nl_NL','or_IN','pa_IN','pl_PL','pt_BR','pt_PT','ro_RO','ru_RU','si_IN', \
+                   'sk_SK','sl_SI','sq_AL','sr_RS','sv_SE','ta_IN','te_IN','tg_TJ','th_TH','tk_TM', \
+                   'tl_PH','tr_TR','uk_UA','ur_PK','uz_UZ','vi_VN','zh_CN','zh_HK','zh_TW','my_ZG', \
+                   'be_BY','pl_SP' ],
+        'kor'  : [ 'de_DE','en_GB','en_US','es_ES','fr_FR','it_IT','ja_JP','ko_KR','pt_PT','ru_RU', \
+                   'vi_VN','zh_CN','zh_TW' ],
+        'usa'  : [ 'de_DE','en_US','es_US','fr_FR','it_IT','ja_JP','ko_KR','vi_VN','zh_CN' ],
+        'chn'  : [ 'en_US','ko_KR','zh_CN','zh_HK','da_DK','de_DE','en_GB','es_ES','fi_FI','fr_FR', \
+                   'in_ID','it_IT','iw_IL','ja_JP','nl_NL','pt_PT','ru_RU','th_TH','vi_VN','zh_TW', \
+                   'ar_AE' ],
+        'jpn'  : [ 'en_US','ja_JP','ko_KR' ]
+    ]
+]
+
+/**********************************************************************************************************************
+ The following codes are internally executed. No need to understand for general users
+**********************************************************************************************************************/
+
+if (!star.isLibraryBuild) {
+    android.applicationVariants.all star.postProcessVersioning
+    android.applicationVariants.all star.postProcessManifest
+    
+    task collectOutput {
+        description = 'Collecting all the artifacts'
+        doLast {
+            def currentPath = project.projectDir.toString()
+            def targetPath = star.getDeliveryPath()
+
+            if (project.depth > 0) {
+                targetPath = star.getDeliveryPath() + '/' + project.name
+            }
+            star.artifactCopy.each { eachCopy ->
+                copy {
+                    from (eachCopy.dir) {
+                        include eachCopy.file
+                    }
+                    if (eachCopy.containsKey('dest')) {
+                        into star.rootProjPath + "/" + eachCopy.dest
+                    } else if (eachCopy.containsKey('destCurrent')) {
+                        into eachCopy.destCurrent
+                    } else {
+                        into targetPath
+                    }
+                    if (eachCopy.containsKey('renFileFrom') && eachCopy.containsKey('renFileTo')) {
+                        rename { String fileName ->
+                                fileName.replace(eachCopy.renFileFrom, eachCopy.renFileTo)
+                        }
+                    }
+                }
+            }
+            copy {
+                from(currentPath + "/build/outputs/apk") {
+                    exclude("*-unaligned.apk")
+                    include("*-release.apk")
+                }
+                from(currentPath) {
+                    include("NOTICE")
+                    include("NO_NEED_NOTICE")
+                }
+                into targetPath
+            }
+
+            def deliveryFolder = new File(currentPath + "/build/delivery")
+            def registerFolder = new File(currentPath + "/build/register")
+            if (deliveryFolder.exists() && registerFolder.exists()) {
+                String err_msg = "Error : build/register folder cannot exist if build/delivery folder exists."
+                logger.error(err_msg)
+                throw new GradleException(err_msg)
+            }
+            star.logger.debug "output task executed"
+        }
+    }
+    allprojects {
+        afterEvaluate { prj ->
+            prj.tasks.findAll {
+                (it.name.startsWith('assemble') || it.name == 'build')
+            }.each { tk ->
+                star.logger.debug "task with collectOutput : $tk.name"
+                tk.finalizedBy prj.tasks.collectOutput
+            }
+        }
+    }
+}
+
+allprojects {
+    afterEvaluate {
+        tasks.withType(JavaCompile) {
+            doLast {
+                options.compilerArgs.each {
+                    if (it.contains('Xbootclasspath')) {
+                        String err_msg = "Error : -Xbootclasspath compile option is not allowed to use"
+                        star.logger.error(err_msg)
+                        throw new GradleException(err_msg)
+                    }
+                }
+            }
+        }
+    }
+}
+
+task cleanSec << {
+    def secDir = new File(star.secPath)
+    if (secDir.exists()) {
+        secDir.deleteDir()
+    }
+}
+
+task showAndroidConfig << {
+    star.logger.quiet "==== Android Configuration ============================"
+    star.logger.quiet " SDK ver : " + android.compileSdkVersion
+    star.logger.quiet " build tool ver : " + android.buildToolsRevision
+    if (android.compileSdkVersion.tokenize('-')[1] != star.getSdlCode().tokenize('.')[0]) {
+        String err_msg = "Error : SDL version does not match with SDK version"
+        star.logger.error(err_msg)
+        throw new GradleException(err_msg)
+    }
+    star.logger.quiet "==== Libraries ========================================"
+    configurations.compile.each { File file -> 
+        if (file.getPath().startsWith(project.rootDir.toString())) {
+            println file.name + " : Local, Static"
+        } else {
+            println file.name + " : Maven, Static"
+        }
+    }
+    configurations.provided.each { File file -> 
+        if (file.getPath().startsWith(project.rootDir.toString())) {
+            println file.name + " : Local, Dynamic"
+        } else {
+            println file.name + " : Maven, Dynamic"
+        }
+    }
+    star.logger.quiet "======================================================="
+}
+preBuild.dependsOn showAndroidConfig
+
+task installSDL << star.installSDL
+preBuild.dependsOn installSDL
+
+/***** END OF FILE ***************************************************************************************************/
