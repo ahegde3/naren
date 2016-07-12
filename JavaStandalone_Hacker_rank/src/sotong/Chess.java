@@ -78,6 +78,7 @@ public class Chess {
 			endR = sc.nextInt();
 			endC = sc.nextInt();
 			int res = minimumSteps(startR, startC, 0, false);
+			started = false;
 			if(res == Integer.MAX_VALUE) {
 				res = -1;
 			}
@@ -87,7 +88,10 @@ public class Chess {
 	}
 
 	static int minimumSteps(int curR, int curC, int steps, boolean isGoingFar) {
-		System.out.println(curR + " " + curC);
+		//System.out.println(curR + " " + curC);
+		if(curR < 1 || curC < 1 || curR > N || curC > M) {
+			return Integer.MAX_VALUE;
+		}
 		if(visited[curR][curC]) {
 			return Integer.MAX_VALUE;
 		}
@@ -97,9 +101,7 @@ public class Chess {
 			}
 		}
 		started = true;
-		if(curR < 1 || curC < 1 || curR > N || curC > M) {
-			return Integer.MAX_VALUE;
-		}
+		
 		if(curR == endR && curC == endC) {
 			return steps;
 		}
