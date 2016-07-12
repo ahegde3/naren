@@ -87,6 +87,7 @@ public class Chess {
 	}
 
 	static int minimumSteps(int curR, int curC, int steps, boolean isGoingFar) {
+		System.out.println(curR + " " + curC);
 		if(visited[curR][curC]) {
 			return Integer.MAX_VALUE;
 		}
@@ -103,7 +104,7 @@ public class Chess {
 			return steps;
 		}
 		visited[curR][curC] = true;
-		if(Math.abs(curR - endR) >=2 || Math.abs(curC - endC) >= 2) {
+		if(Math.abs(curR - endR) >=2 || Math.abs(curC - endC) >= 2 && !isGoingFar) {
 			if(isGoingFar) {
 				if(Math.abs(curC - endC) > 1) {
 					return Integer.MAX_VALUE;	
@@ -172,70 +173,97 @@ public class Chess {
 			}
 
 		} else {
-			// Go any direction
-			// Do in a certain direction
-			if(curR == endR && curC < endC) {
-				// Go right
-				int a = minimumSteps(curR - 1 , curC + 2, steps + 1, true);
-				int b = minimumSteps(curR + 1 , curC + 2, steps + 1, true);
-				int c = minimumSteps(curR + 2 , curC + 1, steps + 1, true);
-				int d = minimumSteps(curR - 2 , curC + 1, steps + 1, true);
-
-				int e = Math.min(a, b);
-				int f = Math.min(c, d);
-				return Math.min(e, f);
-
-			} else if(curR > endR && curC < endC) {
-				// Go right top
-				int a = minimumSteps(curR - 2 , curC + 1, steps + 1, true);
-				int b = minimumSteps(curR - 1 , curC + 2, steps + 1, true);
-				return Math.min(a, b);
-			} else if(curR < endR && curC < endC) {
-				// Go right down
-				int a = minimumSteps(curR + 1 , curC + 2, steps + 1, true);
-				int b = minimumSteps(curR + 2 , curC + 1, steps + 1, true);
-				int c = minimumSteps(curR + 1 , curC - 2, steps + 1, true);
-				int d = minimumSteps(curR + 2 , curC - 1, steps + 1, true);
-				return Math.min(Math.min(a, b), Math.min(c, d));
-			} else if(curC == endC && curR > endR) {
-				// Go right and left up
-				int a = minimumSteps(curR - 1 , curC + 2, steps + 1, true);
-				int b = minimumSteps(curR - 2 , curC + 1, steps + 1, true);
-				int c = minimumSteps(curR - 2 , curC - 1, steps + 1, true);
-				int d = minimumSteps(curR - 1 , curC - 2, steps + 1, true);
-				int e = Math.min(a, b);
-				int f = Math.min(c, d);
-				return Math.min(e, f);
-			} else if(curC > endC && curR > endR) {
-				// Go left up
-				int a = minimumSteps(curR - 2 , curC - 1, steps + 1, true);
-				int b = minimumSteps(curR - 1 , curC - 2, steps + 1, true);
-				return Math.min(a, b);
-			} else if(curR == endR && curC > endC) {
-				// Go left
-				int a = minimumSteps(curR - 2 , curC - 1, steps + 1, true);
-				int b = minimumSteps(curR - 1 , curC - 2, steps + 1, true);
-				int c = minimumSteps(curR + 1 , curC - 2, steps + 1, true);
-				int d = minimumSteps(curR + 2 , curC - 1, steps + 1, true);
-				int e = Math.min(a, b);
-				int f = Math.min(c, d);
-				return Math.min(e, f);
-			} else if(curR < endR && curC > endC) {
-				// Go left down
-				int a = minimumSteps(curR + 1 , curC - 2, steps + 1, true);
-				int b = minimumSteps(curR + 2 , curC - 1, steps + 1, true);
-				return Math.min(a, b);
-			} else if(curC == endC && curR < endR) {
-				// Go down
-				int a = minimumSteps(curR + 1 , curC - 2, steps + 1, true);
-				int b = minimumSteps(curR + 2 , curC - 1, steps + 1, true);
-				int c = minimumSteps(curR + 1 , curC + 2, steps + 1, true);
-				int d = minimumSteps(curR + 2 , curC + 1, steps + 1, true);
-				int e = Math.min(a, b);
-				int f = Math.min(c, d);
-				return Math.min(e, f);
+//			if(Math.abs(curR - endR) >2 || Math.abs(curC - endC) > 2) {
+//				return Integer.MAX_VALUE;
+//			}
+			// Right
+			if(startR == endR && startC + 1 == endC) {
+				if(startR - 2 > 1 && startC + 3 <= M) {
+					return 3;
+				}
+				if(startR + 2 <= N && startC + 3 <= M) {
+					return 3;
+				}
+				return -1;
 			}
-
+			
+			// Right upper
+			if(startR - 1 == endR && startC + 1 == endC) {
+				if(startR - 2 > 0 && startC - 1 > 0) {
+					return 2;
+				}
+				if(startR + 1 <= N && startC + 2 <= M) {
+					return 2;
+				}
+				return -1;
+			}
+			
+			// Right down
+			if(startR + 1 == endR && startC + 1 == endC) {
+				if(startR + 2 <= N && startC - 1 > 0) {
+					return 2;
+				}
+				if(startR - 1 > 0 && startC + 2 <= M) {
+					return 2;
+				}
+				return -1;
+			}
+			
+			// Down
+			if(startR + 1 == endR && startC == endC) {
+				if(startR + 3 <= N && startC + 2 <= M) {
+					return 3;
+				}
+				if(startR + 3 <= N && startC - 2 > 0) {
+					return 3;
+				}
+				return -1;
+			}
+			
+			//UP
+			if(startR - 1 == endR && endC == startC) {
+				if(startR - 3 > 0 && startC + 2 <= M) {
+					return 3;
+				}
+				if(startR - 3 > 0 && startC - 2 > 0) {
+					return 3;
+				}
+				return -1;
+			}
+			
+			// Left up
+			if(startR - 1 == endR && startC - 1 == endC) {
+				if(startR + 1 <= N && startC - 2 > 0) {
+					return 2;
+				}
+				if(startR - 2 > 0 && startC + 1 <= M) {
+					return 2;
+				}
+				return -1;
+			}
+			
+			//Left Down
+			if(startR + 1 == endR && startC - 1 == endC) {
+				if(startR + 1 <= N && startC + 1 <= M) {
+					return 2;
+				}
+				if(startR - 1 > 0 && startC - 2 > 0) {
+					return 2;
+				}
+				return -1;
+			}
+			
+			// Left
+			if(startR == endR && startC - 1 == endC) {
+				if(startR - 2 > 0 && startC - 3 > 0) {
+					return 3;
+				}
+				if(startR + 2 <= N && startC - 3 > 0) {
+					return 3;
+				}
+				return -1;
+			}
+			
 		}
 		return Integer.MAX_VALUE;
 	}
