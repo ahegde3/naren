@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
+import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.samsung.android.email.R;
+import com.samsung.android.email.model.AttachmentFile;
 import com.samsung.android.email.model.Email;
 import com.samsung.android.email.ui.letterInIcon.util.ColorGenerator;
 import com.samsung.android.email.ui.letterInIcon.util.TextShapeDrawable;
@@ -69,22 +71,33 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         holder.mBodyView.setText(dataSource[position].getmBody());
         if(position == 4) {
             Bitmap thumbImage =
-                    ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile("/sdcard/UT_Device_nPass.png"), 500, 500);
-            Log.d("BindView$$$", "thumbImage=" + thumbImage);
-            Bitmap[] bitmap = new Bitmap[1];
+                    ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile("/sdcard/UT_Device_nPass.png"), 400, 400);
+            Bitmap videoThumbnail = ThumbnailUtils.createVideoThumbnail("/sdcard/You.mp4", MediaStore.Images.Thumbnails.MINI_KIND);
+            Bitmap thumbImage2 =
+                    ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile("/sdcard/download.jpg"), 400, 400);
+            Bitmap videoThumbnail2 = ThumbnailUtils.createVideoThumbnail("/sdcard/vid.mp4", MediaStore.Images.Thumbnails.MINI_KIND);
+
+            AttachmentFile[] attachmentFiles = new AttachmentFile[]{
+                    new AttachmentFile("/sdcard/UT_Device_nPass.png", AttachmentFile.FILE_TYPE_IMAGE),
+                    new AttachmentFile("/sdcard/You.mp4", AttachmentFile.FILE_TYPE_VIDEO),
+                    new AttachmentFile("/sdcard/download.jpg", AttachmentFile.FILE_TYPE_IMAGE),
+                    new AttachmentFile("/sdcard/vid.mp4", AttachmentFile.FILE_TYPE_VIDEO)};
+            Bitmap[] bitmap = new Bitmap[4];
             bitmap[0] = thumbImage;
-            dataSource[position].setmAttachmentthumbnails(bitmap);
+            bitmap[1] = videoThumbnail;
+            bitmap[2] = thumbImage2;
+            bitmap[3] = videoThumbnail2;
+            dataSource[position].setmAttachmentFiles(attachmentFiles);
         }
-        if(dataSource[position].getmAttachmentthumbnails() != null &&
-                dataSource[position].getmAttachmentthumbnails().length > 0) {
+        if(dataSource[position].getmAttachmentFiles() != null &&
+                dataSource[position].getmAttachmentFiles().length > 0) {
             AttachmentThumbnailViewAdapter attachmentListAdapter =
-                    new AttachmentThumbnailViewAdapter(mContext, dataSource[position].getmAttachmentthumbnails());
+                    new AttachmentThumbnailViewAdapter(mContext, dataSource[position].getmAttachmentFiles());
             holder.mAttachmentThumbnailRecyclerView.setHasFixedSize(true);
             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
             layoutManager.setOrientation(OrientationHelper.HORIZONTAL);
             holder.mAttachmentThumbnailRecyclerView.setLayoutManager(layoutManager);
             holder.mAttachmentThumbnailRecyclerView.setAdapter(attachmentListAdapter);
-            Log.d("BindView$$$", "added to the attachmentViewer=" + position);
         } else {
             holder.mAttachmentThumbnailRecyclerView.setVisibility(View.GONE);
         }

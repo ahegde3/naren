@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.samsung.android.email.R;
+import com.samsung.android.email.model.AttachmentFile;
 
 /**
  * Created by nsbisht on 7/11/16.
@@ -16,16 +17,16 @@ import com.samsung.android.email.R;
 public class AttachmentThumbnailViewAdapter extends RecyclerView.Adapter<AttachmentThumbnailViewAdapter.ViewHolder> {
 
     private Context mContext;
-    private Bitmap[] mBitmaps;
+    private AttachmentFile[] mAttachmentFiles;
 
-    public AttachmentThumbnailViewAdapter(Context context, Bitmap[] bitmaps) {
+    public AttachmentThumbnailViewAdapter(Context context, AttachmentFile[] files) {
         mContext = context;
-        mBitmaps = bitmaps;
+        mAttachmentFiles = files;
     }
 
     @Override
     public int getItemCount() {
-        return mBitmaps.length;
+        return mAttachmentFiles.length;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -47,6 +48,12 @@ public class AttachmentThumbnailViewAdapter extends RecyclerView.Adapter<Attachm
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.attachment_thumbnail, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.get
+            }
+        });
         return viewHolder;
     }
 }

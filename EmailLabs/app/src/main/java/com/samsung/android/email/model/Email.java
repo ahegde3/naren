@@ -19,14 +19,14 @@ public class Email {
     private String mSubject;
     private String mBody;
     private Date mDate;
-    private Bitmap[] mAttachmentthumbnails;
+    private AttachmentFile[] mAttachmentFiles;
 
-    public Bitmap[] getmAttachmentthumbnails() {
-        return mAttachmentthumbnails;
+    public AttachmentFile[] getmAttachmentFiles() {
+        return mAttachmentFiles;
     }
 
-    public void setmAttachmentthumbnails(Bitmap[] mAttachmentthumbnails) {
-        this.mAttachmentthumbnails = mAttachmentthumbnails;
+    public void setmAttachmentFiles(AttachmentFile[] attachmentFiles) {
+        this.mAttachmentFiles = attachmentFiles;
     }
 
     public String getmFromAddress() {

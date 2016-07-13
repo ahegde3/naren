@@ -64,6 +64,9 @@ public class Chess {
 	static int M;
 	static boolean started;
 	static boolean[][] visited;
+	static int[] xVal = new int[]{-2, -1, 1, 2, 2, 1, -1, -2};
+	static int[] yVal = new int[]{1, 2, 2, 1, -1, -2, -2, -1};
+	static Cell[] queue;
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int T = sc.nextInt();
@@ -101,17 +104,17 @@ public class Chess {
 			}
 		}
 		started = true;
-		
+
 		if(curR == endR && curC == endC) {
 			return steps;
 		}
 		visited[curR][curC] = true;
-		if(Math.abs(curR - endR) >=2 || Math.abs(curC - endC) >= 2 && !isGoingFar) {
+		if(Math.abs(curR - endR) > 2 || Math.abs(curC - endC) > 2 && !isGoingFar) {
 			if(isGoingFar) {
 				if(Math.abs(curC - endC) > 1) {
 					return Integer.MAX_VALUE;	
 				}
-				
+
 			}
 			// Do in a certain direction
 			if(curR == endR && curC < endC) {
@@ -174,10 +177,7 @@ public class Chess {
 				return Math.min(e, f);
 			}
 
-		} else {
-//			if(Math.abs(curR - endR) >2 || Math.abs(curC - endC) > 2) {
-//				return Integer.MAX_VALUE;
-//			}
+		} else if((Math.abs(curR - endR) <= 1 || Math.abs(curC - endC) <= 1)) {
 			// Right
 			if(startR == endR && startC + 1 == endC) {
 				if(startR - 2 > 1 && startC + 3 <= M) {
@@ -188,7 +188,7 @@ public class Chess {
 				}
 				return -1;
 			}
-			
+
 			// Right upper
 			if(startR - 1 == endR && startC + 1 == endC) {
 				if(startR - 2 > 0 && startC - 1 > 0) {
@@ -199,7 +199,7 @@ public class Chess {
 				}
 				return -1;
 			}
-			
+
 			// Right down
 			if(startR + 1 == endR && startC + 1 == endC) {
 				if(startR + 2 <= N && startC - 1 > 0) {
@@ -210,7 +210,7 @@ public class Chess {
 				}
 				return -1;
 			}
-			
+
 			// Down
 			if(startR + 1 == endR && startC == endC) {
 				if(startR + 3 <= N && startC + 2 <= M) {
@@ -221,7 +221,7 @@ public class Chess {
 				}
 				return -1;
 			}
-			
+
 			//UP
 			if(startR - 1 == endR && endC == startC) {
 				if(startR - 3 > 0 && startC + 2 <= M) {
@@ -232,7 +232,7 @@ public class Chess {
 				}
 				return -1;
 			}
-			
+
 			// Left up
 			if(startR - 1 == endR && startC - 1 == endC) {
 				if(startR + 1 <= N && startC - 2 > 0) {
@@ -243,7 +243,7 @@ public class Chess {
 				}
 				return -1;
 			}
-			
+
 			//Left Down
 			if(startR + 1 == endR && startC - 1 == endC) {
 				if(startR + 1 <= N && startC + 1 <= M) {
@@ -254,7 +254,7 @@ public class Chess {
 				}
 				return -1;
 			}
-			
+
 			// Left
 			if(startR == endR && startC - 1 == endC) {
 				if(startR - 2 > 0 && startC - 3 > 0) {
@@ -265,8 +265,76 @@ public class Chess {
 				}
 				return -1;
 			}
-			
+
+		} else {
+			int a = minimumSteps(curR - 1 , curC + 2, steps + 1, true);
+			int b = minimumSteps(curR + 1 , curC + 2, steps + 1, true);
+			int c = minimumSteps(curR + 2 , curC + 1, steps + 1, true);
+			int d = minimumSteps(curR - 2 , curC + 1, steps + 1, true);
+
+			int e = minimumSteps(curR - 2 , curC - 1, steps + 1, true);
+			int f = minimumSteps(curR - 1 , curC - 2, steps + 1, true);
+			int g = minimumSteps(curR + 1 , curC - 2, steps + 1, true);
+			int h = minimumSteps(curR + 2 , curC - 1, steps + 1, true);
+
+			int i = Math.min(a, b);
+			int j = Math.min(c, d);
+			int k = Math.min(e, f);
+			int l = Math.min(g, h);
+			int m = Math.min(i, j);
+			int n = Math.min(k, l);
+			return Math.min(m, n);
 		}
 		return Integer.MAX_VALUE;
 	}
+
+	/*static boolean bfsChess(int curX, int curY, int steps) {
+		if(curX == endR && curY == endC) {
+			return true;
+		}
+		for(int i = 0; i < 8; i++) {
+			int nextX = curX + xVal[i];
+			int nextY = curY + yVal[i];
+		}
+	}*/
+
+	static class Cell {
+		int xVal;
+		int yVal;
+		public Cell(int x, int y) {
+			xVal = x;
+			yVal = y;
+		}
+	}
+	static class Queue {
+		private static int head = 0;
+		private static int tail = 0;
+
+		public static boolean isEmpty() {
+			return head == 0 && tail == 0;
+		}
+		public static void push(Cell cell) {
+			if(isEmpty()) {
+				tail++;
+			}
+			head++;
+			queue[head] = cell;
+		}
+		public static Cell pop() {
+			Cell cell = null;
+			if(!isEmpty()) {
+				cell = queue[tail];
+				if(tail == head) {
+					tail = 0;
+					head = 0;
+				} else {
+					tail++;					
+				}
+			}
+			return cell;
+		}
+		public static Cell peek() {
+			return queue[tail];
+		}
+	} 
 }
