@@ -64,6 +64,7 @@ public class Chess {
 	static int M;
 	static boolean started;
 	static boolean[][] visited;
+	static Cell[][] parents;
 	static int[] xVal = new int[]{-2, -1, 1, 2, 2, 1, -1, -2};
 	static int[] yVal = new int[]{1, 2, 2, 1, -1, -2, -2, -1};
 	static Cell[] queue;
@@ -74,15 +75,17 @@ public class Chess {
 		while(testCase <= T) {
 			N = sc.nextInt();
 			M = sc.nextInt();
+			queue = new Cell[(N + 2) * (M + 2)];
 			int[][] arr = new int[N + 1][M + 1];
 			visited = new boolean[N + 1][M + 1];
+			parents = new Cell[N + 1][M + 1];
 			startR = sc.nextInt();
 			startC = sc.nextInt();
 			endR = sc.nextInt();
 			endC = sc.nextInt();
-			int res = minimumSteps(startR, startC, 0, false);
+			int res = bfsChess(arr);//minimumSteps(startR, startC, 0, false);
 			started = false;
-			if(res == Integer.MAX_VALUE) {
+			if(res == 0/*Integer.MAX_VALUE*/) {
 				res = -1;
 			}
 			System.out.println(res);
@@ -179,7 +182,7 @@ public class Chess {
 
 		} else if((Math.abs(curR - endR) <= 1 || Math.abs(curC - endC) <= 1)) {
 			// Right
-			if(startR == endR && startC + 1 == endC) {
+			/*if(startR == endR && startC + 1 == endC) {
 				if(startR - 2 > 1 && startC + 3 <= M) {
 					return 3;
 				}
@@ -264,6 +267,7 @@ public class Chess {
 					return 3;
 				}
 				return -1;
+<<<<<<< Updated upstream
 			}
 
 		} else {
@@ -284,20 +288,51 @@ public class Chess {
 			int m = Math.min(i, j);
 			int n = Math.min(k, l);
 			return Math.min(m, n);
+			}*/
+			
 		}
 		return Integer.MAX_VALUE;
 	}
 
-	/*static boolean bfsChess(int curX, int curY, int steps) {
-		if(curX == endR && curY == endC) {
-			return true;
+	static int bfsChess(int[][] arr) {
+		Queue q = new Queue();
+		q.push(new Cell(startR, startC));
+		while(!q.isEmpty() && parents[endR][endC] == null) {
+			Cell cell = q.pop();
+			if(cell == null) {
+				continue;
+			}
+			visited[cell.xVal][cell.yVal] = true;
+			for(int i = 0; i < 8; i++) {
+				int x = cell.xVal + xVal[i];
+				int y = cell.yVal + yVal[i];
+				if(needsVisit(x, y)) {
+					parents[x][y] = cell;
+					q.push(new Cell(x, y));
+				}
+			}
 		}
-		for(int i = 0; i < 8; i++) {
-			int nextX = curX + xVal[i];
-			int nextY = curY + yVal[i];
+		Cell cell = parents[endR][endC];
+		int counter = 0;
+		while(cell != null){
+			cell = parents[cell.xVal][cell.yVal];
+			counter++;
 		}
-	}*/
+		parents = null;
+		visited = null;
+		queue = null;
+		q.head = 0;
+		q.tail = 0;
+		q = null;
+		return counter;
+	}
 
+	static boolean needsVisit(int x, int y) {
+		if(x > 0 && y > 0 && x <= N && y <= M) {
+			return !visited[x][y];
+		}
+		return false;
+	}
 	static class Cell {
 		int xVal;
 		int yVal;
@@ -310,17 +345,18 @@ public class Chess {
 		private static int head = 0;
 		private static int tail = 0;
 
-		public static boolean isEmpty() {
+		public boolean isEmpty() {
 			return head == 0 && tail == 0;
 		}
-		public static void push(Cell cell) {
+		public void push(Cell cell) {
 			if(isEmpty()) {
 				tail++;
 			}
 			head++;
+			System.out.println("Push==>" + head + " " + tail);
 			queue[head] = cell;
 		}
-		public static Cell pop() {
+		public Cell pop() {
 			Cell cell = null;
 			if(!isEmpty()) {
 				cell = queue[tail];
@@ -331,6 +367,7 @@ public class Chess {
 					tail++;					
 				}
 			}
+			System.out.println("Pop==>" + head + " " + tail);
 			return cell;
 		}
 		public static Cell peek() {
