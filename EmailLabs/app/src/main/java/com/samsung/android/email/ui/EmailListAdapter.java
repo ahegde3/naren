@@ -1,20 +1,13 @@
 package com.samsung.android.email.ui;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
-import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.samsung.android.email.R;
@@ -70,23 +63,12 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         holder.mSubjectView.setText(dataSource[position].getmSubject());
         holder.mBodyView.setText(dataSource[position].getmBody());
         if(position == 4) {
-            Bitmap thumbImage =
-                    ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile("/sdcard/UT_Device_nPass.png"), 400, 400);
-            Bitmap videoThumbnail = ThumbnailUtils.createVideoThumbnail("/sdcard/You.mp4", MediaStore.Images.Thumbnails.MINI_KIND);
-            Bitmap thumbImage2 =
-                    ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile("/sdcard/download.jpg"), 400, 400);
-            Bitmap videoThumbnail2 = ThumbnailUtils.createVideoThumbnail("/sdcard/vid.mp4", MediaStore.Images.Thumbnails.MINI_KIND);
-
             AttachmentFile[] attachmentFiles = new AttachmentFile[]{
-                    new AttachmentFile("/sdcard/UT_Device_nPass.png", AttachmentFile.FILE_TYPE_IMAGE),
-                    new AttachmentFile("/sdcard/You.mp4", AttachmentFile.FILE_TYPE_VIDEO),
-                    new AttachmentFile("/sdcard/download.jpg", AttachmentFile.FILE_TYPE_IMAGE),
-                    new AttachmentFile("/sdcard/vid.mp4", AttachmentFile.FILE_TYPE_VIDEO)};
-            Bitmap[] bitmap = new Bitmap[4];
-            bitmap[0] = thumbImage;
-            bitmap[1] = videoThumbnail;
-            bitmap[2] = thumbImage2;
-            bitmap[3] = videoThumbnail2;
+                    new AttachmentFile("pic2.jpg", AttachmentFile.FILE_TYPE_IMAGE),
+                    new AttachmentFile("/sdcard/Cars.mp4", AttachmentFile.FILE_TYPE_VIDEO),
+                    new AttachmentFile("pic4.jpg", AttachmentFile.FILE_TYPE_IMAGE),
+                    new AttachmentFile("download.jpg", AttachmentFile.FILE_TYPE_IMAGE),
+                    new AttachmentFile("/sdcard/Vid.mp4", AttachmentFile.FILE_TYPE_VIDEO)};
             dataSource[position].setmAttachmentFiles(attachmentFiles);
         }
         if(dataSource[position].getmAttachmentFiles() != null &&
