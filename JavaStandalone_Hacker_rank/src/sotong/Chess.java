@@ -297,18 +297,20 @@ public class Chess {
 	static int bfsChess(int[][] arr) {
 		Queue q = new Queue();
 		q.push(new Cell(startR, startC));
+		visited[startR][startC] = true;
 		while(!q.isEmpty() && parents[endR][endC] == null) {
 			Cell cell = q.pop();
 			if(cell == null) {
 				continue;
 			}
-			visited[cell.xVal][cell.yVal] = true;
 			for(int i = 0; i < 8; i++) {
 				int x = cell.xVal + xVal[i];
 				int y = cell.yVal + yVal[i];
 				if(needsVisit(x, y)) {
 					parents[x][y] = cell;
+					//System.out.println("Adding**** " + x + " " + y);
 					q.push(new Cell(x, y));
+					visited[x][y] = true;
 				}
 			}
 		}
@@ -328,6 +330,7 @@ public class Chess {
 	}
 
 	static boolean needsVisit(int x, int y) {
+		//System.out.println("needs " + x + " " + y);
 		if(x > 0 && y > 0 && x <= N && y <= M) {
 			return !visited[x][y];
 		}
@@ -342,18 +345,18 @@ public class Chess {
 		}
 	}
 	static class Queue {
-		private static int head = 0;
-		private static int tail = 0;
+		private static int head = -1;
+		private static int tail = -1;
 
 		public boolean isEmpty() {
-			return head == 0 && tail == 0;
+			return head == -1 && tail == -1;
 		}
 		public void push(Cell cell) {
 			if(isEmpty()) {
 				tail++;
 			}
 			head++;
-			System.out.println("Push==>" + head + " " + tail);
+			//System.out.println("Push==>" + head + " " + tail);
 			queue[head] = cell;
 		}
 		public Cell pop() {
@@ -361,13 +364,13 @@ public class Chess {
 			if(!isEmpty()) {
 				cell = queue[tail];
 				if(tail == head) {
-					tail = 0;
-					head = 0;
+					tail = -1;
+					head = -1;
 				} else {
 					tail++;					
 				}
 			}
-			System.out.println("Pop==>" + head + " " + tail);
+			//System.out.println("Pop==>" + head + " " + tail);
 			return cell;
 		}
 		public static Cell peek() {
