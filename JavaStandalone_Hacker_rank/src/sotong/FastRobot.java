@@ -1,5 +1,7 @@
 package sotong;
 
+import java.util.Scanner;
+
 /**
  Mr. Noh is responsible for enhancing the movement of a robot faster. 
 Now, Mr. Noh is thinking like this: The speed of the robot decreases when it changes its direction. 
@@ -418,4 +420,143 @@ Sample Input
  */
 public class FastRobot {
 
+	static int startX;
+	static int startY;
+	static int endX;
+	static int endY;
+	static Cell[] queue;
+	static boolean[][] visited;
+	static int[] moveX = new int[]{0, 0, -1, 1};
+	static int[] moveY = new int[]{-1, 1, 0, 0};
+	static int N;
+	static int M;
+	static int minDirChage = Integer.MAX_VALUE;
+	static int[][] arr;
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		while(T > 0) {
+			N = sc.nextInt();
+			M = sc.nextInt();
+			arr = new int[N + 1][M + 1];
+			queue = new Cell[(N + 1) * (M + 1)];
+			visited = new boolean[N + 1][M + 1];
+			startY = sc.nextInt();
+			startX = sc.nextInt();
+			endY = sc.nextInt();
+			endX = sc.nextInt();
+			for(int i = 0; i < N; i++) {
+				String str = sc.next();
+				for(int j = 1; j <= M; j++) {
+					arr[i][j] = Integer.parseInt("" + str.charAt(j - 1));
+				}
+			}
+			bfsVisit();
+			T--;
+		}
+	}
+
+	static void bfsVisit() {
+		Queue q = new Queue();
+		q.push(new Cell(startX, startY, -1, -1, 0));
+		visited[startX][startY] = true;
+		while(!q.isEmpty()) {
+			Cell cell = q.pop();
+			if(cell == null) {
+				continue;
+			}
+			for(int i = 0; i < 4; i++) {
+				int nextX = cell.curX + moveX[i];
+				int nextY = cell.curY + moveY[i];
+				if(nextX == endX && nextY == endY) {
+					int dirCount = cell.dir;
+					if(isDirChange(cell, nextX, nextY)) {
+						dirCount++;
+					}
+					minDirChage = Math.min(minDirChage, dirCount);
+					visited[nextX][nextY] = true;
+					continue;
+				}
+				if(needsVisite(nextX, nextY)) {
+					int dirCount = cell.dir;
+					if(isDirChange(cell, nextX, nextY)) {
+						dirCount++;
+					}
+					q.push(new Cell(nextX, nextY, cell.curX, cell.curY, dirCount));
+					visited[nextX][nextY] = true;
+				}
+			}
+
+		}
+		System.out.println(minDirChage);
+
+	}
+
+	static boolean needsVisite(int x, int y) {
+		if(x > 0 && y > 0 && x <= N && y <= M) {
+			if(arr[x][y] == 1) {
+				return false;
+			}
+			return !visited[x][y];
+		}
+		return false;
+	}
+
+	static boolean isDirChange(Cell prevCell, int cx, int cy) {
+		boolean horizontalMove = prevCell.curX == prevCell.parX;
+		boolean verticalMove = prevCell.curY == prevCell.parY;
+		if(horizontalMove) {
+			return prevCell.curX != cx;
+		} else {
+			return prevCell.curY != cy;
+		}
+	}
+
+	static class Cell {
+		int curX;
+		int curY;
+		int parX;
+		int parY;
+		int dir;
+		public Cell(int cx, int cy, int px, int py, int count) {
+			curX = cx;
+			curY = cy;
+			parX = px;
+			parY = py;
+			dir = count;
+		}
+	}
+
+	static class Queue {
+		private static int head = -1;
+		private static int tail = -1;
+
+		public boolean isEmpty() {
+			return head == -1 && tail == -1;
+		}
+		public void push(Cell cell) {
+			if(isEmpty()) {
+				tail++;
+			}
+			head++;
+			queue[head] = cell;
+		}
+		public Cell pop() {
+			Cell cell = null;
+			if(!isEmpty()) {
+				cell = queue[tail];
+				if(tail == head) {
+					tail = -1;
+					head = -1;
+				} else {
+					tail++;					
+				}
+			}
+			return cell;
+		}
+		public static Cell peek() {
+			return queue[tail];
+		}
+	} 
 }
