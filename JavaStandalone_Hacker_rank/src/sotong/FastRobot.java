@@ -414,7 +414,14 @@ Sample Input
 0111101111111111101111111011111111111011110111111111111101111111111110111100110011111111111111110000000000001111111111111111010101111111111110101111111110010100
 0111101111111111101111111011111111111011110111111111111101111111111110111100110011111111111111110111111111111111111111111111010101111111111110101111111110010000
 0111101111111111100000000000001111111011110111111111111101111111111110111100110011111111100011110111100000000000000000000000000100000000000000101111111110010010
-0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011111111111111111100000000000000000 
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011111111111111111100000000000000000
+
+answer:
+3
+2
+4
+8
+7
  * @author nsbisht
  *
  */
@@ -446,18 +453,22 @@ public class FastRobot {
 			startX = sc.nextInt();
 			endY = sc.nextInt();
 			endX = sc.nextInt();
-			for(int i = 0; i < N; i++) {
+			for(int i = 1; i <= N; i++) {
 				String str = sc.next();
 				for(int j = 1; j <= M; j++) {
 					arr[i][j] = Integer.parseInt("" + str.charAt(j - 1));
 				}
 			}
-			bfsVisit();
+			int res = bfsVisit();
+			if (res == Integer.MAX_VALUE) {
+				res = -1;
+			}
+			System.out.println(res);
 			T--;
 		}
 	}
 
-	static void bfsVisit() {
+	static int bfsVisit() {
 		Queue q = new Queue();
 		q.push(new Cell(startX, startY, -1, -1, 0));
 		visited[startX][startY] = true;
@@ -489,8 +500,7 @@ public class FastRobot {
 			}
 
 		}
-		System.out.println(minDirChage);
-
+		return minDirChage;
 	}
 
 	static boolean needsVisite(int x, int y) {
@@ -504,6 +514,9 @@ public class FastRobot {
 	}
 
 	static boolean isDirChange(Cell prevCell, int cx, int cy) {
+		if(prevCell.parX == -1 && prevCell.parY == -1) {
+			return false;
+		}
 		boolean horizontalMove = prevCell.curX == prevCell.parX;
 		boolean verticalMove = prevCell.curY == prevCell.parY;
 		if(horizontalMove) {
