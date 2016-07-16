@@ -1,5 +1,6 @@
 package sotong;
 
+import java.math.BigInteger;
 import java.util.Scanner;
 
 /**
@@ -444,8 +445,8 @@ public class FastRobot {
 		Scanner sc = new Scanner(System.in);
 		int T = sc.nextInt();
 		while(T > 0) {
-			N = sc.nextInt();
 			M = sc.nextInt();
+			N = sc.nextInt();
 			arr = new int[N + 1][M + 1];
 			queue = new Cell[(N + 1) * (M + 1)];
 			visited = new boolean[N + 1][M + 1];
@@ -453,7 +454,7 @@ public class FastRobot {
 			startX = sc.nextInt();
 			endY = sc.nextInt();
 			endX = sc.nextInt();
-			for(int i = 1; i <= N; i++) {
+			for(int i = 1; i <= N; i++) { 
 				String str = sc.next();
 				for(int j = 1; j <= M; j++) {
 					arr[i][j] = Integer.parseInt("" + str.charAt(j - 1));
