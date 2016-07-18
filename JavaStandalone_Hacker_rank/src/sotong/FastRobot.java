@@ -434,8 +434,8 @@ public class FastRobot {
 	static int endY;
 	static Cell[] queue;
 	static boolean[][] visited;
-	static int[] moveX = new int[]{0, 0, -1, 1};
-	static int[] moveY = new int[]{-1, 1, 0, 0};
+	static int[] moveX = new int[]{0, 1, 0, -1};
+	static int[] moveY = new int[]{1, 0, -1, 0};
 	static int N;
 	static int M;
 	static int minDirChage = Integer.MAX_VALUE;
@@ -465,6 +465,7 @@ public class FastRobot {
 				res = -1;
 			}
 			System.out.println(res);
+			minDirChage = Integer.MAX_VALUE;
 			T--;
 		}
 	}
