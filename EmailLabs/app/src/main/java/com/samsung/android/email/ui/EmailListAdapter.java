@@ -64,10 +64,10 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         holder.mBodyView.setText(dataSource[position].getmBody());
         if(position == 4) {
             AttachmentFile[] attachmentFiles = new AttachmentFile[]{
-                    new AttachmentFile("pic2.jpg", AttachmentFile.FILE_TYPE_IMAGE),
+                    new AttachmentFile("/sdcard/pic2.jpg", AttachmentFile.FILE_TYPE_IMAGE),
                     new AttachmentFile("/sdcard/Cars.mp4", AttachmentFile.FILE_TYPE_VIDEO),
-                    new AttachmentFile("pic4.jpg", AttachmentFile.FILE_TYPE_IMAGE),
-                    new AttachmentFile("download.jpg", AttachmentFile.FILE_TYPE_IMAGE),
+                    new AttachmentFile("/sdcard/pic4.jpg", AttachmentFile.FILE_TYPE_IMAGE),
+                    new AttachmentFile("/sdcard/download.jpg", AttachmentFile.FILE_TYPE_IMAGE),
                     new AttachmentFile("/sdcard/Vid.mp4", AttachmentFile.FILE_TYPE_VIDEO)};
             dataSource[position].setmAttachmentFiles(attachmentFiles);
         }

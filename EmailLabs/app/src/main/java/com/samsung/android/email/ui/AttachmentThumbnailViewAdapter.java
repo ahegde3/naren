@@ -1,6 +1,7 @@
 package com.samsung.android.email.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -40,14 +41,23 @@ public class AttachmentThumbnailViewAdapter extends RecyclerView.Adapter<Attachm
         return mAttachmentFiles.length;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         protected ImageView mThumbnailImageView;
         protected ImageView mPlayButton;
+        protected IClickItem mIClick;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, IClickItem clickItem) {
             super(itemView);
             mThumbnailImageView = (ImageView) itemView.findViewById(R.id.attachment_thumbview);
             mPlayButton = (ImageView) itemView.findViewById(R.id.play_button);
+            mIClick = clickItem;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mIClick.itemClicked(getAdapterPosition());
+
         }
     }
 
@@ -57,12 +67,8 @@ public class AttachmentThumbnailViewAdapter extends RecyclerView.Adapter<Attachm
         Bitmap thumbNail = null;
         if(file != null) {
             if(file.getmFileType() == AttachmentFile.FILE_TYPE_IMAGE) {
-                try {
-                    thumbNail = ThumbnailUtils.extractThumbnail(BitmapFactory.
-                            decodeStream(mContext.getAssets().open(file.getmFilePath())), 400, 400);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                thumbNail = ThumbnailUtils.extractThumbnail(BitmapFactory.
+                        decodeFile(file.getmFilePath()), 400, 400);
                 holder.mPlayButton.setVisibility(View.GONE);
             } else if(file.getmFileType() == AttachmentFile.FILE_TYPE_VIDEO) {
 //                Uri video = Uri.parse("android.resource://com.samsung.android.email/raw/" + file.getmFilePath());
@@ -86,14 +92,25 @@ public class AttachmentThumbnailViewAdapter extends RecyclerView.Adapter<Attachm
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.attachment_thumbnail, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
+        ViewHolder viewHolder = new ViewHolder(view, new IClickItem() {
             @Override
-            public void onClick(View view) {
-                //view.get
+            public void itemClicked(int position) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                Uri resUri = Uri.parse("file://" + mAttachmentFiles[position].getmFilePath());
+                if(mAttachmentFiles[position].getmFileType() == AttachmentFile.FILE_TYPE_VIDEO) {
+                    intent.setDataAndType(resUri, "video/*");
+                } else {
+                    intent.setDataAndType(resUri, "image/*");
+                }
+                mContext.startActivity(intent);
             }
         });
         return viewHolder;
+    }
+
+    interface IClickItem {
+        public void itemClicked(int position);
     }
 }
 
