@@ -1,6 +1,5 @@
 package sotong;
 
-import java.math.BigInteger;
 import java.util.Scanner;
 
 /**
@@ -433,6 +432,7 @@ public class FastRobot {
 	static int endX;
 	static int endY;
 	static Cell[] queue;
+	static Cell[][] cellMatrix;
 	static boolean[][] visited;
 	static int[] moveX = new int[]{0, 1, 0, -1};
 	static int[] moveY = new int[]{1, 0, -1, 0};
@@ -450,6 +450,7 @@ public class FastRobot {
 			arr = new int[N + 1][M + 1];
 			queue = new Cell[(N + 1) * (M + 1)];
 			visited = new boolean[N + 1][M + 1];
+			cellMatrix = new Cell[N + 1][M + 1];
 			startY = sc.nextInt();
 			startX = sc.nextInt();
 			endY = sc.nextInt();
@@ -474,6 +475,7 @@ public class FastRobot {
 		Queue q = new Queue();
 		q.push(new Cell(startX, startY, -1, -1, 0));
 		visited[startX][startY] = true;
+		cellMatrix[startX][startY] = new Cell(startX, startY, -1, -1, 0);
 		while(!q.isEmpty()) {
 			Cell cell = q.pop();
 			if(cell == null) {
@@ -496,7 +498,11 @@ public class FastRobot {
 					if(isDirChange(cell, nextX, nextY)) {
 						dirCount++;
 					}
+					if(cellMatrix[nextX][nextY] != null && dirCount > cellMatrix[nextX][nextY].dir) {
+						continue;
+					}
 					q.push(new Cell(nextX, nextY, cell.curX, cell.curY, dirCount));
+					cellMatrix[nextX][nextY] = new Cell(nextX, nextY, cell.curX, cell.curY, dirCount);
 					visited[nextX][nextY] = true;
 				}
 			}
@@ -510,7 +516,8 @@ public class FastRobot {
 			if(arr[x][y] == 1) {
 				return false;
 			}
-			return !visited[x][y];
+			//return !visited[x][y];
+			return true;
 		}
 		return false;
 	}
