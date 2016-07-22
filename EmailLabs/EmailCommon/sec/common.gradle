@@ -95,7 +95,7 @@ project.ext.secConf = [
                    'nl_BE','nl_NL','or_IN','pa_IN','pl_PL','pt_BR','pt_PT','ro_RO','ru_RU','si_IN', \
                    'sk_SK','sl_SI','sq_AL','sr_RS','sv_SE','ta_IN','te_IN','tg_TJ','th_TH','tk_TM', \
                    'tl_PH','tr_TR','uk_UA','ur_PK','uz_UZ','vi_VN','zh_CN','zh_HK','zh_TW','my_ZG', \
-                   'be_BY','pl_SP' ],
+                   'be_BY','pl_SP','bs_BA' ],
         'kor'  : [ 'de_DE','en_GB','en_US','es_ES','fr_FR','it_IT','ja_JP','ko_KR','pt_PT','ru_RU', \
                    'vi_VN','zh_CN','zh_TW' ],
         'usa'  : [ 'de_DE','en_US','es_US','fr_FR','it_IT','ja_JP','ko_KR','vi_VN','zh_CN' ],
