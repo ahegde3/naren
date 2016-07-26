@@ -6,22 +6,20 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.samsung.android.email.R;
+import com.samsung.android.email.labs.R;
 import com.samsung.android.email.labs.model.AttachmentFile;
 
-import java.io.File;
-import java.io.IOException;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by nsbisht on 7/11/16.
@@ -42,14 +40,14 @@ public class AttachmentThumbnailViewAdapter extends RecyclerView.Adapter<Attachm
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        protected ImageView mThumbnailImageView;
-        protected ImageView mPlayButton;
+        @BindView(R.id.attachment_thumbview) ImageView mThumbnailImageView;
+        @BindView(R.id.play_button) ImageView mPlayButton;
+
         protected IClickItem mIClick;
 
         public ViewHolder(View itemView, IClickItem clickItem) {
             super(itemView);
-            mThumbnailImageView = (ImageView) itemView.findViewById(R.id.attachment_thumbview);
-            mPlayButton = (ImageView) itemView.findViewById(R.id.play_button);
+            ButterKnife.bind(this, itemView);
             mIClick = clickItem;
             itemView.setOnClickListener(this);
         }

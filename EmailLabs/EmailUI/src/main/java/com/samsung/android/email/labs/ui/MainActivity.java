@@ -6,15 +6,18 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.samsung.android.email.R;
+import com.samsung.android.email.labs.R;
 import com.samsung.android.email.labs.model.SampleData;
 import com.samsung.android.email.labs.utils.RuntimePermissionChecker;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by nsbisht on 5/31/16.
  */
 public class MainActivity extends Activity {
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.main_recycler_view) RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -31,7 +34,7 @@ public class MainActivity extends Activity {
 
     private void initViews() {
         setContentView(R.layout.activity_main_recycler_list);
-        mRecyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
+        ButterKnife.bind(this);
         mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(this);

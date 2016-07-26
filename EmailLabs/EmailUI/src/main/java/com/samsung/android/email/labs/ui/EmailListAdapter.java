@@ -13,12 +13,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.samsung.android.email.R;
+import com.samsung.android.email.labs.R;
 import com.samsung.android.email.labs.model.AttachmentFile;
 import com.samsung.android.email.labs.model.Email;
+import com.samsung.android.email.labs.ui.letterInIcon.util.ColorGenerator;
+import com.samsung.android.email.labs.ui.letterInIcon.util.TextShapeDrawable;
 import com.samsung.android.email.labs.utils.Ulitily;
-import com.samsung.android.email.ui.letterInIcon.util.ColorGenerator;
-import com.samsung.android.email.ui.letterInIcon.util.TextShapeDrawable;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by nsbisht on 5/31/16.
@@ -36,24 +39,17 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        protected ImageView mFromAddressIcon;
-        protected TextView mFromAddressView;
-        protected TextView mDateView;
-        protected TextView mSubjectView;
-        protected TextView mBodyView;
-        protected RecyclerView mAttachmentThumbnailRecyclerView;
-        protected CardView mCardView;
+        @BindView(R.id.from_address_image_view) ImageView mFromAddressIcon;
+        @BindView(R.id.from_address_label) TextView mFromAddressView;
+        @BindView(R.id.date_label) TextView mDateView;
+        @BindView(R.id.subject_label) TextView mSubjectView;
+        @BindView(R.id.body_label) TextView mBodyView;
+        @BindView(R.id.attachment_thumbnail_recycler_view) RecyclerView mAttachmentThumbnailRecyclerView;
+        @BindView(R.id.card_view) CardView mCardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mCardView = (CardView) itemView.findViewById(R.id.card_view);
-            mFromAddressIcon = (ImageView) itemView.findViewById(R.id.from_address_image_view);
-            mFromAddressView = (TextView) itemView.findViewById(R.id.from_address_label);
-            mDateView = (TextView) itemView.findViewById(R.id.date_label);
-            mSubjectView = (TextView) itemView.findViewById(R.id.subject_label);
-            mBodyView = (TextView) itemView.findViewById(R.id.body_label);
-            mAttachmentThumbnailRecyclerView = (RecyclerView) itemView.findViewById(R.id.attachment_thumbnail_recycler_view);
-
+            ButterKnife.bind(this, itemView);
         }
     }
 
@@ -89,10 +85,10 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         } else {
             holder.mAttachmentThumbnailRecyclerView.setVisibility(View.GONE);
         }
-        setAnimation(holder.mCardView, position);
+        setAnimation(holder.mCardView);
     }
 
-    private void setAnimation(View view, int position) {
+    private void setAnimation(View view) {
         Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
         view.startAnimation(animation);
     }
