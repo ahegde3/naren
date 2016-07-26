@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.samsung.android.email">
+    package="com.samsung.android.email.labs">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application

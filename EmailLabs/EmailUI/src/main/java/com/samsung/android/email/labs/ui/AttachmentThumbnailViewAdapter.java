@@ -1,4 +1,4 @@
-package com.samsung.android.email.ui;
+package com.samsung.android.email.labs.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.samsung.android.email.R;
-import com.samsung.android.email.model.AttachmentFile;
+import com.samsung.android.email.labs.model.AttachmentFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,9 +71,6 @@ public class AttachmentThumbnailViewAdapter extends RecyclerView.Adapter<Attachm
                         decodeFile(file.getmFilePath()), 400, 400);
                 holder.mPlayButton.setVisibility(View.GONE);
             } else if(file.getmFileType() == AttachmentFile.FILE_TYPE_VIDEO) {
-//                Uri video = Uri.parse("android.resource://com.samsung.android.email/raw/" + file.getmFilePath());
-//                String fileName = video.getEncodedPath();
-//                Log.d("FILE**" , fileName);
                 thumbNail = ThumbnailUtils.createVideoThumbnail(file.getmFilePath(), MediaStore.Images.Thumbnails.MINI_KIND);
 
                 Canvas canvas = new Canvas();

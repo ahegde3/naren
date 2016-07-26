@@ -1,4 +1,4 @@
-package com.samsung.android.email.utils;
+package com.samsung.android.email.labs.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

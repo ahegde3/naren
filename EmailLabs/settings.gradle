@@ -1,2 +1,2 @@
 include 'EmailCommon'
-include 'app'
+include 'EmailUI'

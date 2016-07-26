@@ -2,6 +2,12 @@
 ======================================================================================================================
   Date    Version     Description and Reference
 ======================================================================================================================
+ 160722   23.2.5     added bs_BA to locale.full
+----------------------------------------------------------------------------------------------------------------------
+ 160722   23.2.2-4   re-releases due to wrong build tool environment (JDK version)
+----------------------------------------------------------------------------------------------------------------------
+ 160721   23.2.1     suppressed API_CODE matching test for library project
+----------------------------------------------------------------------------------------------------------------------
  160323   23.2.0     added collectOutput task to only specific tasks to eliminate error in gradle version above 2.2.1
                      fixed a bug to check revision value for each version type
                      set buildToolsVersion to '23.0.3'

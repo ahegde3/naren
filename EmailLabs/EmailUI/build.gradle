@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.samsung.android.email"
+        applicationId "com.samsung.android.email.labs"
         minSdkVersion 23
         targetSdkVersion 23
         versionCode 1

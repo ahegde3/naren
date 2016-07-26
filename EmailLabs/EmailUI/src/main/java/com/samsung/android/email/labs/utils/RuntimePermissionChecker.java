@@ -1,4 +1,4 @@
-package com.samsung.android.email.utils;
+package com.samsung.android.email.labs.utils;
 
 import android.Manifest;
 import android.app.Activity;

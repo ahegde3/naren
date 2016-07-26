@@ -1,4 +1,4 @@
-package com.samsung.android.email.ui;
+package com.samsung.android.email.labs.ui;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
@@ -7,10 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.samsung.android.email.R;
-import com.samsung.android.email.model.SampleData;
-import com.samsung.android.email.utils.RuntimePermissionChecker;
-import com.samsung.android.emailcommon.utility.EmailLog;
-import com.samsung.android.emailcommon.utility.EmailRuntimePermission;
+import com.samsung.android.email.labs.model.SampleData;
+import com.samsung.android.email.labs.utils.RuntimePermissionChecker;
 
 /**
  * Created by nsbisht on 5/31/16.

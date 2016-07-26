@@ -1,4 +1,4 @@
-package com.samsung.android.email.model;
+package com.samsung.android.email.labs.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

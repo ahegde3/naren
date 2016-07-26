@@ -1,4 +1,4 @@
-package com.samsung.android.email.model;
+package com.samsung.android.email.labs.model;
 
 /**
  * Created by nsbisht on 7/13/16.

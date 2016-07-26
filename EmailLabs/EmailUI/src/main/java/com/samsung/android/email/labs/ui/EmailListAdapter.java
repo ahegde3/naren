@@ -1,21 +1,24 @@
-package com.samsung.android.email.ui;
+package com.samsung.android.email.labs.ui;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.samsung.android.email.R;
-import com.samsung.android.email.model.AttachmentFile;
-import com.samsung.android.email.model.Email;
+import com.samsung.android.email.labs.model.AttachmentFile;
+import com.samsung.android.email.labs.model.Email;
+import com.samsung.android.email.labs.utils.Ulitily;
 import com.samsung.android.email.ui.letterInIcon.util.ColorGenerator;
 import com.samsung.android.email.ui.letterInIcon.util.TextShapeDrawable;
-import com.samsung.android.email.utils.Ulitily;
 
 /**
  * Created by nsbisht on 5/31/16.
@@ -39,9 +42,11 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         protected TextView mSubjectView;
         protected TextView mBodyView;
         protected RecyclerView mAttachmentThumbnailRecyclerView;
+        protected CardView mCardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            mCardView = (CardView) itemView.findViewById(R.id.card_view);
             mFromAddressIcon = (ImageView) itemView.findViewById(R.id.from_address_image_view);
             mFromAddressView = (TextView) itemView.findViewById(R.id.from_address_label);
             mDateView = (TextView) itemView.findViewById(R.id.date_label);
@@ -64,6 +69,7 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         holder.mBodyView.setText(dataSource[position].getmBody());
         if(position == 4) {
             AttachmentFile[] attachmentFiles = new AttachmentFile[]{
+                    // These files are in the assest folder, copy them to device
                     new AttachmentFile("/sdcard/pic2.jpg", AttachmentFile.FILE_TYPE_IMAGE),
                     new AttachmentFile("/sdcard/Cars.mp4", AttachmentFile.FILE_TYPE_VIDEO),
                     new AttachmentFile("/sdcard/pic4.jpg", AttachmentFile.FILE_TYPE_IMAGE),
@@ -83,7 +89,12 @@ public class EmailListAdapter extends RecyclerView.Adapter<EmailListAdapter.View
         } else {
             holder.mAttachmentThumbnailRecyclerView.setVisibility(View.GONE);
         }
+        setAnimation(holder.mCardView, position);
+    }
 
+    private void setAnimation(View view, int position) {
+        Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
+        view.startAnimation(animation);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.samsung.android.email.ui.letterInIcon.util;
+package com.samsung.android.email.labs.ui.letterInIcon.util;
 
 import android.graphics.*;
 import android.graphics.drawable.ShapeDrawable;

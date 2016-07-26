@@ -1,4 +1,4 @@
-package com.samsung.android.email.ui.letterInIcon.util;
+package com.samsung.android.email.labs.ui.letterInIcon.util;
 
 import java.util.Arrays;
 import java.util.List;
