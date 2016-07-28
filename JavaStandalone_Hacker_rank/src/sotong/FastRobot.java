@@ -501,6 +501,9 @@ public class FastRobot {
 					if(cellMatrix[nextX][nextY] != null && dirCount > cellMatrix[nextX][nextY].dir) {
 						continue;
 					}
+					if(nextX == cell.parX && nextY == cell.parY) {
+						continue;
+					}
 					q.push(new Cell(nextX, nextY, cell.curX, cell.curY, dirCount));
 					cellMatrix[nextX][nextY] = new Cell(nextX, nextY, cell.curX, cell.curY, dirCount);
 					visited[nextX][nextY] = true;
