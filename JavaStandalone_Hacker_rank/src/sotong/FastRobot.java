@@ -471,6 +471,8 @@ public class FastRobot {
 		}
 	}
 
+	
+	
 	static int bfsVisit() {
 		Queue q = new Queue();
 		q.push(new Cell(startX, startY, -1, -1, 0));
