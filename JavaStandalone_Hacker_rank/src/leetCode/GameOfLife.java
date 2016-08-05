@@ -29,7 +29,7 @@ public class GameOfLife {
 				int k = 0;
 				int ones = 0;
 				while(k < 8 && neighbors[k] != -1) {
-					if(neighbors[k] == 1) {
+					if((neighbors[k] & 1) == 1) {
 						ones++;
 					}
 					k++;
