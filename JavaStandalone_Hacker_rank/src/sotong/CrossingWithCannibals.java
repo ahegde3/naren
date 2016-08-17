@@ -66,6 +66,7 @@ Output
 public class CrossingWithCannibals {
 	static int readIndex = 0;
 	static int insertIndex = 0;
+	static int boatLimit;
 	public static class State {
 		int sCount;
 		int cCount;
@@ -87,10 +88,23 @@ public class CrossingWithCannibals {
 			list[insertIndex++] = state;
 			return;
 		}
-		for() {
-			
-		}
+//		for() {
+//			
+//		}
 		
+	}
+	
+	static void generateStates(State state) {
+		for(int i = 0; i <= boatLimit; i++) {
+			for(int j = 0; j <= boatLimit; j++) {
+				if(i == 0 && j == 0) {
+					continue;
+				}
+				if(i + j > boatLimit) {
+					break;
+				}
+			}
+		}
 	}
 	
 	static boolean isValid(State state) {
