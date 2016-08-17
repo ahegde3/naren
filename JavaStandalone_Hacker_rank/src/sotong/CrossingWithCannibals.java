@@ -67,6 +67,7 @@ public class CrossingWithCannibals {
 	static int readIndex = 0;
 	static int insertIndex = 0;
 	static int boatLimit;
+	
 	public static class State {
 		int sCount;
 		int cCount;
@@ -80,6 +81,13 @@ public class CrossingWithCannibals {
 			boatDirection = dir;
 			parentState = parent;
 			level = lev;
+		}
+		
+		public boolean isValid() {
+			if(this.sCount < this.cCount) {
+				return false;
+			}
+			return true;
 		}
 	}
 	
