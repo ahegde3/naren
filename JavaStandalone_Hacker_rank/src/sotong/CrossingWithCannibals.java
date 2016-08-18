@@ -125,7 +125,7 @@ public class CrossingWithCannibals {
 					break;
 				}
 				State newState = new State(i, j, !state.boatDirection, state, state.level + 1);
-				System.out.println(i + " " + j);
+				System.out.println(i + " " + j + " " + !state.boatDirection + " " + (state.level + 1));
 				addToList(newState);
 			}
 		}
@@ -140,5 +140,11 @@ public class CrossingWithCannibals {
 			}
 			generateStates(state);
 		}
+	}
+	
+	public static void main(String[] args) {
+		list = new State[1000];
+		boatLimit = 2;
+		process(new State(2, 2, false, null, 0), new State(2, 2, true, null, 0));
 	}
 }
