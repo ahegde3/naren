@@ -67,14 +67,16 @@ public class CrossingWithCannibals {
 	static int readIndex = 0;
 	static int insertIndex = 0;
 	static int boatLimit;
-	
+	static State[] list = null;
+	static int minTrips = Integer.MAX_VALUE;
+
 	public static class State {
 		int sCount;
 		int cCount;
 		boolean boatDirection; // false -> towards des, true -> towards source
 		State parentState;
 		int level;
-		
+
 		public State(int sC, int cC, boolean dir, State parent, int lev) {
 			sCount = sC;
 			cCount = cC;
@@ -82,26 +84,37 @@ public class CrossingWithCannibals {
 			parentState = parent;
 			level = lev;
 		}
-		
+
 		public boolean isValid() {
 			if(this.sCount < this.cCount) {
 				return false;
 			}
 			return true;
 		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if(this == (State)obj) {
+				return true;
+			}
+			State state = (State) obj;
+			if(this.cCount == state.cCount && this.sCount == state.sCount && this.boatDirection == state.boatDirection) {
+				return true;
+			}
+			return false;
+		}
 	}
-	
-	static void addToList(State state, State[] list) {
+
+	static void addToList(State state) {
 		if(state.parentState == null) {
 			list[insertIndex++] = state;
 			return;
 		}
-//		for() {
-//			
-//		}
-		
+		if(state.isValid()) {
+			list[insertIndex++] = state;
+		}
 	}
-	
+
 	static void generateStates(State state) {
 		for(int i = 0; i <= boatLimit; i++) {
 			for(int j = 0; j <= boatLimit; j++) {
@@ -111,17 +124,21 @@ public class CrossingWithCannibals {
 				if(i + j > boatLimit) {
 					break;
 				}
+				State newState = new State(i, j, !state.boatDirection, state, state.level + 1);
+				System.out.println(i + " " + j);
+				addToList(newState);
 			}
 		}
 	}
 	
-	static boolean isValid(State state) {
-		if(state.sCount == 0 && state.cCount == 0) {
-			return false;
+	static void process(State start, State end) {
+		addToList(start);
+		while(list[readIndex] != null) {
+			State state = list[readIndex++];
+			if(state.equals(end)) {
+				minTrips = Math.min(state.level, minTrips);
+			}
+			generateStates(state);
 		}
-		if(state.sCount < state.cCount) {
-			return false;
-		}
-		return true;
 	}
 }
