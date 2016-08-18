@@ -69,6 +69,8 @@ public class CrossingWithCannibals {
 	static int boatLimit;
 	static State[] list = null;
 	static int minTrips = Integer.MAX_VALUE;
+	static int totalS;
+	static int totalC;
 
 	public static class State {
 		int sCount;
@@ -86,7 +88,8 @@ public class CrossingWithCannibals {
 		}
 
 		public boolean isValid() {
-			if(this.sCount < this.cCount) {
+			if(this.sCount < this.cCount ||
+					totalS - this.sCount < totalC - this.cCount) {
 				return false;
 			}
 			return true;
@@ -112,6 +115,7 @@ public class CrossingWithCannibals {
 		}
 		if(state.isValid()) {
 			list[insertIndex++] = state;
+			System.out.println(state.sCount + " " + state.cCount + " " + state.boatDirection + " " + (state.level));
 		}
 	}
 
@@ -125,7 +129,6 @@ public class CrossingWithCannibals {
 					break;
 				}
 				State newState = new State(i, j, !state.boatDirection, state, state.level + 1);
-				System.out.println(i + " " + j + " " + !state.boatDirection + " " + (state.level + 1));
 				addToList(newState);
 			}
 		}
@@ -145,6 +148,8 @@ public class CrossingWithCannibals {
 	public static void main(String[] args) {
 		list = new State[1000];
 		boatLimit = 2;
+		totalC = 2;
+		totalS = 2;
 		process(new State(2, 2, false, null, 0), new State(2, 2, true, null, 0));
 	}
 }
