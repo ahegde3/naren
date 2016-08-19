@@ -88,8 +88,10 @@ public class CrossingWithCannibals {
 		}
 
 		public boolean isValid() {
-			if(this.sCount < this.cCount ||
-					totalS - this.sCount < totalC - this.cCount) {
+			if(this.sCount < this.cCount && this.sCount > 0) {
+				return false;
+			}
+			if(this.parentState.sCount - this.sCount < this.parentState.cCount - this.cCount) {
 				return false;
 			}
 			return true;
