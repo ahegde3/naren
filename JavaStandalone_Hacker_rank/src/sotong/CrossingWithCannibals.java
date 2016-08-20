@@ -73,25 +73,36 @@ public class CrossingWithCannibals {
 	static int totalC;
 
 	public static class State {
-		int sCount;
-		int cCount;
 		boolean boatDirection; // false -> towards des, true -> towards source
 		State parentState;
 		int level;
+		int aS;
+		int bS;
+		int aC;
+		int bC;
+		boolean[][] visited;
 
-		public State(int sC, int cC, boolean dir, State parent, int lev) {
-			sCount = sC;
-			cCount = cC;
+		public State(int aS, int aC, int bS, int bC, boolean dir, State parent, int lev) {
+			this.aS = aS;
+			this.aC = aC;
+			this.bS = bS;
+			this.bC = bC;
 			boatDirection = dir;
 			parentState = parent;
 			level = lev;
+			//visited = parent == null ? null : parent.visited;
 		}
 
 		public boolean isValid() {
-			if(this.sCount < this.cCount && this.sCount > 0) {
+			if((this.aS != 0 && (this.aS < this.aC)) || (this.bS != 0 && (this.bS < this.bC))) {
 				return false;
 			}
-			if(this.parentState.sCount - this.sCount < this.parentState.cCount - this.cCount) {
+			
+			if(this.aS < 0 || this.aC < 0 || this.bS < 0 || this.bC < 0) {
+				return false;
+			}
+			
+			if(aS > totalS || bS > totalS || aC > totalC || bC > totalC) {
 				return false;
 			}
 			return true;
@@ -103,7 +114,9 @@ public class CrossingWithCannibals {
 				return true;
 			}
 			State state = (State) obj;
-			if(this.cCount == state.cCount && this.sCount == state.sCount && this.boatDirection == state.boatDirection) {
+			if(this.aS == state.aS && this.bS == state.bS &&
+					this.aC == state.aC && this.bC == state.bC &
+					this.boatDirection == state.boatDirection) {
 				return true;
 			}
 			return false;
@@ -115,9 +128,11 @@ public class CrossingWithCannibals {
 			list[insertIndex++] = state;
 			return;
 		}
-		if(state.isValid()) {
+		if(state.isValid() && !state.visited[Integer.parseInt("" + state.aS + state.aC)][Integer.parseInt("" + state.bS + state.bC)]) {
+			state.visited[Integer.parseInt("" + state.aS + state.aC)][Integer.parseInt("" + state.bS + state.bC)] = true;
 			list[insertIndex++] = state;
-			System.out.println(state.sCount + " " + state.cCount + " " + state.boatDirection + " " + (state.level));
+			System.out.println(state.aS + " " + state.aC + " " + " " + state.bS + " " + state.bC +
+					" " + state.boatDirection + " " + (state.level));
 		}
 	}
 
@@ -130,14 +145,24 @@ public class CrossingWithCannibals {
 				if(i + j > boatLimit) {
 					break;
 				}
-				State newState = new State(i, j, !state.boatDirection, state, state.level + 1);
+				State newState = null;
+				if(!state.boatDirection || state.parentState == null) {
+					newState = new State(state.aS - i, state.aC - j, state.bS + i, state.bC + j,
+							!state.boatDirection, state, state.level + 1);	 
+				} else {
+					newState = new State(state.aS + i, state.aC + j, state.bS - i, state.bC - j,
+							!state.boatDirection, state, state.level + 1);
+				}
+				//newState.visited = new 
+
 				addToList(newState);
 			}
 		}
 	}
-	
+
 	static void process(State start, State end) {
 		addToList(start);
+		start.visited[Integer.parseInt("" + start.aS + start.aC)][Integer.parseInt("" + start.bS + start.bC)] = true;
 		while(list[readIndex] != null) {
 			State state = list[readIndex++];
 			if(state.equals(end)) {
@@ -146,12 +171,15 @@ public class CrossingWithCannibals {
 			generateStates(state);
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		list = new State[1000];
 		boatLimit = 2;
-		totalC = 2;
-		totalS = 2;
-		process(new State(2, 2, false, null, 0), new State(2, 2, true, null, 0));
+		totalC = 3;
+		totalS = 3;
+		int r = totalC + 1;
+		State start = new State(3, 3, 0, 0, false, null, 0);
+		start.visited = new boolean[Integer.parseInt("" + r + r)][Integer.parseInt("" + r + r)];
+		process(start, new State(0, 0, 3, 3, true, null, 0));
 	}
 }
