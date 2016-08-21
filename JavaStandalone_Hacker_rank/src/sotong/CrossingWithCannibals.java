@@ -92,7 +92,6 @@ public class CrossingWithCannibals {
 			boatDirection = dir;
 			parentState = parent;
 			level = lev;
-			//visited = parent == null ? null : parent.visited;
 		}
 
 		public boolean isValid() {
@@ -135,8 +134,7 @@ public class CrossingWithCannibals {
 			list[insertIndex++] = state;
 			return;
 		}
-		if(state.isValid()/* && !state.visited[Integer.parseInt("" + state.aS + state.aC)][Integer.parseInt("" + state.bS + state.bC)]*/) {
-			//state.visited[Integer.parseInt("" + state.aS + state.aC)][Integer.parseInt("" + state.bS + state.bC)] = true;
+		if(state.isValid()) {
 			list[insertIndex++] = state;
 //			System.out.println(state.aS + " " + state.aC + " " + " " + state.bS + " " + state.bC +
 //					" " + state.boatDirection + " " + (state.level));
@@ -160,19 +158,6 @@ public class CrossingWithCannibals {
 					newState = new State(state.aS + i, state.aC + j, state.bS - i, state.bC - j,
 							!state.boatDirection, state, state.level + 1);
 				}
-				//newState.visited = new 
-
-//				if(newState.boatDirection) {
-//					if(visited[newState.level][Integer.parseInt("" + newState.bS + newState.bC)]) {
-//						continue;
-//					}
-//					visited[newState.level][Integer.parseInt("" + newState.bS + newState.bC)] = true;
-//				} else {
-//					if(visited[newState.level][Integer.parseInt("" + newState.aS + newState.aC)]) {
-//						continue;
-//					}
-//					visited[newState.level][Integer.parseInt("" + newState.aS + newState.aC)] = true;
-//				}
 				if(!newState.equals(newState.parentState) &&
 						!newState.equals(new State(totalS, totalC, 0, 0, false, null, 0))) {
 					addToList(newState);
@@ -184,7 +169,6 @@ public class CrossingWithCannibals {
 
 	static void process(State start, State end) {
 		addToList(start);
-		//start.visited[Integer.parseInt("" + start.aS + start.aC)][Integer.parseInt("" + start.bS + start.bC)] = true;
 		while(list[readIndex] != null) {
 			State state = list[readIndex++];
 			if(state.equals(end)) {
@@ -210,7 +194,7 @@ public class CrossingWithCannibals {
 
 			int r = totalC + 1;
 			State start = new State(totalS, totalC, 0, 0, false, null, 0);
-			visited = new State[10000][10000];
+			visited = new State[2000][2000];
 			process(start, new State(0, 0, totalS, totalC, true, null, 0));
 			System.out.println(minTrips == Integer.MAX_VALUE ? "impossible" : minTrips);
 			minTrips = Integer.MAX_VALUE;	
