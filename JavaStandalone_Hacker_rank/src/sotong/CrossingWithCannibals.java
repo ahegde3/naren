@@ -1,5 +1,7 @@
 package sotong;
 
+import java.util.Scanner;
+
 /**
  * 
 Our company is patron to some scholars who are researching the ecosystem of a jungle.
@@ -71,6 +73,7 @@ public class CrossingWithCannibals {
 	static int minTrips = Integer.MAX_VALUE;
 	static int totalS;
 	static int totalC;
+	static State[][] visited;
 
 	public static class State {
 		boolean boatDirection; // false -> towards des, true -> towards source
@@ -80,7 +83,6 @@ public class CrossingWithCannibals {
 		int bS;
 		int aC;
 		int bC;
-		boolean[][] visited;
 
 		public State(int aS, int aC, int bS, int bC, boolean dir, State parent, int lev) {
 			this.aS = aS;
@@ -97,14 +99,19 @@ public class CrossingWithCannibals {
 			if((this.aS != 0 && (this.aS < this.aC)) || (this.bS != 0 && (this.bS < this.bC))) {
 				return false;
 			}
-			
+
 			if(this.aS < 0 || this.aC < 0 || this.bS < 0 || this.bC < 0) {
 				return false;
 			}
-			
+
 			if(aS > totalS || bS > totalS || aC > totalC || bC > totalC) {
 				return false;
 			}
+			if((visited[Integer.parseInt("" + this.aS + this.aC)][Integer.parseInt("" + this.bS + this.bC)]) != null &&
+					(visited[Integer.parseInt("" + this.aS + this.aC)][Integer.parseInt("" + this.bS + this.bC)]).equals(this)) {
+				return false;
+			}
+			visited[Integer.parseInt("" + this.aS + this.aC)][Integer.parseInt("" + this.bS + this.bC)] = this;
 			return true;
 		}
 
@@ -128,11 +135,11 @@ public class CrossingWithCannibals {
 			list[insertIndex++] = state;
 			return;
 		}
-		if(state.isValid() && !state.visited[Integer.parseInt("" + state.aS + state.aC)][Integer.parseInt("" + state.bS + state.bC)]) {
-			state.visited[Integer.parseInt("" + state.aS + state.aC)][Integer.parseInt("" + state.bS + state.bC)] = true;
+		if(state.isValid()/* && !state.visited[Integer.parseInt("" + state.aS + state.aC)][Integer.parseInt("" + state.bS + state.bC)]*/) {
+			//state.visited[Integer.parseInt("" + state.aS + state.aC)][Integer.parseInt("" + state.bS + state.bC)] = true;
 			list[insertIndex++] = state;
-			System.out.println(state.aS + " " + state.aC + " " + " " + state.bS + " " + state.bC +
-					" " + state.boatDirection + " " + (state.level));
+//			System.out.println(state.aS + " " + state.aC + " " + " " + state.bS + " " + state.bC +
+//					" " + state.boatDirection + " " + (state.level));
 		}
 	}
 
@@ -155,31 +162,62 @@ public class CrossingWithCannibals {
 				}
 				//newState.visited = new 
 
-				addToList(newState);
+//				if(newState.boatDirection) {
+//					if(visited[newState.level][Integer.parseInt("" + newState.bS + newState.bC)]) {
+//						continue;
+//					}
+//					visited[newState.level][Integer.parseInt("" + newState.bS + newState.bC)] = true;
+//				} else {
+//					if(visited[newState.level][Integer.parseInt("" + newState.aS + newState.aC)]) {
+//						continue;
+//					}
+//					visited[newState.level][Integer.parseInt("" + newState.aS + newState.aC)] = true;
+//				}
+				if(!newState.equals(newState.parentState) &&
+						!newState.equals(new State(totalS, totalC, 0, 0, false, null, 0))) {
+					addToList(newState);
+				}
+
 			}
 		}
 	}
 
 	static void process(State start, State end) {
 		addToList(start);
-		start.visited[Integer.parseInt("" + start.aS + start.aC)][Integer.parseInt("" + start.bS + start.bC)] = true;
+		//start.visited[Integer.parseInt("" + start.aS + start.aC)][Integer.parseInt("" + start.bS + start.bC)] = true;
 		while(list[readIndex] != null) {
 			State state = list[readIndex++];
 			if(state.equals(end)) {
 				minTrips = Math.min(state.level, minTrips);
+				//System.out.println("************ FOUND ******************");
+				return;
 			}
 			generateStates(state);
 		}
 	}
 
 	public static void main(String[] args) {
-		list = new State[1000];
-		boatLimit = 2;
-		totalC = 3;
-		totalS = 3;
-		int r = totalC + 1;
-		State start = new State(3, 3, 0, 0, false, null, 0);
-		start.visited = new boolean[Integer.parseInt("" + r + r)][Integer.parseInt("" + r + r)];
-		process(start, new State(0, 0, 3, 3, true, null, 0));
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		while(T > 0) {
+			int N = sc.nextInt();
+			int M = sc.nextInt();
+			boatLimit = M;
+			totalC = N;
+			totalS = N;
+
+			list = new State[100000];
+
+			int r = totalC + 1;
+			State start = new State(totalS, totalC, 0, 0, false, null, 0);
+			visited = new State[10000][10000];
+			process(start, new State(0, 0, totalS, totalC, true, null, 0));
+			System.out.println(minTrips == Integer.MAX_VALUE ? "impossible" : minTrips);
+			minTrips = Integer.MAX_VALUE;	
+			readIndex = 0;
+			insertIndex = 0;
+			T--;
+		}
+
 	}
 }
