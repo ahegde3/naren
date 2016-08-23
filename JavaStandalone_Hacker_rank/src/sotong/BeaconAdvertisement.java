@@ -1,5 +1,7 @@
 package sotong;
 
+import java.util.Scanner;
+
 /**
  * 
  * Refer BeaconAdvertisement_X.jpg for problem description
@@ -94,4 +96,105 @@ Expected output
  */
 public class BeaconAdvertisement {
 
+	static int[][] cus;
+	static int[][] add = new int[4][3];
+	static int N;
+	static int maxWidth = 0;
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		while(T > 0) {
+			N = sc.nextInt();
+			int L1 = sc.nextInt();
+			int L2 = sc.nextInt();
+			int L3 = sc.nextInt();
+			int P1 = sc.nextInt();
+			int P2 = sc.nextInt();
+			int P3 = sc.nextInt();
+//			add[1][1] = L1;
+//			add[1][2] = P1;
+//			add[2][1] = L2;
+//			add[2][2] = P2;
+//			add[3][1] = L1;
+//			add[3][2] = P2;
+			if(P1 > P2) {
+				if(P1 > P3) {
+					add[3][1] = L1;
+					add[3][2] = P1;
+					if(P3 > P2) {
+						add[2][1] = L3;
+						add[2][2] = P3;
+						add[1][1] = L2;
+						add[1][2] = P2;
+					} else {
+						add[2][1] = L2;
+						add[2][2] = P2;
+						add[1][1] = L3;
+						add[1][2] = P3;
+					}
+				} else {
+					add[3][1] = L3;
+					add[3][2] = P3;
+					add[2][1] = L1;
+					add[2][2] = P1;
+					add[1][1] = L2;
+					add[1][2] = P2;
+				}
+			} else if(P2 > P1) {
+				if(P2 > P3) {
+					add[3][1] = L2;
+					add[3][2] = P2;
+					if(P3 > P1) {
+						add[2][1] = L3;
+						add[2][2] = P3;
+						add[1][1] = L1;
+						add[1][2] = P1;
+					} else {
+						add[2][1] = L1;
+						add[2][2] = P1;
+						add[1][1] = L3;
+						add[1][2] = P3;
+					}
+				} else {
+					add[3][1] = L3;
+					add[3][2] = P3;
+					add[2][1] = L2;
+					add[2][2] = P2;
+					add[1][1] = L1;
+					add[1][2] = P1;
+				}
+			}
+			cus = new int[3][N + 1];
+			for(int i = 1; i <= N; i++) {
+				for(int j = 1; j < 3; j++) {
+					cus[j][i] = sc.nextInt();
+					maxWidth = Math.max(maxWidth, cus[1][i] + cus[2][i]);
+				}
+			}
+			process();
+			T--;
+		}
+	}
+
+	static int process() {
+		int sum = 0;
+		int[][] resArr = new int[N  + 1][maxWidth + 1];
+		for(int i = 1; i <= maxWidth - add[1][1]; i++) {
+			for(int j = i + add[1][1]; j <= maxWidth - add[2][1]; j ++) {
+				for(int k = j + add[2][1]; k <= maxWidth - add[3][1]; k++) {
+					for(int l = 1; l <= N; l++) {
+						if(cus[1][l] >= k && cus[1][l] + cus[2][l] <= k + add[3][1]) {
+							sum += add[3][2];
+						} else if(cus[1][l] >= j && cus[1][l] + cus[2][l] <= j + add[2][1]) {
+							sum += add[2][2];
+						} else if(cus[1][l] >= i && cus[1][l] + cus[2][l] <= i + add[1][1]) {
+							sum += add[1][2];
+						}
+					}
+				}
+			}
+		}
+		return sum;
+	}
 }
