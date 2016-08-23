@@ -179,22 +179,25 @@ public class BeaconAdvertisement {
 
 	static int process() {
 		int sum = 0;
+		int maxSum = 0;
 		int[][] resArr = new int[N  + 1][maxWidth + 1];
 		for(int i = 1; i <= maxWidth - add[1][1]; i++) {
 			for(int j = i + add[1][1]; j <= maxWidth - add[2][1]; j ++) {
 				for(int k = j + add[2][1]; k <= maxWidth - add[3][1]; k++) {
 					for(int l = 1; l <= N; l++) {
-						if(cus[1][l] >= k && cus[1][l] + cus[2][l] <= k + add[3][1]) {
+						if(cus[1][l] <= k && cus[1][l] + cus[2][l] >= k + add[3][1]) {
 							sum += add[3][2];
-						} else if(cus[1][l] >= j && cus[1][l] + cus[2][l] <= j + add[2][1]) {
+						} else if(cus[1][l] <= j && cus[1][l] + cus[2][l] >= j + add[2][1]) {
 							sum += add[2][2];
-						} else if(cus[1][l] >= i && cus[1][l] + cus[2][l] <= i + add[1][1]) {
+						} else if(cus[1][l] <= i && cus[1][l] + cus[2][l] >= i + add[1][1]) {
 							sum += add[1][2];
 						}
 					}
+					maxSum = Math.max(maxSum, sum);
+					sum = 0;
 				}
 			}
 		}
-		return sum;
+		return maxSum;
 	}
 }
