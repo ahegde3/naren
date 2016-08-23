@@ -112,12 +112,6 @@ public class BeaconAdvertisement {
 			int P1 = sc.nextInt();
 			int P2 = sc.nextInt();
 			int P3 = sc.nextInt();
-//			add[1][1] = L1;
-//			add[1][2] = P1;
-//			add[2][1] = L2;
-//			add[2][2] = P2;
-//			add[3][1] = L1;
-//			add[3][2] = P2;
 			if(P1 > P2) {
 				if(P1 > P3) {
 					add[3][1] = L1;
@@ -172,7 +166,7 @@ public class BeaconAdvertisement {
 					maxWidth = Math.max(maxWidth, cus[1][i] + cus[2][i]);
 				}
 			}
-			process();
+			System.out.println(process());
 			T--;
 		}
 	}
@@ -180,7 +174,8 @@ public class BeaconAdvertisement {
 	static int process() {
 		int sum = 0;
 		int maxSum = 0;
-		int[][] resArr = new int[N  + 1][maxWidth + 1];
+		
+		// 1,2,3
 		for(int i = 1; i <= maxWidth - add[1][1]; i++) {
 			for(int j = i + add[1][1]; j <= maxWidth - add[2][1]; j ++) {
 				for(int k = j + add[2][1]; k <= maxWidth - add[3][1]; k++) {
@@ -198,6 +193,102 @@ public class BeaconAdvertisement {
 				}
 			}
 		}
+
+		// 2,1,3
+		for(int i = 1; i <= maxWidth - add[2][1]; i++) {
+			for(int j = i + add[2][1]; j <= maxWidth - add[1][1]; j ++) {
+				for(int k = j + add[1][1]; k <= maxWidth - add[3][1]; k++) {
+					for(int l = 1; l <= N; l++) {
+						if(cus[1][l] <= k && cus[1][l] + cus[2][l] >= k + add[3][1]) {
+							sum += add[3][2];
+						} else if(cus[1][l] <= i && cus[1][l] + cus[2][l] >= i + add[2][1]) {
+							sum += add[2][2];
+						} else if(cus[1][l] <= j && cus[1][l] + cus[2][l] >= j + add[1][1]) {
+							sum += add[1][2];
+						}
+					}
+					maxSum = Math.max(maxSum, sum);
+					sum = 0;
+				}
+			}
+		}
+
+		// 1,3,2
+		for(int i = 1; i <= maxWidth - add[1][1]; i++) {
+			for(int j = i + add[1][1]; j <= maxWidth - add[3][1]; j ++) {
+				for(int k = j + add[3][1]; k <= maxWidth - add[2][1]; k++) {
+					for(int l = 1; l <= N; l++) {
+						if(cus[1][l] <= j && cus[1][l] + cus[2][l] >= j + add[3][1]) {
+							sum += add[3][2];
+						} else if(cus[1][l] <= k && cus[1][l] + cus[2][l] >= k + add[2][1]) {
+							sum += add[2][2];
+						} else if(cus[1][l] <= i && cus[1][l] + cus[2][l] >= i + add[1][1]) {
+							sum += add[1][2];
+						}
+					}
+					maxSum = Math.max(maxSum, sum);
+					sum = 0;
+				}
+			}
+		}
+
+		// 3,2,1
+		for(int i = 1; i <= maxWidth - add[3][1]; i++) {
+			for(int j = i + add[3][1]; j <= maxWidth - add[2][1]; j ++) {
+				for(int k = j + add[2][1]; k <= maxWidth - add[1][1]; k++) {
+					for(int l = 1; l <= N; l++) {
+						if(cus[1][l] <= i && cus[1][l] + cus[2][l] >= i + add[3][1]) {
+							sum += add[3][2];
+						} else if(cus[1][l] <= j && cus[1][l] + cus[2][l] >= j + add[2][1]) {
+							sum += add[2][2];
+						} else if(cus[1][l] <= k && cus[1][l] + cus[2][l] >= k + add[1][1]) {
+							sum += add[1][2];
+						}
+					}
+					maxSum = Math.max(maxSum, sum);
+					sum = 0;
+				}
+			}
+		}
+
+		// 2,3,1
+		for(int i = 1; i <= maxWidth - add[2][1]; i++) {
+			for(int j = i + add[2][1]; j <= maxWidth - add[3][1]; j ++) {
+				for(int k = j + add[3][1]; k <= maxWidth - add[1][1]; k++) {
+					for(int l = 1; l <= N; l++) {
+						if(cus[1][l] <= j && cus[1][l] + cus[2][l] >= j + add[3][1]) {
+							sum += add[3][2];
+						} else if(cus[1][l] <= i && cus[1][l] + cus[2][l] >= i + add[2][1]) {
+							sum += add[2][2];
+						} else if(cus[1][l] <= k && cus[1][l] + cus[2][l] >= k + add[1][1]) {
+							sum += add[1][2];
+						}
+					}
+					maxSum = Math.max(maxSum, sum);
+					sum = 0;
+				}
+			}
+		}
+
+		// 3,1,2
+		for(int i = 1; i <= maxWidth - add[3][1]; i++) {
+			for(int j = i + add[3][1]; j <= maxWidth - add[1][1]; j ++) {
+				for(int k = j + add[1][1]; k <= maxWidth - add[2][1]; k++) {
+					for(int l = 1; l <= N; l++) {
+						if(cus[1][l] <= i && cus[1][l] + cus[2][l] >= i + add[3][1]) {
+							sum += add[3][2];
+						} else if(cus[1][l] <= k && cus[1][l] + cus[2][l] >= k + add[2][1]) {
+							sum += add[2][2];
+						} else if(cus[1][l] <= j && cus[1][l] + cus[2][l] >= j + add[1][1]) {
+							sum += add[1][2];
+						}
+					}
+					maxSum = Math.max(maxSum, sum);
+					sum = 0;
+				}
+			}
+		}
+
 		return maxSum;
 	}
 }
