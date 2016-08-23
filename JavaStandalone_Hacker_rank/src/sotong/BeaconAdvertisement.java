@@ -104,6 +104,7 @@ public class BeaconAdvertisement {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int T = sc.nextInt();
+		long s = System.currentTimeMillis();
 		while(T > 0) {
 			N = sc.nextInt();
 			int L1 = sc.nextInt();
@@ -169,6 +170,7 @@ public class BeaconAdvertisement {
 			System.out.println(process());
 			T--;
 		}
+		//System.out.println(System.currentTimeMillis() - s);
 	}
 
 	static int process() {
