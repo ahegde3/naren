@@ -1,5 +1,7 @@
 package sotong;
 
+import java.util.Scanner;
+
 /**
  * 
 As in , there is a 4×4 sized table. In a grid of the table, there are white or black stones. When you choose a position of stone randomly, four stones adjacent to the up, down, left and right sides of the stone will turn to the opposite color like turning a white stone to a black & a black stone to a white. Let’s suppose this process as a calculation.﻿﻿
@@ -77,4 +79,30 @@ bwww   wwww   wwww   wwww   wwww
  */
 public class TurnOverGame {
 
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		sc.nextLine();
+		while(T > 0) {
+			String input = "";
+			for(int i = 1; i < 5; i++) {
+				String readInput = sc.nextLine();
+				for(int j = 0; j < 4; j++) {
+					input += readInput.charAt(j) == 'b' ? 1 : 0;
+				}
+			}
+			int inputNumber = Integer.parseInt(input, 2);
+			T--;
+		}
+	}
+	
+	static void process(int input) {
+		int[] combination = new int[100000];
+		boolean[] visited = new boolean[100000];
+		while(true) {
+			for(int i = 0, j = 1; i < 16; i++, j++) {
+				
+			}
+		}
+	}
 }
