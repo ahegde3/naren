@@ -97,12 +97,38 @@ public class TurnOverGame {
 	}
 	
 	static void process(int input) {
+		int curIndex = 0;
 		int[] combination = new int[100000];
 		boolean[] visited = new boolean[100000];
 		while(true) {
 			for(int i = 0, j = 1; i < 16; i++, j++) {
-				
+				visited[input] = true;
+				int temp = getFlippedNumber(input, j);
 			}
 		}
+	}
+	
+	static int getFlippedNumber(int input, int flipBit) {
+		int xorNumber = 0;
+		if(flipBit == 1 || flipBit == 5 || flipBit == 9 || flipBit == 13) {
+			xorNumber |= 1 << (flipBit - 1);
+		} else if (flipBit == 4 || flipBit == 8 || flipBit == 12 || flipBit == 16) {
+			xorNumber |= 1 << (flipBit + 1);
+		} else {
+			if(flipBit + 1 < 17) {
+				xorNumber |= 1 << (flipBit + 1);
+			}
+			if(flipBit - 1 > 0) {
+				xorNumber |= 1 << (flipBit - 1);
+			}	
+		}
+	
+		if(flipBit + 4 < 17) {
+			xorNumber |= 1 << (flipBit + 4);
+		}
+		if(flipBit - 4 > 0) {
+			xorNumber |= 1 << (flipBit - 4);
+		}
+		return xorNumber;
 	}
 }
