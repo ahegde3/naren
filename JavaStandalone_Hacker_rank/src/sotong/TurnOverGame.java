@@ -117,14 +117,13 @@ public class TurnOverGame {
 			input = com.number;
 			int level = com.level;
 			visited[input] = true;
-			if((input & 65535) == 1 || input == 0) {
+			if((input & 65535) == 65535 || input == 0) {
 				return level;
 			}
 			for(int i = 0, j = 1; i < 16; i++, j++) {
-				//System.out.println(" j=" + j);
 				int temp = input ^ getFlippedNumber(input, j);
 				if(!visited[temp]) {
-					if((temp & 65535) == 1 || temp == 0) {
+					if((temp & 65535) == 65535 || temp == 0) {
 						return level + 1;
 					}
 					combination[writeIndex++] = new Combination(temp, level + 1);
@@ -159,7 +158,6 @@ public class TurnOverGame {
 		if(flipBit - 5 >= 0) {
 			xorNumber |= 1 << (flipBit - 5);
 		}
-		//System.out.println("XorNumber=" + xorNumber);
 		return xorNumber;
 	}
 }
