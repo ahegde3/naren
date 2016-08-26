@@ -64,7 +64,7 @@ Moves (row, column) indexed from 0, on ascii image moves are bold:
 
 (0,2), (0,0), (3,1),  (1,1) 
 
- 
+
 
 bwwb   bwwb   wbwb   wbww   wwww 
 
@@ -92,22 +92,33 @@ public class TurnOverGame {
 				}
 			}
 			int inputNumber = Integer.parseInt(input, 2);
+			process(inputNumber);
 			T--;
 		}
 	}
-	
+
 	static void process(int input) {
-		int curIndex = 0;
+		int writeIndex = 0;
+		int readIndex = 0;
 		int[] combination = new int[100000];
 		boolean[] visited = new boolean[100000];
-		while(true) {
-			for(int i = 0, j = 1; i < 16; i++, j++) {
+		combination[writeIndex++] = input;
+		while(combination[readIndex] != 0) {
+			input = combination[readIndex++];
+			if(!visited[input]) {
 				visited[input] = true;
-				int temp = getFlippedNumber(input, j);
-			}
+				for(int i = 0, j = 1; i < 16; i++, j++) {
+					int temp = input ^ getFlippedNumber(input, j);
+					if((temp & 65535) == 1 || temp == 0) {
+						return;
+					}
+					combination[writeIndex++] = temp;
+					visited[temp] = true;
+				}	
+			}			
 		}
 	}
-	
+
 	static int getFlippedNumber(int input, int flipBit) {
 		int xorNumber = 0;
 		if(flipBit == 1 || flipBit == 5 || flipBit == 9 || flipBit == 13) {
@@ -122,7 +133,7 @@ public class TurnOverGame {
 				xorNumber |= 1 << (flipBit - 1);
 			}	
 		}
-	
+
 		if(flipBit + 4 < 17) {
 			xorNumber |= 1 << (flipBit + 4);
 		}
