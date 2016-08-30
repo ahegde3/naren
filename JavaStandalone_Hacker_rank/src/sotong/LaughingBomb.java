@@ -1,5 +1,7 @@
 package sotong;
 
+import java.util.Scanner;
+
 /**
  * 
 You are busy to promote a newly released film in a movie theater. The title is Biochemical Laughing Bomb which is about terror.
@@ -273,4 +275,83 @@ o/p for sample input  is:
  */
 public class LaughingBomb {
 
+	static class Cell {
+		int level = -1;
+		int x;
+		int y;
+
+		public Cell(int l, int r, int c) {
+			level = l;
+			x = r;
+			y = c;
+		}
+	}
+
+	static Cell[] arr;
+	static int[][] cityArr;
+	static int N;
+	static int M;
+	static int[] xMoves = new int[]{0, 0, -1, 1};
+	static int[] yMoves = new int[]{-1, 1, 0, 0};
+	static int readIndex = 0;
+	static int insertIndex = 0;
+	static boolean[][] visited;
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		while(T > 0) {
+			N = sc.nextInt();
+			M = sc.nextInt();
+			cityArr = new int[M + 1][N + 1];
+			arr = new Cell[(M + 1) * (N + 1)];
+			visited = new boolean[M + 1][N + 1];
+			for(int i = 1; i <= M; i++) {
+				for(int j = 1; j <= N; j++) {
+					cityArr[i][j] = sc.nextInt();
+				}
+			}
+			int bombY = sc.nextInt();
+			int bombX = sc.nextInt();
+			System.out.println(process(bombX, bombY));
+			readIndex = 0;
+			insertIndex = 0;
+			T--;
+		}
+	}
+
+	static int process(int startX, int startY) {
+		int level = 1;
+		arr[insertIndex++] = new Cell(1, startX, startY);
+		visited[startX][startY] = true;
+		while(arr[readIndex] != null) {
+			Cell cell = arr[readIndex++];
+			Cell[] neighbors = findNeighbors(cell);
+			for(int i = 0; i < 4; i++) {
+				if(neighbors[i] == null) {
+					break;
+				}
+				arr[insertIndex++] = neighbors[i];
+				level = Math.max(level, neighbors[i].level);
+			}
+		}
+		return level;
+	}
+
+	static Cell[] findNeighbors(Cell cell) {
+		Cell[] neighbors = new Cell[4];
+		int index = 0;
+		for(int i = 0; i < 4; i++) {
+			int x = cell.x + xMoves[i];
+			int y = cell.y + yMoves[i];
+			if(x > 0 && y > 0 && x <= M && y <= N
+					&& cityArr[x][y] != 0) {
+				if(!visited[x][y]) {
+					neighbors[index++] = new Cell(cell.level + 1, x, y);
+					visited[x][y] = true;
+				}
+			}
+		}
+		return neighbors;
+	}
 }
