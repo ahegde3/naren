@@ -2,7 +2,9 @@ package sotong;
 
 /**
  * 
-In our company, there is a popular meeting room. Many meetings are reserved to use this room with starting time and finishing time, and the place cant hold two meetings at the same time if the time is overlapped. Thus only one of the same time-framed meetings can be held in here and the others should give up. However, it is not overlapped for the same starting time of a meeting and the finishing time of another meeting.
+In our company, there is a popular meeting room. Many meetings are reserved to use this room with starting time and finishing time,
+and the place cant hold two meetings at the same time if the time is overlapped. Thus only one of the same time-framed meetings can be held
+in here and the others should give up. However, it is not overlapped for the same starting time of a meeting and the finishing time of another meeting.
 When the number of meetings, starting time and finishing time of each meetings are given, you want to hold as many meetings as possible.
 In a given number of meetings and each given starting/finishing time, you want to hold as many meetings as possible. Create a program that can assign meetings to the meeting room as many as it can.
 
