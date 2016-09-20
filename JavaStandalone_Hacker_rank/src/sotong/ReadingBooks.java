@@ -53,4 +53,28 @@ find the count of the shortest  sequence which contains all occured numbers.
  */
 public class ReadingBooks {
 
+	static void process(int[] input) {
+		boolean[] visited = new boolean[1000001];
+		int uniqueNumber = 0;
+		for(int i : input) {
+			if(!visited[i]) {
+				visited[i] = true;
+				uniqueNumber++;
+			}
+		}
+		
+		for(int i = 0; i >= uniqueNumber; i++ ) {
+			for(;;) {
+				
+			}
+		}
+	}
+	
+	static void populateVisited(int[] input, boolean[] visited) {
+		for(int i : input) {
+			if(!visited[i]) {
+				visited[i] = true;
+			}
+		}
+	}
 }
