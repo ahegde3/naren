@@ -63,11 +63,15 @@ public class ReadingBooks {
 			}
 		}
 		
-		for(int i = 0; i >= uniqueNumber; i++ ) {
-			for(;;) {
+		for(int i = 0; (input.length - i) >= uniqueNumber; i++ ) {
+			for(int j = i; j < input.length; j++) {
 				
 			}
 		}
+	}
+	
+	static void isDone(boolean[] visited) {
+		
 	}
 	
 	static void populateVisited(int[] input, boolean[] visited) {
