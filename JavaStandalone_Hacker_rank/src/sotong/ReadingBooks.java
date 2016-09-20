@@ -1,5 +1,7 @@
 package sotong;
 
+import java.util.Scanner;
+
 /**
  * 
 Jessica is a girl who is loved by many boys. Jessica has an exam in a few days but hasn’t started exam study yet. To pass the exam, she has to read and memorize a very thick book. Just like many others, the author of the book had repeated the same contents through many pages of the book. Jessica, realizing such a fact, wants to read each content more than once but to read the minimal pages of the book. 
@@ -53,7 +55,23 @@ find the count of the shortest  sequence which contains all occured numbers.
  */
 public class ReadingBooks {
 
-	static void process(int[] input) {
+	public static void main(String[] args) {
+//		int[] input = new int[]{1,4,2,1,1};
+//		System.out.println(process(input));
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		while(T > 0) {
+			int N = sc.nextInt();
+			int[] input = new int[N];
+			for(int i = 0; i < N; i++) {
+				input[i] = sc.nextInt();
+			}
+			System.out.println(process(input));
+			T--;
+		}
+	}
+	static int process(int[] input) {
+		int minSeq = Integer.MAX_VALUE;
 		boolean[] visited = new boolean[1000001];
 		int uniqueNumber = 0;
 		for(int i : input) {
@@ -64,14 +82,31 @@ public class ReadingBooks {
 		}
 		
 		for(int i = 0; (input.length - i) >= uniqueNumber; i++ ) {
+			int tempCount = 0;
+			boolean allMeet = false;
 			for(int j = i; j < input.length; j++) {
-				
+				visited[input[j]] = false;
+				tempCount++;
+				if(isDone(visited, input)) {
+					allMeet = true;
+					break;
+				}
 			}
+			if(allMeet) {
+				minSeq = Math.min(minSeq, tempCount);	
+			}
+			populateVisited(input, visited);
 		}
+		return minSeq;
 	}
 	
-	static void isDone(boolean[] visited) {
-		
+	static boolean isDone(boolean[] visited, int[] input) {
+		for(int i : input) {
+			if(visited[i]) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	static void populateVisited(int[] input, boolean[] visited) {
