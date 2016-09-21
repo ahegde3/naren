@@ -84,10 +84,14 @@ public class ReadingBooks {
 		for(int i = 0; (input.length - i) >= uniqueNumber; i++ ) {
 			int tempCount = 0;
 			boolean allMeet = false;
+			int allTouched = 0;
 			for(int j = i; j < input.length; j++) {
+				if(visited[input[j]]) {
+					allTouched++;
+				}
 				visited[input[j]] = false;
 				tempCount++;
-				if(isDone(visited, input)) {
+				if(allTouched == uniqueNumber/*isDone(visited, input)*/) {
 					allMeet = true;
 					break;
 				}
