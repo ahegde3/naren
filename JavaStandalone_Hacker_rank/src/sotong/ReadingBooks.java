@@ -47,6 +47,13 @@ Sample I/O
 30
 1 27 5 16 25 1 23 15 13 10 22 7 6 13 13 6 1 19 26 6 21 10 29 4 1 11 7 1 19 19
 
+expected output
+2
+3
+9
+8
+25
+
 Summary:
 find the count of the shortest  sequence which contains all occured numbers.
  * 
