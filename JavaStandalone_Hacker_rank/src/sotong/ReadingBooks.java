@@ -99,18 +99,19 @@ public class ReadingBooks {
 				}
 			}
 			if(allMeet) {
-				minSeq = Math.min(minSeq, tempCount);	
+				minSeq = Math.min(minSeq, tempCount);
+				populateVisited(input, visited);
+			} else {
+				break;
 			}
-			populateVisited(input, visited);
+			
 		}
 		return minSeq;
 	}
 	
 	static void populateVisited(int[] input, boolean[] visited) {
 		for(int i : input) {
-			if(!visited[i]) {
-				visited[i] = true;
-			}
+			visited[i] = true;
 		}
 	}
 }
