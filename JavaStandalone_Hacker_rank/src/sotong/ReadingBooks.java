@@ -63,16 +63,18 @@ public class ReadingBooks {
 		while(T > 0) {
 			int N = sc.nextInt();
 			int[] input = new int[N];
+			int maxNumber = 0;
 			for(int i = 0; i < N; i++) {
 				input[i] = sc.nextInt();
+				maxNumber = Math.max(maxNumber, input[i]);
 			}
-			System.out.println(process(input));
+			System.out.println(process(input, maxNumber));
 			T--;
 		}
 	}
-	static int process(int[] input) {
+	static int process(int[] input, int max) {
 		int minSeq = Integer.MAX_VALUE;
-		boolean[] visited = new boolean[1000001];
+		boolean[] visited = new boolean[max + 1];
 		int uniqueNumber = 0;
 		for(int i : input) {
 			if(!visited[i]) {
@@ -91,7 +93,7 @@ public class ReadingBooks {
 				}
 				visited[input[j]] = false;
 				tempCount++;
-				if(allTouched == uniqueNumber/*isDone(visited, input)*/) {
+				if(allTouched == uniqueNumber) {
 					allMeet = true;
 					break;
 				}
@@ -102,15 +104,6 @@ public class ReadingBooks {
 			populateVisited(input, visited);
 		}
 		return minSeq;
-	}
-	
-	static boolean isDone(boolean[] visited, int[] input) {
-		for(int i : input) {
-			if(visited[i]) {
-				return false;
-			}
-		}
-		return true;
 	}
 	
 	static void populateVisited(int[] input, boolean[] visited) {
