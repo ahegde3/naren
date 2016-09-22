@@ -104,7 +104,7 @@ public class AutomaticFuelingRobot {
 	}
 	
 	static int process(int[] input, int dStat, int g, int d) {
-		int minSteps = 0;
+		int minSteps = Integer.MAX_VALUE;
 		State initial = new State(0, 1, 0, null, g, d, new Fuel(1, 2), input);
 		states[writeIndex++] = initial;
 		while(states[readIndex] != null) {
@@ -155,7 +155,7 @@ public class AutomaticFuelingRobot {
 							s.dLeft--;
 						}
 						if(s.gLeft == 0 && s.dLeft == 0) {
-							return s.steps;
+							minSteps = Math.min(minSteps, s.steps);
 						}
 						if(s.gLeft >=0 && s.dLeft >=0) {
 							State[] neighbor = getNextState(s, input, dStat);
