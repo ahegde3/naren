@@ -109,7 +109,6 @@ public class AutomaticFuelingRobot {
 		states[writeIndex++] = initial;
 		while(states[readIndex] != null) {
 			State s = states[readIndex++];
-			System.out.println("curIn=" + s.curIndx + " type=" + s.type + " gLeft=" + s.gLeft + " dLeft="  + s.dLeft +" steps=" + s.steps + " filled=" + s.cars[s.curIndx]);
 			if(s.gLeft == 0 && s.dLeft == 0) {
 				minSteps = Math.min(minSteps, s.steps - 1);
 			}
@@ -124,7 +123,6 @@ public class AutomaticFuelingRobot {
 								(st.dLeft == 0 && st.curIndx == dStat)) {
 							continue;
 						}
-						System.out.println("" + visitedIndex);
 						states[writeIndex++] = st;
 					}
 				}
@@ -139,14 +137,12 @@ public class AutomaticFuelingRobot {
 									(st.dLeft == 0 && st.curIndx == dStat)) {
 								continue;
 							}
-							System.out.println("" + visitedIndex);
 							states[writeIndex++] = st;
 						}
 					}
 					
 					//With Consuming
 					if(s.cars[s.curIndx] != 0) {
-						System.out.println("Consuming!!");
 						s.fuel.capa--;
 						s.cars[s.curIndx] = 0;
 						if(s.type == 1) {
@@ -166,7 +162,6 @@ public class AutomaticFuelingRobot {
 											(st.dLeft == 0 && st.curIndx == dStat)) {
 										continue;
 									}
-									System.out.println("" + visitedIndex);
 									states[writeIndex++] = st;
 								}
 							}
@@ -183,7 +178,6 @@ public class AutomaticFuelingRobot {
 									(st.dLeft == 0 && st.curIndx == dStat)) {
 								continue;
 							}
-							System.out.println("" + visitedIndex);
 							states[writeIndex++] = st;
 						}
 					}
@@ -196,7 +190,8 @@ public class AutomaticFuelingRobot {
 	static int[] getCarsList(int[] in) {
 		int[] cars = new int[in.length];
 		for(int i = 0; i < in.length; i++) {
-			cars[i] = in[i];
+			int val = in[i];
+			cars[i] = val;
 		}
 		return cars;
 	}
@@ -214,9 +209,10 @@ public class AutomaticFuelingRobot {
 			}
 		} else {
 			neighbors = new State[2];
-			int[]cars = getCarsList(state.cars);
-			neighbors[0] = new State(state.curIndx - 1, input[state.curIndx - 1], state.steps + 1, state, state.gLeft, state.dLeft, new Fuel(state.fuel.type, state.fuel.capa), cars);
-			neighbors[1] = new State(state.curIndx + 1, input[state.curIndx + 1], state.steps + 1, state, state.gLeft, state.dLeft, new Fuel(state.fuel.type, state.fuel.capa), cars);
+			int[]cars1 = getCarsList(state.cars);
+			int[]cars2 = getCarsList(state.cars);
+			neighbors[0] = new State(state.curIndx - 1, input[state.curIndx - 1], state.steps + 1, state, state.gLeft, state.dLeft, new Fuel(state.fuel.type, state.fuel.capa), cars1);
+			neighbors[1] = new State(state.curIndx + 1, input[state.curIndx + 1], state.steps + 1, state, state.gLeft, state.dLeft, new Fuel(state.fuel.type, state.fuel.capa), cars2);
 		}
 		return neighbors;
 	}
