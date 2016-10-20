@@ -1,5 +1,7 @@
 package sotong;
 
+import java.util.Scanner;
+
 /**
  * 
  * Refer to the screen shots with the same name
@@ -34,25 +36,59 @@ Expected output
  */
 public class SamsungTire {
 
+	static int K;
+	static int N;
+	static int[] inflate;
+	static int[] deflate;
+	static int res = Integer.MAX_VALUE;
+	
 	public static void main(String[] args) {
-		int[] num = new int[]{1,2,3,4};
-		getPermutation(new int[]{1,1,1,1}, new int[4], 0, num);
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		while(T > 0) {
+			N = sc.nextInt();
+			K = sc.nextInt();
+			inflate = new int[N];
+			deflate = new int[N];
+			int[] num = new int[N];
+			int[] result = new int[N];
+			int[] count = new int[N];
+			res = Integer.MAX_VALUE;
+			for(int i = 0; i < N; i++) {
+				inflate[i] = sc.nextInt();
+				num[i] = i;
+				count[i] = 1;
+			}
+			for(int i = 0; i < N; i++) {
+				deflate[i] = sc.nextInt();
+			}
+			getPermutation(count, result, 0, num);
+			System.out.println(res == Integer.MAX_VALUE ? "-1" : res);
+			T--;
+		}
 	}
 	
-	static class TestCase {
-		int inf;
-		int def;
-	}
-	static void getPermutation(int[] count, int[] result, int level, int[] num) {
+	static int[] getPermutation(int[] count, int[] result, int level, int[] num) {
 		for(int i = 0; i < count.length; i++) {
 			if(count[i] > 0) {
 				result[level] = num[i];
-				getPermutation(getNewArray(count, i), result, level + 1, num);
+				int[] resultArr = getPermutation(getNewArray(count, i), result, level + 1, num);
+				if(resultArr == null) {
+					return null;
+				}
 			}
 		}
-		for(int i = 0; i < count.length; i++)
-			System.out.print(result[i]);
-		System.out.println();
+		boolean needPermutation = true;
+		for(int j = 0; j < result.length; j++) {
+			if(count[j] > 0) {
+				needPermutation = false;
+				break;
+			}
+		}
+		if(needPermutation) {
+			res = Math.min(process(result), res);
+		}
+		return result;
 	}
 	
 	static int[] getNewArray(int[] in, int j) {
@@ -64,5 +100,27 @@ public class SamsungTire {
 				newArr[i] = in[i];
 		}
 		return newArr;
+	}
+	
+	static int process(int[] res) {
+		for(int i = 0; i <= K; i++) {
+			int initP = i;
+			boolean completed = true;
+			for(int j = 0 ; j < res.length; j++) {
+				int infV = inflate[res[j]];
+				int defV = deflate[res[j]];
+				int afterInf = infV + initP;
+				int afterDef = afterInf - defV;
+				if(afterDef < 0 || afterInf > K) {
+					completed = false;
+					break;
+				}
+				initP = afterDef;
+			}
+			if(completed) {
+				return i;
+			}
+		}
+		return Integer.MAX_VALUE;
 	}
 }
