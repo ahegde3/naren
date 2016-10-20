@@ -34,4 +34,30 @@ Expected output
  */
 public class SamsungTire {
 
+	public static void main(String[] args) {
+		int[] num = new int[]{1,2,3,4};
+		getPermutation(new int[]{1,1,1,1}, new int[4], 0, num);
+	}
+	static void getPermutation(int[] count, int[] result, int level, int[] num) {
+		for(int i = 0; i < count.length; i++) {
+			if(count[i] > 0) {
+				result[level] = num[i];
+				getPermutation(getNewArray(count, i), result, level + 1, num);
+			}
+		}
+		for(int i = 0; i < count.length; i++)
+			System.out.print(result[i]);
+		System.out.println();
+	}
+	
+	static int[] getNewArray(int[] in, int j) {
+		int[] newArr = new int[in.length];
+		for(int i = 0; i < in.length; i++) {
+			if(i == j) {
+				newArr[i] = in[i] - 1;
+			} else
+				newArr[i] = in[i];
+		}
+		return newArr;
+	}
 }
