@@ -38,6 +38,11 @@ public class SamsungTire {
 		int[] num = new int[]{1,2,3,4};
 		getPermutation(new int[]{1,1,1,1}, new int[4], 0, num);
 	}
+	
+	static class TestCase {
+		int inf;
+		int def;
+	}
 	static void getPermutation(int[] count, int[] result, int level, int[] num) {
 		for(int i = 0; i < count.length; i++) {
 			if(count[i] > 0) {
