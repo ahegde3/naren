@@ -1263,7 +1263,6 @@ public class MineDevelopment {
 		for (int i = 0; i <= b; i++) {
 			kn[v][i] = kn[p[v]][i];
 		}
-
 		for (int i = 0; i < adj[v].arr.length; i++) {
 			dfs(adj[v].arr[i]);
 		}
