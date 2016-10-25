@@ -1,5 +1,7 @@
 package sotong;
 
+import java.util.Scanner;
+
 /**
  * 
  * 
@@ -1246,4 +1248,42 @@ Case #2
  */
 public class MineDevelopment {
 
+	static int[][] kn = new int[1100][11000];
+	static int[] weight = new int[1100];
+	static int[] value = new int[1100];
+	static int n, b;
+	static int[] p = new int[1100];
+	static Array[] adj = new Array[1100];
+	
+	static class Array {
+		int[] arr;
+	}
+
+	static void dfs(int v) {
+		for (int i = 0; i <= b; i++) {
+			kn[v][i] = kn[p[v]][i];
+		}
+
+		for (int i = 0; i < adj[v].arr.length; i++) {
+			dfs(adj[v].arr[i]);
+		}
+
+		for (int i = 0; i+weight[v] <= b; i++) {
+			if (kn[v][i] != -1) {
+				kn[p[v]][i + weight[v]] = Math.max(kn[p[v]][i], kn[v][i] + value[v]);
+			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		while(T > 0) {
+			n = sc.nextInt();
+			b = sc.nextInt();
+			kn[0][0] = 0;
+			dfs(0);
+			T--;
+		}
+	}
 }
