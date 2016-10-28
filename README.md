@@ -1,3 +1,1 @@
-naren
-=====
-Repositiory to various problem solved
+Repositiory to various coding problems solved
