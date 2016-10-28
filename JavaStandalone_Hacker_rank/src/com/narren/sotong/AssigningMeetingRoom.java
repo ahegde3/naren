@@ -1,4 +1,4 @@
-package sotong;
+package com.narren.sotong;
 
 /**
  * 

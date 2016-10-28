@@ -1,4 +1,4 @@
-package sotong;
+package com.narren.sotong;
 
 import java.util.Scanner;
 
@@ -8,7 +8,7 @@ public class BusFare {
 	 *
 In a city, a bus stops every kilometer. Also the bus fare is different from 1km to 10km,
 so you can use each section well to decrease the total fare to get to the destination. 
-For example, let’s suppose a bus fare list as below:
+For example, letï¿½s suppose a bus fare list as below:
 
 12 21 31 40 49 58 69 79 90 101
 

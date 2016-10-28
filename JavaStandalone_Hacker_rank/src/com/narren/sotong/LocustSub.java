@@ -1,4 +1,4 @@
-package sotong;
+package com.narren.sotong;
 
 import java.util.ArrayList;
 import java.util.List;
