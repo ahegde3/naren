@@ -1,4 +1,4 @@
-package com.narren.gayle;
+package com.narren.coding.practice;
 
 
 public class ListOfDepth {

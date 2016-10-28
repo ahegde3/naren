@@ -1,4 +1,4 @@
-package com.narren.coding.interview;
+package com.narren.coding.practice;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package com.narren.coding.interview;
+package com.narren.coding.practice;
 
 public class DutchFlagProblem {
 	public static void main(String[] args) {
