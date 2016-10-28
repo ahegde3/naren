@@ -1,3 +1,3 @@
 naren
 =====
-Repositiory to various problem solved in HackerRank
+Repositiory to various problem solved

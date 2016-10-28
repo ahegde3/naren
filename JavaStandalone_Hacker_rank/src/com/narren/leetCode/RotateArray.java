@@ -1,4 +1,4 @@
-package leetCode;
+package com.narren.leetCode;
 
 /**
  * 
