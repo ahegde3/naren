@@ -49,52 +49,81 @@ public class WordLadder {
 
 		System.out.println(wl.ladderLength("hit", "cog", mySet1));
 	}
+	
+	
+	class Node {
+		String word;
+		int steps;
+		
+		Node(String w, int s) {
+			word = w;
+			steps = s;
+		}
+	}
+	
+	Node[] queue;
+	int enquequeIndex = -1;
+	int dequeueIndex = -1;
+	
+	Node dequeue() {
+		if(dequeueIndex < 0) {
+			return null;
+		}
+		if(dequeueIndex == enquequeIndex) {
+			Node n = queue[dequeueIndex];
+			dequeueIndex = -1;
+			enquequeIndex = -1;
+			return n;
+		}
+		return queue[dequeueIndex++];
+	}
+	
+	boolean isEmpty() {
+		return (enquequeIndex == -1 && dequeueIndex == -1);
+	}
+	void enqueue(Node n) {
+		if(isEmpty()) {
+			enquequeIndex = 0;
+			dequeueIndex = 0;
+			queue[enquequeIndex] = n;
+			return;
+		}
+		queue[++enquequeIndex] = n;
+		
+	}
+	
 	public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
-		String[] dic = new String[wordList.size()];
+		String[] dic = new String[wordList.size() + 1];
+		queue = new Node[wordList.size() + 1];
 		int index = 0;
 		for(String s : wordList) {
 			dic[index++] = s;
 		}
-		boolean[] visited = new boolean[wordList.size()];
-		int min = beginWord.equals(endWord) ? 0 : process(beginWord, endWord, dic, visited, 1, Integer.MAX_VALUE);
-		if(min == Integer.MAX_VALUE) {
+		dic[index] = endWord;
+		if(beginWord.equals(endWord)) {
 			return 0;
 		}
-		return min;
-	}
-
-	int process(String currentStr, String endString, String[] dic, boolean[] visited, int steps, int min) {
-		if(steps >= min) {
-			return Integer.MAX_VALUE;
-		}
-		if(currentStr.equals(endString)) {
-			min = Math.min(min, steps);
-		}
-		int dis = 0;
-		for(int i = 0; i < dic.length; i++) {
-			if(!visited[i]) {
-				visited[i] = true;
-				if(currentStr.equals(endString)) {
-					min = Math.min(min,steps);
-				} else {
-					if(!currentStr.equals(dic[i]) && isOneLetterDifference(currentStr.toCharArray(), dic[i].toCharArray())) {
-						min = Math.min(min, process(dic[i], endString, dic, getVisited(visited), steps + 1, min));
+		boolean[] visited = new boolean[dic.length];
+		enqueue(new Node(beginWord, 1));
+		while(!isEmpty()) {
+			Node n = null;
+			n = dequeue();
+			if(n != null) {
+				if(n.word.equals(endWord)) {
+					return n.steps;
+				}
+				for(int i = 0; i < dic.length; i++) {
+					if(!visited[i] && dic[i] != null && isOneLetterDifference(dic[i].toCharArray(), n.word.toCharArray())) {
+						visited[i] = true;
+						enqueue(new Node(dic[i], n.steps + 1));
+						dic[i] = null;
 					}
 				}
-				
 			}
 		}
-		return min;
+		return 0;
 	}
-
-	boolean[] getVisited(boolean[] visited) {
-		boolean[] newVisited = new boolean[visited.length];
-		for(int i = 0; i < visited.length; i++) {
-			newVisited[i] = visited[i];
-		}
-		return newVisited;
-	}
-
+	
 	boolean isOneLetterDifference(char[] a, char[] b) {
 		boolean foundDiff = false;
 		for(int i = 0 ; i < a.length; i++) {
