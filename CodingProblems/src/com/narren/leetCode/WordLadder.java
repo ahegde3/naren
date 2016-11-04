@@ -34,11 +34,20 @@ public class WordLadder {
 	public static void main(String[] args) {
 		WordLadder wl = new WordLadder();
 		Set mySet1 = new HashSet();
+//		mySet1.add("hot");
+//		mySet1.add("dog");
+//		mySet1.add("dot");
+//		mySet1.add("cog");
+//		mySet1.add("pot");
 		mySet1.add("hot");
-		mySet1.add("dog");
+		mySet1.add("cog");
 		mySet1.add("dot");
+		mySet1.add("dog");
+		mySet1.add("hit");
+		mySet1.add("lot");
+		mySet1.add("log");
 
-		System.out.println(wl.ladderLength("hot", "dog", mySet1));
+		System.out.println(wl.ladderLength("hit", "cog", mySet1));
 	}
 	public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
 		String[] dic = new String[wordList.size()];
@@ -47,7 +56,7 @@ public class WordLadder {
 			dic[index++] = s;
 		}
 		boolean[] visited = new boolean[wordList.size()];
-		int min = process(beginWord, endWord, dic, visited, 0, Integer.MAX_VALUE);
+		int min = beginWord.equals(endWord) ? 0 : process(beginWord, endWord, dic, visited, 1, Integer.MAX_VALUE);
 		if(min == Integer.MAX_VALUE) {
 			return 0;
 		}
@@ -61,12 +70,18 @@ public class WordLadder {
 		if(currentStr.equals(endString)) {
 			min = Math.min(min, steps);
 		}
+		int dis = 0;
 		for(int i = 0; i < dic.length; i++) {
 			if(!visited[i]) {
 				visited[i] = true;
-				if(!currentStr.equals(dic[i]) && isOneLetterDifference(currentStr.toCharArray(), dic[i].toCharArray())) {
-					return process(dic[i], endString, dic, getVisited(visited), steps + 1, min);
+				if(currentStr.equals(endString)) {
+					min = Math.min(min,steps);
+				} else {
+					if(!currentStr.equals(dic[i]) && isOneLetterDifference(currentStr.toCharArray(), dic[i].toCharArray())) {
+						min = Math.min(min, process(dic[i], endString, dic, getVisited(visited), steps + 1, min));
+					}
 				}
+				
 			}
 		}
 		return min;
@@ -83,12 +98,11 @@ public class WordLadder {
 	boolean isOneLetterDifference(char[] a, char[] b) {
 		boolean foundDiff = false;
 		for(int i = 0 ; i < a.length; i++) {
-			if(a[i] != b[i] && !foundDiff) {
-				foundDiff = true;
-			} else {
+			if(a[i] != b[i]) {
 				if(foundDiff) {
 					return false;
 				}
+				foundDiff = true;
 			}
 		}
 		return true;
