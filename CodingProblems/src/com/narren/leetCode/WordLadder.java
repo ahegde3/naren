@@ -54,7 +54,7 @@ public class WordLadder {
 	class Node {
 		String word;
 		int steps;
-		
+
 		Node(String w, int s) {
 			word = w;
 			steps = s;
@@ -93,17 +93,10 @@ public class WordLadder {
 	}
 	
 	public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
-		String[] dic = new String[wordList.size() + 1];
 		queue = new Node[wordList.size() + 1];
-		int index = 0;
-		for(String s : wordList) {
-			dic[index++] = s;
-		}
-		dic[index] = endWord;
 		if(beginWord.equals(endWord)) {
 			return 0;
 		}
-		boolean[] visited = new boolean[dic.length];
 		enqueue(new Node(beginWord, 1));
 		while(!isEmpty()) {
 			Node n = null;
@@ -112,28 +105,23 @@ public class WordLadder {
 				if(n.word.equals(endWord)) {
 					return n.steps;
 				}
-				for(int i = 0; i < dic.length; i++) {
-					if(!visited[i] && dic[i] != null && isOneLetterDifference(dic[i].toCharArray(), n.word.toCharArray())) {
-						visited[i] = true;
-						enqueue(new Node(dic[i], n.steps + 1));
-						dic[i] = null;
+				for(int i = 0; i < n.word.length(); i++) {
+					char[] word = n.word.toCharArray();
+					for(char ch = 'a'; ch <= 'z'; ch++) {
+						char temp = word[i];
+						if(ch != word[i]) {
+							word[i] = ch;
+						}
+						String newString = new String(word);
+						if(wordList.contains(newString)) {
+							enqueue(new Node(newString, n.steps + 1));
+							wordList.remove(newString);
+						}
+						word[i] = temp;
 					}
 				}
 			}
 		}
 		return 0;
-	}
-	
-	boolean isOneLetterDifference(char[] a, char[] b) {
-		boolean foundDiff = false;
-		for(int i = 0 ; i < a.length; i++) {
-			if(a[i] != b[i]) {
-				if(foundDiff) {
-					return false;
-				}
-				foundDiff = true;
-			}
-		}
-		return true;
 	}
 }
