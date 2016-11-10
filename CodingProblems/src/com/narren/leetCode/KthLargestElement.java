@@ -1,4 +1,7 @@
 package com.narren.leetCode;
+
+import java.util.PriorityQueue;
+
 /**
  * 
 https://leetcode.com/problems/kth-largest-element-in-an-array/
@@ -18,44 +21,23 @@ public class KthLargestElement {
 
 	public static void main(String[] args) {
 		KthLargestElement algo = new KthLargestElement();
-		int i = algo.findKthLargest(new int[]{1}, 1);
+		int i = algo.findKthLargest(new int[]{2,1}, 1);
 		System.out.println(i);
 	}
+	
 	public int findKthLargest(int[] nums, int k) {
-		quickSort(nums, 0, nums.length - 1);
-		for(int i = nums.length - 1, j = 1; i >= 0 ; i++) {
-			if(j == k) {
-				return nums[i];
+		PriorityQueue<Integer> queue = new PriorityQueue<Integer>(nums.length);
+		for(int n : nums) {
+			queue.add(n);
+		}
+		int counter = 0;
+		while(counter <= nums.length - k) {
+			int n = queue.poll();
+			if(counter == nums.length - k) {
+				return n;
 			}
-			j++;
+			counter++;
 		}
 		return 0;
-	}
-
-	void quickSort(int[] arr, int start, int end) {
-		while(start < end) {
-			int partitionIndex = partitionIndex(arr, start, end);
-			quickSort(arr, start, partitionIndex - 1);
-			quickSort(arr, partitionIndex + 1, end);
-		}
-	}
-	
-	int partitionIndex(int[] arr, int start, int end) {
-		int pivot = arr[end];
-		int partitionIndex = start;
-		for(int i = start; i < end; i++) {
-			if(arr[i] <= pivot) {
-				swap(arr, i, partitionIndex);
-				partitionIndex++;
-			}
-		}
-		swap(arr, end, partitionIndex);
-		return partitionIndex;
-	}
-	
-	void swap(int[] arr, int i, int j) {
-		int temp = arr[i];
-		arr[i] = arr[j];
-		arr[j] = temp;
 	}
 }
