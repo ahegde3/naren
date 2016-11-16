@@ -5,13 +5,17 @@ import java.util.Scanner;
 import sun.misc.Queue;
 /**
  * 
-3
+5
 15
 0 2 2 0 1 2 2 1 0 0 0 0 2 0 2
 6
 0 0 0 0 0 0
 10
 0 2 0 0 1 0 0 0 0 0
+25
+1 2 0 2 0 1 0 1 1 2 0 0 0 2 2 0 1 0 1 0 1 1 2 0 1
+30
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  * 
  * @author nsbisht
  *
@@ -112,8 +116,12 @@ public class Samthello {
 			State s = queue.dequeue();
 			State[] possibilities = getPossibleStates(s);
 			for(State state : possibilities) {
+				if(state.turns > 3) {
+					continue;
+				}
 				if(state.turns == 3) {
 					maxPoints = Math.max(maxPoints, countBlacks(state.game));
+					continue;
 				}
 				queue.enqueue(state);
 			}
