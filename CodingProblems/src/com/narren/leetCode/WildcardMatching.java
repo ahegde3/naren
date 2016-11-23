@@ -33,10 +33,16 @@ public class WildcardMatching {
 	        char[] pc = p.toCharArray();
 	        int index = 0;
 	        for(int i = 0; i < sc.length; i++) {
-	        	if(sc[i] == pc[index]) {
+	        	if(sc[i] == pc[index] || pc[index] == '?') {
+	        		index++;
 	        		continue;
 	        	}
-	        	if
+	        	if(pc[index] == '*') {
+	        		int tempIndex = index;
+	        		while(pc[tempIndex]) {
+	        			
+	        		}
+	        	}
 	        	
 	        }
 	    }
