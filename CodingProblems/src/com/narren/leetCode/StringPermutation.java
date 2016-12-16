@@ -3,6 +3,10 @@ package com.narren.leetCode;
 public class StringPermutation {
 
 	static int[] resultArr;
+	
+	public static void main(String[] args) {
+		printPermutation("abc");
+	}
 	static void printPermutation(String input) {
 		resultArr = new int[input.length()];
 		int[] inStr = new int[123];
@@ -20,11 +24,21 @@ public class StringPermutation {
 				charArr[index++] = i;
 			}
 		}
-		
+		process(0, inStr, charArr);
 		
 	}
 	
 	static void process(int level, int[] inStr, int[] charArr) {
-		
+		for(int n : charArr) {
+			if(inStr[n] > 0) {
+				resultArr[level] = n;
+				inStr[n] -= 1;
+				process(level + 1, inStr, charArr);
+			}
+		}
+		for(int n : resultArr) {
+			System.out.print("" + n);
+		}
+		System.out.println();
 	}
 }
