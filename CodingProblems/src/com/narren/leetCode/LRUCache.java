@@ -34,7 +34,9 @@ public class LRUCache {
 		} else {
 			// Somewhere in between
 			// number two node
-			node.previous.next = node.next;
+			if(node.previous != null) {
+				node.previous.next = node.next;				
+			}
 			if(node.next != null) {
 				node.next.previous = node.previous;					
 			}
@@ -47,7 +49,51 @@ public class LRUCache {
 	}
 
 	public void set(int key, int value) {
-
+		Node node = hashMap.get(key);
+		if(node != null) {
+			node.value = value;
+			return;
+		}
+		// No node found
+		Node newNode = new Node(null, null, value);
+		if(currentCapacity == CACHE_CAPACITY) {
+			// Need to remove and add this one
+			newNode.previous = tail.previous;
+			if(tail.previous != null) {
+				tail.previous.next = newNode;				
+			}
+			if(head == tail) {
+				head = null;
+				head = newNode;
+				tail = newNode;
+			} else {
+				hashMap.remove(tail.value);
+				tail = null;
+				tail = newNode;				
+			}
+			
+		} else {
+			if(currentCapacity == 0) {
+				head = newNode;
+				tail = newNode;
+			} else {
+				newNode.previous = tail;
+				tail.next = newNode;
+				tail = newNode;				
+			}
+			currentCapacity++;
+		}
+		newNode.value = value;
+		hashMap.put(key, newNode);
+	}
+	
+	public static void main(String[] args) {
+		LRUCache cache = new LRUCache(1);
+		cache.set(2, 1);
+		int i = cache.get(2);
+		cache.set(3, 2);
+		i = cache.get(2);
+		i = cache.get(3);
 	}
 }
 
