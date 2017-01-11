@@ -33,6 +33,14 @@ public class LRUCache {
 			head = node;
 		} else {
 			// Somewhere in between
+			// number two node
+			node.previous.next = node.next;
+			if(node.next != null) {
+				node.next.previous = node.previous;					
+			}
+			node.next = head;
+			head.previous = node;
+			head = node;
 
 		}
 		return node.value;
