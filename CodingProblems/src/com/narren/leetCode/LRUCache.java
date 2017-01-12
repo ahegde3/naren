@@ -57,13 +57,17 @@ public class LRUCache {
 		if(tail == null) {
 			return;
 		}
+		hashMap.remove(tail.key);
 		if(head == tail) {
 			head = null;
 			tail = null;
 			return;
 		}
+		
 		tail.previous.next = null;
-		tail = tail.previous;
+		Node temp = tail.previous;
+		tail.previous = null;
+		tail = temp;
 	}
 
 	public int get(int key) {
@@ -75,38 +79,6 @@ public class LRUCache {
 			// Already on top, no need to do anything
 			return node.value;
 		}
-		//         if(tail == node) {
-		//             // This the last node
-		//             tail = node.previous;
-		//             node.previous.next = null;
-		//             node.next = head;
-		//             node.previous = null;
-		//             head.previous = node;
-		//             head = node;
-		//         } else {
-		//             // Somewhere in between
-		//             // number two node
-		//             if(node.previous != null) {
-		//                 node.previous.next = node.next;
-		//             }
-		//             if(node.next != null) {
-		//                 node.next.previous = node.previous;
-		//             }
-		//             if(node.next == null && node.previous == null) {
-		//                 // THis is a removed entry...
-		//                 hashMap.remove(key);
-		//                 return -1;
-		//             }
-		//             node.next = head;
-		//             head.previous = node;
-		//             head = node;
-		//
-		//         }
-        if(node.next == null && node.previous == null) {
-            // THis is a removed entry...
-            hashMap.remove(key);
-            return -1;
-        }
 		setHead(node);
 		return node.value;
 	}
@@ -119,36 +91,13 @@ public class LRUCache {
 			return;
 		}
 		// No node found
-		Node newNode = new Node(null, null, value);
+		Node newNode = new Node(null, null, key, value);
 		if(currentCapacity == CACHE_CAPACITY) {
 			// Need to remove the tail and add this one to head
-			hashMap.remove(tail.value);
 			removeTail();
 			setHead(newNode);
 
-			//             newNode.previous = tail.previous;
-			//             if(tail.previous != null) {
-			//                 tail.previous.next = newNode;
-			//             }
-			//             if(head == tail) {
-			//                 head = null;
-			//                 head = newNode;
-			//                 tail = newNode;
-			//             } else {
-			//
-			//                 tail = null;
-			//                 tail = newNode;
-			//             }
-
 		} else {
-			//             if(currentCapacity == 0) {
-			//                 head = newNode;
-			//                 tail = newNode;
-			//             } else {
-			//                 newNode.previous = tail;
-			//                 tail.next = newNode;
-			//                 tail = newNode;
-			//             }
 			setHead(newNode);
 			currentCapacity++;
 		}
@@ -171,9 +120,11 @@ class Node {
 	Node previous;
 	Node next;
 	int value;
-	Node(Node p, Node n, int v) {
+	int key;
+	Node(Node p, Node n, int k, int v) {
 		previous = p;
 		next = n;
+		key = k;
 		value = v;
 	}
 }
