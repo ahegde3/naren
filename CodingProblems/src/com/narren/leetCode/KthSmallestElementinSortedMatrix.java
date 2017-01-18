@@ -26,4 +26,25 @@ https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/
  */
 public class KthSmallestElementinSortedMatrix {
 
+	public int kthSmallest(int[][] matrix, int k) {
+		int[] res = new int[matrix.length * matrix.length];
+		int index = 0;
+		
+		for(int i = 0; i < matrix.length; i++) {
+			res[index++] = matrix[0][i];
+		}
+		
+		for(int i = 1; i < matrix.length; i++)
+			for(int j = 0; j < matrix.length; j++) {
+				int e = matrix[i][j];
+				int t = index - 1;
+				while(res[t] > e && t - 1> 0) {
+					res[t + 1] = res[t];
+					t--;
+				}
+				res[t + 1] = e;
+				index++;
+			}
+		return res[k - 1];
+	}
 }
