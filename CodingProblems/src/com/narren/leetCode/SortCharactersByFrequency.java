@@ -1,11 +1,7 @@
 package com.narren.leetCode;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.PriorityQueue;
-
-import com.narren.leetCode.SortCharactersByFrequency.Element;
 
 /**
  * 
