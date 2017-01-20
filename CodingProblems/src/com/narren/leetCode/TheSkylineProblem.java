@@ -1,5 +1,8 @@
 package com.narren.leetCode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 
 A city's skyline is the outer contour of the silhouette formed by all the buildings in that city when viewed from a
@@ -38,6 +41,49 @@ should be merged into one in the final output as such: [...[2 3], [4 5], [12 7],
  */
 public class TheSkylineProblem {
 	public List<int[]> getSkyline(int[][] buildings) {
-
+		List<int[]> result = new ArrayList<int[]>();
+		
+		if(buildings.length < 1) {
+			return result;
+		}
+		int pS = 0, pE = 0, pH = 0;
+		for(int i = 0; i < buildings.length; i++) {
+			if(pS == 0 && pE == 0 && pH == 0) {
+				result.add(new int[]{buildings[i][0], buildings[i][2]});
+				pS = buildings[i][0];
+				pE = buildings[i][1];
+				pH = buildings[i][2];
+				continue;
+			}
+			
+			if(buildings[i][0] > pS && buildings[i][1] < pE) {
+				// Cover
+				if(buildings[i][2] > pH) {
+					result.add(new int[]{buildings[i][0], buildings[i][2]});
+					pS = buildings[i][0];
+					pE = buildings[i][1];
+					pH = buildings[i][2];
+				}
+			} else if(buildings[i][0] < pE && buildings[i][0] > pS && buildings[i][1] > pE) {
+				// Overlap
+				result.add(new int[]{pE, buildings[i][2]});
+				pS = buildings[i][0];
+				pE = buildings[i][1];
+				pH = buildings[i][2];
+			} else if(buildings[i][0] > pE){
+				// Disjoint
+				result.add(new int[]{pE, 0});
+				result.add(new int[]{buildings[i][0], buildings[i][2]});
+				pS = buildings[i][0];
+				pE = buildings[i][1];
+				pH = buildings[i][2];
+			} else {
+				pS = buildings[i][0];
+				pE = buildings[i][1];
+				pH = buildings[i][2];
+			}
+		}
+		result.add(new int[]{pE, 0});
+		return result;
 	}
 }
