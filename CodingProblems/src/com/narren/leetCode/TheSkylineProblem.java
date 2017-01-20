@@ -41,49 +41,33 @@ should be merged into one in the final output as such: [...[2 3], [4 5], [12 7],
  */
 public class TheSkylineProblem {
 	public List<int[]> getSkyline(int[][] buildings) {
-		List<int[]> result = new ArrayList<int[]>();
-		
-		if(buildings.length < 1) {
-			return result;
-		}
-		int pS = 0, pE = 0, pH = 0;
-		for(int i = 0; i < buildings.length; i++) {
-			if(pS == 0 && pE == 0 && pH == 0) {
-				result.add(new int[]{buildings[i][0], buildings[i][2]});
-				pS = buildings[i][0];
-				pE = buildings[i][1];
-				pH = buildings[i][2];
-				continue;
-			}
-			
-			if(buildings[i][0] > pS && buildings[i][1] < pE) {
-				// Cover
-				if(buildings[i][2] > pH) {
-					result.add(new int[]{buildings[i][0], buildings[i][2]});
-					pS = buildings[i][0];
-					pE = buildings[i][1];
-					pH = buildings[i][2];
-				}
-			} else if(buildings[i][0] < pE && buildings[i][0] > pS && buildings[i][1] > pE) {
-				// Overlap
-				result.add(new int[]{pE, buildings[i][2]});
-				pS = buildings[i][0];
-				pE = buildings[i][1];
-				pH = buildings[i][2];
-			} else if(buildings[i][0] > pE){
-				// Disjoint
-				result.add(new int[]{pE, 0});
-				result.add(new int[]{buildings[i][0], buildings[i][2]});
-				pS = buildings[i][0];
-				pE = buildings[i][1];
-				pH = buildings[i][2];
-			} else {
-				pS = buildings[i][0];
-				pE = buildings[i][1];
-				pH = buildings[i][2];
-			}
-		}
-		result.add(new int[]{pE, 0});
-		return result;
+		int[] height = new int[10000];
+        int maxY = 0;
+        int minX = 0;
+        for(int i = 0; i < buildings.length; i++) {
+            int x = buildings[i][0];
+            int y = buildings[i][1];
+            int h = buildings[i][2];
+            maxY = Math.max(maxY, y);
+            minX = Math.min(minX, x);
+            while(x <= y) {
+                if(height[x] < h) {
+                    height[x] = h;
+                }
+                x++;
+            }
+        }
+        int curMax = 0;
+        List<int[]> list = new ArrayList<int[]>();
+        for(int i = minX; i <= maxY + 1; i++) {
+            if(curMax < height[i]) {
+                list.add(new int[]{i, height[i]});
+            } else if(curMax > height[i]) {
+                list.add(new int[]{i - 1, height[i]});
+            }
+            curMax = height[i];
+        }
+
+        return list;
 	}
 }
