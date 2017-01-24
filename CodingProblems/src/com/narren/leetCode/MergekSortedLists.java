@@ -1,5 +1,6 @@
 package com.narren.leetCode;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -12,32 +13,55 @@ https://leetcode.com/problems/merge-k-sorted-lists/
  *
  */
 public class MergekSortedLists {
+	
+	public static void main(String[] args) {
+		ListNode lNode3 = new ListNode(5);
+		
+		ListNode lNode2 = new ListNode(3);
+		lNode2.next = lNode3;
+		lNode3.next = null;
+		ListNode lNode = new ListNode(1);
+		lNode.next = lNode2;
+		
+		
+		ListNode node = new MergekSortedLists().mergeKLists(new ListNode[]{lNode});
+		System.out.println(node);
+	}
 	public ListNode mergeKLists(ListNode[] lists) {
-		int listLen = lists.length;
-		int nullCount = 0;
-		PriorityQueue<Integer> queue = new PriorityQueue<Integer>((a, b) -> (b - a));
-		while(nullCount < listLen) {
-			nullCount = 0;
-			for(ListNode ln : lists) {
-				if(ln == null) {
-					nullCount++;
-				} else {
-					queue.offer(ln.val);
-					ln = ln.next;
-				}
+		if(lists == null) {
+			return null;
+		}
+		if(lists.length == 1) {
+			return lists[0];
+		}
+		PriorityQueue<ListNode> queue = new PriorityQueue<ListNode>(new Comparator<ListNode>() {
+
+			@Override
+			public int compare(ListNode o1, ListNode o2) {
+				return o1.val - o2.val;
+			}
+		});
+		for(ListNode ln : lists) {
+			if(ln != null) {
+				queue.offer(ln);
 			}
 		}
+		
 		ListNode head = null;
+		ListNode tail = null;
 		while(!queue.isEmpty()) {
-			int val = queue.poll();
 			if(head == null) {
-				head = new ListNode(val);
-				head.next = null;
+				head = queue.poll();
+				tail = head;
 			} else {
-				ListNode node = new ListNode(val);
-				node.next = head;
-				head = node;
+				ListNode n = queue.poll();
+				tail.next = n;
+				tail = n;
 			}
+			if(tail != null && tail.next != null) {
+				queue.offer(tail.next);
+			}
+			
 		}
 		return head;
 	}
