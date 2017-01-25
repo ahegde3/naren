@@ -15,5 +15,41 @@ https://leetcode.com/problems/house-robber/
  *
  */
 public class HouseRobber {
+    public int rob(int[] nums) {
+        if(nums.length < 1) {
+            return 0;
+        }
+        if(nums.length == 1) {
+            return nums[0];
+        }
+        if(nums.length == 2) {
+            return Math.max(nums[0], nums[1]);
+        }
+        int maxVal = 0;
+        int[] sum = new int[nums.length];
+        sum[0] = nums[0];
+        sum[1] = Math.max(nums[0], nums[1]);
+        for(int i = 2; i < nums.length; i++) {
+            sum[i] = -1;
+        }
+        for(int i = 0; i < sum.length; i++) {
+            getMaxSum(sum, i, nums);
+        }
+        for(int i : sum) {
+            maxVal = Math.max(i, maxVal);
+        }
+        return maxVal;
 
+    }
+
+    int getMaxSum(int[] sum, int i, int[] nums) {
+        if(i < 0) {
+            return 0;
+        }
+        if(sum[i] != -1) {
+            return sum[i];
+        }
+        sum[i] = Math.max(getMaxSum(sum, i - 2, nums), getMaxSum(sum, i - 3, nums)) + nums[i];
+        return sum[i];
+    }
 }
