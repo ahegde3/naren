@@ -23,4 +23,26 @@ https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
  */
 public class BestTimetoBuyandSellStock {
 
+	public static void main(String[] args) {
+		BestTimetoBuyandSellStock bst = new BestTimetoBuyandSellStock();
+		System.out.println(bst.maxProfit(new int[]{7, 1, 5, 3, 6, 4, 10, 3, 4, 20, 4}));
+	}
+	
+	public int maxProfit(int[] prices) {
+		int maxProfit = 0;
+		int buyingCost = Integer.MAX_VALUE;
+		int sellCost = 0;
+
+		for(int i = 0; i < prices.length; i++) {
+			if(buyingCost > prices[i]) {
+				buyingCost = prices[i];
+				sellCost = prices[i];
+			} else {
+				sellCost = Math.max(sellCost, prices[i]);
+			}
+			maxProfit = Math.max(maxProfit, (sellCost - buyingCost));
+		}
+		
+		return maxProfit;
+	}
 }
