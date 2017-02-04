@@ -49,27 +49,32 @@ https://leetcode.com/problems/frog-jump/
  */
 public class FrogJump {
 
+	public static void main(String[] args) {
+		FrogJump fj = new FrogJump();
+		System.out.println(fj.canCross(new int[]{0,1,3,4,5,7,9,10,12}));
+	}
 	public boolean canCross(int[] stones) {
 		HashMap<Integer, HashSet<Integer>> map = new HashMap<Integer, HashSet<Integer>>(stones.length);
-		map.put(0, new HashSet<Integer>());
-		map.get(0).add(1);
+		
 
 		for(int i : stones) {
 			map.put(i, new HashSet<Integer>());
 		}
+		map.get(0).add(1);
 		for(int i : stones) {
 			for(int j : map.get(i)) {
 				int reach = j + i;
 				if(stones[stones.length - 1] == reach) {
 					return true;
 				}
-				HashSet set = map.get(reach);
+				HashSet<Integer> set = map.get(reach);
 				if(set != null) {
-					set.add(reach);
-					set.add(reach + 1);
-					if(reach - 1 > 0) {
-						set.add(reach - 1);
+					if(j - 1 > 0) {
+						set.add(j - 1);
 					}
+					set.add(j);
+					set.add(j + 1);
+					
 
 				}
 
