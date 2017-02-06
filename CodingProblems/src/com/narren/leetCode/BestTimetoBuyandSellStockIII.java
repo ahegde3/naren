@@ -26,6 +26,16 @@ public class BestTimetoBuyandSellStockIII {
 	}
 	
 	int maxProfit(int[] prices, int k) {
+		if(k > (prices.length / 2)) {
+			int maxProfit = 0;
+			for(int i = 1; i < prices.length; i++) {
+				if(prices[i] - prices[i - 1] > 0) {
+					maxProfit += prices[i] - prices[i - 1];
+				}
+			}
+			return maxProfit;
+		}
+
 		int[][] T = new int[k + 1][prices.length];
 		
 		for(int i = 1; i <= k; i++) {
