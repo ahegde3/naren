@@ -27,34 +27,23 @@ public class StockMaximize {
 	}
 	
 	static long process(long[] arr) {
-		long max = 0;
-		long start = 0;
-		long maxP = 0;
-		long cost = 0;
-		while(max < arr.length) {
-			for(long i = start + 1; i < arr.length; i++) {
-				max = Math.max(arr[(int) max], arr[(int) i]) != arr[(int) max] ? i : max;				
-			}
-			if(start != max && max == arr.length - 1) {
-				for(long i = start; i < arr.length - 1; i++) {
-					cost += arr[(int) i];				
-				}
-				maxP += (max - start) * arr[arr.length - 1] - cost;
-				return maxP;
-			}
-			if(start == max) {
-				start++;
-				max++;
-				continue;
-			}
-			for(long i = start; i < max; i++) {
-				cost += arr[(int) i];				
-			}
-			maxP += (max - start) * arr[(int) max] - cost;
-			start = ++max;
-			cost = 0;
-		}
-		return maxP;
+		long profit = 0;
+		long buyingPrice = 0;
+		long buyingUnit = 0;
+		long maxPrice = arr[arr.length - 1];
+        for(int i = arr.length - 2; i >= 0; i--) {
+            if(maxPrice != Math.max(maxPrice, arr[i])) {
+                profit += maxPrice * buyingUnit - buyingPrice;
+                maxPrice = arr[i];
+                buyingPrice = 0;
+                buyingUnit = 0;
+            } else {
+                buyingUnit++;
+                buyingPrice += arr[i];
+            }
+        }
+        profit += maxPrice * buyingUnit - buyingPrice;
+        return profit;
 		
 	}
 }
