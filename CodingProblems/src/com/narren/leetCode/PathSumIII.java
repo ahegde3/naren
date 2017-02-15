@@ -40,7 +40,7 @@ https://leetcode.com/problems/path-sum-iii/
 public class PathSumIII {
 
 	public int pathSum(TreeNode root, int sum) {
-		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>
+		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 		map.put(0, 1);
 		return calculatePathSum(root, sum, 0, map);
 	}
