@@ -58,7 +58,6 @@ public class PathSumIII {
 		if(map.getOrDefault(newSum, 0) > 0) {
 			map.put(newSum, map.get(newSum) - 1);
 		} 
-		map.remove(newSum);
 		return res;
 	}
 }
