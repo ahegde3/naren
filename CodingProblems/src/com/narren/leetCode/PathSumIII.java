@@ -55,6 +55,9 @@ public class PathSumIII {
 		int left = calculatePathSum(root.left, desired, newSum, map);
 		int right = calculatePathSum(root.right, desired, newSum, map);
 		res += left + right;
+		if(map.getOrDefault(newSum, 0) > 0) {
+			map.put(newSum, map.get(newSum) - 1);
+		} 
 		map.remove(newSum);
 		return res;
 	}
