@@ -1,5 +1,8 @@
 package com.narren.leetCode;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * 
 There are a number of spherical balloons spread in two-dimensional space. For each balloon, provided input is the start and end
@@ -26,5 +29,30 @@ Subscribe to see which companies asked this question.
  *
  */
 public class MinimumNumberofArrowstoBurstBalloons {
-
+	public int findMinArrowShots(int[][] points) {
+		if(points == null || points.length < 1 || points[0] == null || points[0].length < 1) {
+            return 0;
+        }
+        if(points[0].length == 1) {
+            return 1;
+        }
+        Arrays.sort(points, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return Integer.compare(o2[0], o1[0]);
+            }
+        });
+        int noOfArrows = 1;
+        for(int i = 0; i < points.length; i++) {
+            if(i + 1 < points.length) {
+                if(points[i + 1][0] >= points[i][0] &&
+                        points[i + 1][0] <= points[i][1]) {
+                    points[i + 1][1] = Math.min(points[i][1], points[i + 1][1]);
+                } else {
+                    noOfArrows++;
+                }
+            }
+        }
+        return noOfArrows;
+	}
 }
