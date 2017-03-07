@@ -37,8 +37,10 @@ public class RemoveNthNodeFromEndofList {
 			pointer1 = pointer1.next;
 			pointer2 = pointer2.next;
 		}
-		if(pointer2 == head) {
+		if(pointer2 == head && pointer1 == null) {
 			head = head.next;
+		} else if(pointer2 == head && pointer1 != null){
+			head.next = head.next.next;
 		} else {
 			pointer2.next = pointer2.next.next;
 		}
