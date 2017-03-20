@@ -38,7 +38,7 @@ The cells are adjacent in only four directions: up, down, left and right.
  */
 public class Matrix01 {
 	public List<List<Integer>> updateMatrix(List<List<Integer>> matrix) {
-		List<List<Integer>> updatedMatrix = new ArrayList<List<Integer>>();
+		List<List<Integer>> updatedMatrix;
 		Integer[][] array = new Integer[matrix.size()][];
 
 		int i = 0;
@@ -46,48 +46,63 @@ public class Matrix01 {
 		    array[i++] = nestedList.toArray(new Integer[nestedList.size()]);
 		}
 		i = matrix.size();
+		updatedMatrix = new ArrayList<List<Integer>>(i);
 		for(int j = 0 ; j < i; j++) {
-			ArrayList<Integer> list = new ArrayList<>();
 			for(int k = 0; k < array[0].length; k++) {
-				if(array[j][k] == 0) {
-					list.add(0);
+				if((array[j][k] & 1) == 0) {
+					array[j][k] = 0;
 				} else {
 					int left = -1;
 					int right = -1;
 					int up = -1;
 					int down = -1;
 					if(k - 1 >= 0) {
-						left = array[j][k - 1];
+						left = array[j][k - 1] >> 1;
 					}
 					if(k + 1 < array[0].length) {
-						right = array[j][k + 1];
+						right = array[j][k + 1] >> 1;
 					}
 					if(j - 1 >= 0) {
-						up = array[j - 1][k];
+						up = array[j - 1][k] >> 1;
 					}
 					if(j + 1 < i) {
-						down = array[j + 1][k];
+						down = array[j + 1][k] >> 1;
 					}
 					
 					if(left == 0 || right == 0| up == 0 | down == 0) {
-						list.add(1);
+						array[j][k] = array[j][k] | 1 << 1;
 					} else {
 						int min = Integer.MAX_VALUE;
 						min = left > 0 ? Math.min(min, left) : min;
 						min = right > 0 ? Math.min(min, right) : min;
 						min = up > 0 ? Math.min(min, up) : min;
 						min = down > 0 ? Math.min(min, down) : min;
-						list.add(array[j][k] + min);
+						array[j][k] = ((array[j][k] >> 1) + min) | array[j][k];
 						
 					}
 					
 				}
 				
 			}
-			updatedMatrix.add(list);
 			
 		}
+		
+		for(int j = 0; j < array.length; j++) {
+			ArrayList<Integer> list = new ArrayList<Integer>();
+			for(int k = 0; k < array[0].length; k++) {
+				list.add(array[j][k] >> 1);
+			}
+			updatedMatrix.add(list);
+		}
 		return updatedMatrix;
+		/**
+		 * Input:
+[[0,0,0],[0,1,0],[1,1,1]]
+Output:
+[[0,0,0],[0,1,0],[1,1,1]]
+Expected:
+[[0,0,0],[0,1,0],[1,2,1]]
+		 */
 
 	}
 }
