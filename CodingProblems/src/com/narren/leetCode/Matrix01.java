@@ -1,7 +1,9 @@
 package com.narren.leetCode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * 
@@ -37,13 +39,70 @@ The cells are adjacent in only four directions: up, down, left and right.
  *
  */
 public class Matrix01 {
+	public static void main(String[] args) {
+		int[][] array = new int[][]{{1, 0, 1, 1, 0, 0, 1, 0, 0, 1}
+		,{0, 1, 1, 0, 1, 0, 1, 0, 1, 1}
+		,{0, 0, 1, 0, 1, 0, 0, 1, 0, 0}
+		,{1, 0, 1, 0, 1, 1, 1, 1, 1, 1}
+		,{0, 1, 0, 1, 1, 0, 0, 0, 0, 1}
+		,{0, 0, 1, 0, 1, 1, 1, 0, 1, 0}
+		,{0, 1, 0, 1, 0, 1, 0, 0, 1, 1}
+		,{1, 0, 0, 0, 1, 1, 1, 1, 0, 1}
+		,{1, 1, 1, 1, 1, 1, 1, 0, 1, 0}
+		,{1, 1, 1, 1, 0, 1, 0, 0, 1, 1}
+		};
+
+		List<List<Integer>> updatedMatrix = new ArrayList<List<Integer>>();;
+		for(int j = 0; j < array.length; j++) {
+			ArrayList<Integer> list = new ArrayList<Integer>();
+			for(int k = 0; k < array[0].length; k++) {
+				list.add(array[j][k]);
+			}
+			updatedMatrix.add(list);
+		}
+		
+		new Matrix01().updateMatrix(updatedMatrix);
+
+	}
+	
+	class element {
+		int i;
+		int j;
+		int d;
+		
+		public element(int k, int l, int dis) {
+			i = k;
+			j = l;
+			d = dis;
+		}
+	}
+	private int getRDownDis(int i, int j, int[][] arr) {
+		if(i >= arr.length || j < 0 || j >= arr[0].length) {
+			return -1;
+		}
+		Queue<element> queue = new LinkedList<element>();
+		arr[i][j] = arr[i][j] | ((arr[i][j] >> 1) + 1);
+		element e = new element(i, j, (arr[i][j] >> 1) + 1);
+		queue.offer(e);
+		while(!queue.isEmpty()) {
+			element el = queue.poll();
+			int ri = el.i;
+			int rj = el.j + 1;
+			if(ri < arr.length && rj < arr[0].length) {
+				if(arr[ri][rj] >> 1) {
+					
+				}
+			}
+		}
+	}
+	
 	public List<List<Integer>> updateMatrix(List<List<Integer>> matrix) {
 		List<List<Integer>> updatedMatrix;
 		Integer[][] array = new Integer[matrix.size()][];
 
 		int i = 0;
 		for (List<Integer> nestedList : matrix) {
-		    array[i++] = nestedList.toArray(new Integer[nestedList.size()]);
+			array[i++] = nestedList.toArray(new Integer[nestedList.size()]);
 		}
 		i = matrix.size();
 		updatedMatrix = new ArrayList<List<Integer>>(i);
@@ -60,33 +119,33 @@ public class Matrix01 {
 						left = array[j][k - 1] >> 1;
 					}
 					if(k + 1 < array[0].length) {
-						right = array[j][k + 1] >> 1;
+						right = array[j][k + 1];
 					}
 					if(j - 1 >= 0) {
 						up = array[j - 1][k] >> 1;
 					}
 					if(j + 1 < i) {
-						down = array[j + 1][k] >> 1;
+						down = array[j + 1][k];
 					}
-					
+
 					if(left == 0 || right == 0| up == 0 | down == 0) {
-						array[j][k] = array[j][k] | 1 << 1;
+						array[j][k] = array[j][k] | 2;
 					} else {
 						int min = Integer.MAX_VALUE;
 						min = left > 0 ? Math.min(min, left) : min;
-						min = right > 0 ? Math.min(min, right) : min;
+						//min = right > 0 ? Math.min(min, right) : min;
 						min = up > 0 ? Math.min(min, up) : min;
-						min = down > 0 ? Math.min(min, down) : min;
-						array[j][k] = ((array[j][k] >> 1) + min) | array[j][k];
-						
+						//min = down > 0 ? Math.min(min, down) : min;
+						array[j][k] = ((array[j][k] + min) << 1) | array[j][k];
+
 					}
-					
+
 				}
-				
+
 			}
-			
+
 		}
-		
+
 		for(int j = 0; j < array.length; j++) {
 			ArrayList<Integer> list = new ArrayList<Integer>();
 			for(int k = 0; k < array[0].length; k++) {
@@ -97,11 +156,18 @@ public class Matrix01 {
 		return updatedMatrix;
 		/**
 		 * Input:
-[[0,0,0],[0,1,0],[1,1,1]]
+[[1, 0, 1, 1, 0, 0, 1, 0, 0, 1], [0, 1, 1, 0, 1, 0, 1, 0, 1, 1], [0, 0, 1, 0, 1, 0, 0, 1, 0, 0], [1, 0, 1, 0, 1, 1, 1, 1, 1, 1], [0, 1, 0, 1, 1, 0, 0, 0, 0, 1], [0, 0, 1, 0, 1, 1, 1, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 0, 1, 1],
+ [1, 0, 0, 0, 1, 1, 1, 1, 0, 1],
+ [1, 1, 1, 1, 1, 1, 1, 0, 1, 0],
+ [1, 1, 1, 1, 0, 1, 0, 0, 1, 1]]
 Output:
-[[0,0,0],[0,1,0],[1,1,1]]
+[[0,0,0],
+ [0,1,0],
+ [1,1,1]]
 Expected:
-[[0,0,0],[0,1,0],[1,2,1]]
+[[0,0,0],
+ [0,1,0],
+ [1,2,1]]
 		 */
 
 	}
