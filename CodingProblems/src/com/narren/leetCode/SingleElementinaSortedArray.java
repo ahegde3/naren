@@ -20,7 +20,40 @@ https://leetcode.com/problems/single-element-in-a-sorted-array/#/description
  *
  */
 public class SingleElementinaSortedArray {
+	
+	public static void main(String[] args) {
+		System.out.println(new SingleElementinaSortedArray().singleNonDuplicate(new int[]{1,1,2}));
+	}
 	public int singleNonDuplicate(int[] nums) {
+		if(nums.length == 1) {
+			return nums[0];
+		}
+		return getDup(nums, 0, nums.length - 1);
+	}
 
+	int getDup(int[] num, int s, int e) {
+		if(s >= e) {
+			return num[s];
+		}
+		int mid = s + (e - s) / 2;
+		int left = num[mid - 1];
+		int right = num[mid + 1];
+		if(left == num[mid]) {
+			if(((mid + 1) & 1) == 1) {
+				e = mid -1;
+			} else {
+				s = mid + 1;
+			}
+		} else if(right == num[mid]) {
+			if(((mid + 1) & 1) == 1) {
+				s = mid + 1;
+			} else {
+				e = mid -1;
+			}
+		} else {
+			return num[mid];
+		}
+
+		return getDup(num, s, e);
 	}
 }
