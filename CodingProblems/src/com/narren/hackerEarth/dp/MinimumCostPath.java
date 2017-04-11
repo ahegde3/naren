@@ -1,4 +1,4 @@
-package com.narren.hackerEarth;
+package com.narren.hackerEarth.dp;
 
 /**
  * Problem Statement :

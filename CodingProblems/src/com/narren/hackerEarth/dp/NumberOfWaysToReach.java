@@ -1,4 +1,4 @@
-package com.narren.hackerEarth;
+package com.narren.hackerEarth.dp;
 /**
  * Problem Statement :
 Given a 2-D matrix with M rows and N columns, find the number of ways to reach cell with coordinates (i,j)
