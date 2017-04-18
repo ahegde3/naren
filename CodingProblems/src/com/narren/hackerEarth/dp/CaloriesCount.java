@@ -45,4 +45,70 @@ http://codeforces.com/problemset/problem/429/B
  */
 public class CaloriesCount {
 
+	public static void main(String[] args) {
+		int[][] calories = new int[][]{
+			{0, 0, 0, 0},
+			{0, 2, 2, 2},
+			{0, 2, 1, 2},
+			{0,2, 2, 2}
+		};
+		System.out.println(getMaxCalories(calories, 4, 4));
+	}
+	static int getMaxCalories(int[][] workout, int N, int M) {
+		// Boy from [1][1] to [i][j]
+		int[][] boy1 = new int[N + 1][M + 1];
+		// Boy from [i][j] to [N][M]
+		int[][] boy2 = new int[N + 1][M + 1];
+		// Girl from [N][1] to [i][j]
+		int[][] girl1 = new int[N + 1][M + 1];
+		// Girl from [i][j] to [1][M]
+		int[][] girl2 = new int[N + 1][M + 1];
+		
+		for(int i = 1; i <= N; i++) {
+			for(int j = 1; j <= M; j++) {
+				boy1[i][j] = Math.max(boy1[i - 1][j], boy1[i][j - 1]) + workout[i][j];
+			}
+		}
+		
+		for(int i = N; i <= 1; i--) {
+			for(int j = M; j <= 1; j--) {
+				boy2[i][j] = Math.max(boy2[i + 1][j], boy2[i][j + 1]) + workout[i][j];
+			}
+		}
+		
+		for(int i = N; i <= 1; i--) {
+			for(int j = 1; j <= 1; j--) {
+				girl1[i][j] = Math.max(girl1[i + 1][j], girl1[i][j + 1]) + workout[i][j];
+			}
+		}
+		
+		for(int i = 1; i <= N; i++) {
+			for(int j = M; j <= M; j++) {
+				girl2[i][j] = Math.max(girl2[i - 1][j], girl2[i][j - 1]) + workout[i][j];
+			}
+		}
+		
+		/**
+		 * Comparing the 4 sequences of the boy and the girl, the boy and girl meet only at one position (i,j), iff
+
+           Boy: (i,j-1)-->(i,j)-->(i,j+1) and Girl: (i+1,j)-->(i,j)-->(i-1,j)
+           or
+           Boy: (i-1,j)-->(i,j)-->(i+1,j) and Girl:  (i,j-1)-->(i,j)-->(i,j+1)
+		 * 
+		 * 
+		 */
+		
+		int maxCalories = 0;
+		for(int i = 1; i <= N ; i++) {
+			for(int j = 1; j <= M; j++) {
+				int c1 = boy1[i][j - 1] + boy2[i][j + 1] + girl1[i + 1][j] + girl2[i - 1][j];
+				
+				int c2 = boy1[i - 1][j] + boy2[i + 1][j] + girl1[i][j - 1] + girl2[i][j + 1];
+				
+				maxCalories = Math.max(maxCalories, Math.max(c1, c2));
+			}
+		}
+		return maxCalories;
+	}
+	
 }
