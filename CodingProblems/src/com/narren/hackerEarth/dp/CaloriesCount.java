@@ -53,7 +53,7 @@ public class CaloriesCount {
 		Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
         int M = sc.nextInt();
-        int[][] workout = new int[N + 1][M + 1];
+        long[][] workout = new long[N + 1][M + 1];
         for(int i = 1; i <= N; i++) {
             for(int j = 1; j <= M; j++) {
                 workout[i][j] = sc.nextInt();
@@ -63,15 +63,15 @@ public class CaloriesCount {
         System.out.println(getMaxCalories(workout, N, M));
 	}
 
-	static int getMaxCalories(int[][] workout, int N, int M) {{
+	static long getMaxCalories(long[][] workout, int N, int M) {{
 		// Boy from [1][1] to [i][j]
-		int[][] boy1 = new int[2 * N][2 * M];
+		long[][] boy1 = new long[2 * N][2 * M];
 		// Boy from [i][j] to [N][M]
-		int[][] boy2 = new int[2 * N][2 * M];
+		long[][] boy2 = new long[2 * N][2 * M];
 		// Girl from [N][1] to [i][j]
-		int[][] girl1 = new int[2 * N][2 * M];
+		long[][] girl1 = new long[2 * N][2 * M];
 		// Girl from [i][j] to [1][M]
-		int[][] girl2 = new int[2 * N][2 * M];
+		long[][] girl2 = new long[2 * N][2 * M];
 
 		for(int i = 1; i <= N; i++) {
 			for(int j = 1; j <= M; j++) {
@@ -107,12 +107,12 @@ public class CaloriesCount {
 		 *
 		 */
 
-		int maxCalories = 0;
+		long maxCalories = 0;
 		for(int i = 2; i <= N ; i++) {
 			for(int j = 2; j <= M; j++) {
-				int c1 = boy1[i][j - 1] + boy2[i][j + 1] + girl1[i + 1][j] + girl2[i - 1][j];
+				long c1 = boy1[i][j - 1] + boy2[i][j + 1] + girl1[i + 1][j] + girl2[i - 1][j];
 
-				int c2 = boy1[i - 1][j] + boy2[i + 1][j] + girl1[i][j - 1] + girl2[i][j + 1];
+				long c2 = boy1[i - 1][j] + boy2[i + 1][j] + girl1[i][j - 1] + girl2[i][j + 1];
 
 				maxCalories = Math.max(maxCalories, Math.max(c1, c2));
 			}
