@@ -93,7 +93,7 @@ public class CaloriesCount {
 
 		for(int i = 1; i <= N; i++) {
 			for(int j = M; j >= 1; j--) {
-				girl2[i][j] = Math.max(girl2[i - 1][j], girl2[i][j - 1]) + workout[i][j];
+				girl2[i][j] = Math.max(girl2[i - 1][j], girl2[i][j + 1]) + workout[i][j];
 			}
 		}
 
@@ -108,8 +108,8 @@ public class CaloriesCount {
 		 */
 
 		long maxCalories = 0;
-		for(int i = 2; i <= N ; i++) {
-			for(int j = 2; j <= M; j++) {
+		for(int i = 2; i < N ; i++) {
+			for(int j = 2; j < M; j++) {
 				long c1 = boy1[i][j - 1] + boy2[i][j + 1] + girl1[i + 1][j] + girl2[i - 1][j];
 
 				long c2 = boy1[i - 1][j] + boy2[i + 1][j] + girl1[i][j - 1] + girl2[i][j + 1];
