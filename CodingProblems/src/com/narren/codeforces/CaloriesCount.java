@@ -1,4 +1,4 @@
-package com.narren.hackerEarth.dp;
+package com.narren.codeforces;
 
 import java.util.Scanner;
 
