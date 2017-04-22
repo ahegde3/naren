@@ -15,6 +15,15 @@ https://leetcode.com/problems/edit-distance/#/description
  *
  */
 public class EditDistance {
+	
+	public static void main(String[] args) {
+		EditDistance ed = new EditDistance();
+		System.out.println(ed.minDistance("zoologicoarchaeologist", "zoogeologist"));
+		/**
+		 * zoologicoarchaeologist
+		 * zoogeologist
+		 */
+	}
 	public int minDistance(String word1, String word2) {
 		char[] source = word1.toCharArray();
 		char[] destination = word2.toCharArray();
@@ -32,10 +41,13 @@ public class EditDistance {
 		
 		for(int i = 1; i <= s; i++) {
 			for(int j = 1; j <= d; j++) {
-				if(source[i][j] == destination[i][j]) {
-					
+				if(source[i - 1] == destination[j - 1]) {
+					dp[i][j] = dp[i - 1][j - 1];
+				} else {
+					dp[i][j] = 1 + Math.min(dp[i - 1][j], Math.min(dp[i][j - 1], dp[i - 1][j - 1]));
 				}
 			}
 		}
+		return dp[s][d];
 	}
 }
