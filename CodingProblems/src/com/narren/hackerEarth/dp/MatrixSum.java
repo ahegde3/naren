@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class MatrixSum {
 
 	static int[][] dp;
-	
+
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
@@ -17,11 +17,12 @@ public class MatrixSum {
 				in[i][j] = sc.nextInt();
 			}
 		}
+		dp[0][0] = in[0][0];
 		int cases = sc.nextInt();
 		while(cases > 0) {
 			int x = sc.nextInt();
 			int y = sc.nextInt();
-			System.out.println(findSum(in, x, y));
+			System.out.println(findSum(in, x -1 , y - 1));
 			cases--;
 		}
 	}
@@ -29,9 +30,22 @@ public class MatrixSum {
 		if(x < 0 || y < 0 || x >= matrix.length || y >= matrix[0].length) {
 			return 0;
 		}
-		
+
 		if(dp[x][y] > 0) {
 			return dp[x][y];
 		}
+		int px = x, py = y;
+		if(x == 0) {
+			py--;
+		} else if(y == 0) {
+			px--;
+			py = matrix[0].length - 1;
+		} else {
+			py--;
+		}
+
+		int n = findSum(matrix, px, py);
+		dp[x][y] = n + matrix[x][y];
+		return dp[x][y];
 	}
 }
