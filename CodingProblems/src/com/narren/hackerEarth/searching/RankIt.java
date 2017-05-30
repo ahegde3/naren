@@ -63,14 +63,30 @@ public class RankIt {
 		int q = sc.nextInt();
 		Arrays.sort(arr);
 		while(q > 0) {
-			
+			int n = sc.nextInt();
+			System.out.println(findRank(arr, n, 0, arr.length - 1));
 			q--;
 		}
 	}
 	
-	int findRank(long[] arr, int q) {
-		int s = 0;
-		int e = arr.length - 1;
+	static int findRank(long[] arr, int q, int s, int e) {
+        if(s >= e) {
+            return s;
+        }
+        int mid = (e - s) / 2;
+        if(q == arr[s]) {
+            return s;
+        } else if(q == arr[mid]) {
+            return mid;
+        } else if(q == arr[e]) {
+            return e;
+        }
+
+        if(q < mid) {
+            return findRank(arr, q, s, mid);
+        } else {
+            return findRank(arr, q, mid, e);
+        }
 		
 	}
 }
