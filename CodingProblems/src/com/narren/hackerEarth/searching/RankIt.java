@@ -73,16 +73,16 @@ public class RankIt {
         if(s >= e) {
             return s;
         }
-        int mid = (e - s) / 2;
+        int mid = (s + e) >>> 1;
         if(q == arr[s]) {
-            return s;
+            return s + 1;
         } else if(q == arr[mid]) {
-            return mid;
+            return mid + 1;
         } else if(q == arr[e]) {
-            return e;
+            return e + 1;
         }
 
-        if(q < mid) {
+        if(q < arr[mid]) {
             return findRank(arr, q, s, mid);
         } else {
             return findRank(arr, q, mid, e);
