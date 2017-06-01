@@ -28,30 +28,52 @@ Explanation: The two heater was placed in the position 1 and 4. We need to use r
  *
  */
 public class Heaters {
-	 
+
 	public static void main(String[] args) {
-		System.out.println(new Heaters().findRadius(new int[]{1,2,3,4}, new int[]{1,4}));
+				System.out.println(new Heaters().findRadius(
+						new int[]{2824,6226,9849,1441,4702,1010,4578,4587},
+						new int[]{8235,1154,7844,742,1148,1375,4412,165,8233,1435}));
+//		System.out.println(new Heaters().findRadius(
+//				new int[]{3, 4, 2, 7},
+//				new int[]{13, 12, 1}));
 	}
-    int getMin(int house, int[] heaters, int s, int e) {
-        if(s < e) {
-            int m = (s + e) >>> 1;
-            if(house == heaters[m] || house == heaters[s] || house == heaters[e]) {
-                return 0;
-            }
-            if(house > heaters[m]) {
-                return getMin(house, heaters, m + 1, e);
-            } else {
-                return getMin(house, heaters, s, m - 1);
-            }
-        }
-        return Math.min(Math.abs(house - heaters[s]), Math.abs(house - heaters[e]));
-    }
-    public int findRadius(int[] houses, int[] heaters) {
-        Arrays.sort(heaters);
-        int min = -1;
-        for(int house : houses) {
-            min = Math.max(min, getMin(house, heaters, 0, heaters.length - 1));
-        }
-        return min;
-    }
+	int getMin(int house, int[] heaters, int s, int e) {
+		if(s < e) {
+			if(e - s == 1) {
+				return Math.min(Math.abs(house - heaters[s]), Math.abs(house - heaters[e]));
+			}
+			int m = (s + e) >>> 1;
+			if(house == heaters[m] || house == heaters[s] || house == heaters[e]) {
+				return 0;
+			}
+
+
+			if(house < heaters[m]) {
+				// left half
+				return getMin(house, heaters, s, m);
+			}
+			if(house > heaters[m]) {
+				// right half
+				return getMin(house, heaters, m, e);
+			}
+
+			if(house < heaters[s]) {
+				return Math.abs(house - heaters[s]);
+			}
+			if(house > heaters[e]) {
+				return Math.abs(house - heaters[s]);
+			}
+		}
+
+		return Math.min(Math.abs(house - heaters[s]), Math.abs(house - heaters[e]));
+	}
+	public int findRadius(int[] houses, int[] heaters) {
+		Arrays.sort(heaters);
+		// [16531729, 74243042, 114807987, 115438165, 137522503, 143542612, 441282327, 784484492, 823378840, 823564440]
+		int min = -1;
+		for(int house : houses) {
+			min = Math.max(min, getMin(house, heaters, 0, heaters.length - 1));
+		}
+		return min;
+	}
 }
