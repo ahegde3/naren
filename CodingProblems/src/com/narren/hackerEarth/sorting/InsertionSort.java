@@ -70,12 +70,14 @@ public class InsertionSort {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
 		int[] arr = new int[N];
+		int[] bk = new int[N];
 		for(int i = 0; i < N; i++) {
 			arr[i] = sc.nextInt();
+			bk[i] = arr[i];
 		}
 		insertionSort(arr);
-		for(int i : arr) {
-			System.out.print(i + " ");
+		for(int i : bk) {
+			System.out.print((binarySearch(arr, 0, arr.length - 1, i) + 1) + " ");
 		}
 	}
 	
@@ -95,5 +97,22 @@ public class InsertionSort {
 		int t = arr[i];
 		arr[i] = arr[j];
 		arr[j] = t;
+	}
+	
+	static int binarySearch(int[] arr, int s, int e, int num) {
+		int m = (s + e) >>> 1;
+		if(num == arr[s]) {
+			return s;
+		} else if(num == arr[e]) {
+			return e;
+		} else if(num == arr[m]) {
+			return m;
+		}
+		
+		if(num < arr[m]) {
+			return binarySearch(arr, s, m, num);
+		} else {
+			return binarySearch(arr, m, e, num);
+		}
 	}
 }
