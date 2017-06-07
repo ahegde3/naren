@@ -47,7 +47,7 @@ public class MergeSort {
 			 if(arr[s1] > arr[s2]) {
 				 temp[index++] = arr[s2];
 				 s2++;
-				 System.out.println("*");
+				 System.out.println((mid + 1 - start));
 			 } else {
 				 temp[index++] = arr[s1];
 				 s1++;
