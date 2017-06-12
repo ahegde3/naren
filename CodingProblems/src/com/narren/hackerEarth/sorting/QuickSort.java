@@ -1,19 +1,20 @@
 package com.narren.hackerEarth.sorting;
 
+import java.util.Scanner;
+
 public class QuickSort {
 
-	void printArray(int[] arr) {
-        for(int i : arr) {
+	void printArray(long[] arr) {
+        for(long i : arr) {
         	System.out.print(i + " ");
         }
-        System.out.println();
     }
-    int partitionIndex(int[] arr, int s, int e) {
+    int partitionIndex(long[] arr, int s, int e) {
         int partitionIndex = s;
-        int pivot = arr[e];
+        long pivot = arr[e];
 
         for(int i = s; i < e; i++) {
-            if(arr[partitionIndex] < pivot) {
+            if(arr[i] < pivot) {
                 swap(arr, i, partitionIndex);
                 partitionIndex++;
             }
@@ -24,22 +25,28 @@ public class QuickSort {
         return partitionIndex;
     }
 
-    void quickSort(int[] arr, int start, int end) {
+    void quickSort(long[] arr, int start, int end) {
         if(start < end) {
             int i = partitionIndex(arr, start, end);
             quickSort(arr, start, i - 1);
             quickSort(arr, i + 1, end);
         }
     }
-    void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
+    void swap(long[] arr, int i, int j) {
+        long temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
     
     public static void main(String[] args) {
+    	Scanner sc = new Scanner(System.in);
+    	int N = sc.nextInt();
+    	long[] arr = new long[N];
+    	for(int i = 0; i < N; i++) {
+    		arr[i] = sc.nextLong();
+    	}
 		QuickSort qc = new QuickSort();
-		int[] arr = new int[]{5, 4, 3, 2, 7, 1};
 		qc.quickSort(arr, 0, arr.length - 1);
+		qc.printArray(arr);
 	}
 }
