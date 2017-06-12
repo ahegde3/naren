@@ -58,6 +58,5 @@ public class MergeSort {
 		 for(int i = start; i <= end; i++) {
 			 arr[i] = temp[index++];
 		 }
-		 
 	 }
 }
