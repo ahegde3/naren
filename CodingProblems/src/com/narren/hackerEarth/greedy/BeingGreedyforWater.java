@@ -18,52 +18,54 @@ SAMPLE OUTPUT
  *
  */
 public class BeingGreedyforWater {
-	
-	static int maxBotttle = 0; 
+
+	static long maxBotttle = 0; 
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int T = sc.nextInt();
-		
+
 		while(T > 0) {
 			int N = sc.nextInt();
 			int X = sc.nextInt();
-			int[] bottles = new int[N];
+			long[] bottles = new long[N];
 
 			for(int i = 0; i < N; i++) {
 				bottles[i] = sc.nextInt();
 			}
 			Arrays.sort(bottles);
 			for(int i = 0; i < N; i++) {
-				fillWater(bottles, i, 0, X, 0);				
+				if(bottles[i] > X) {
+					break;
+				}
+				fillWater(bottles, i, 0, X, 1);
 			}
 			System.out.println(maxBotttle);
 			maxBotttle = 0;
-			
+
 			T--;
 		}
 	}
-	
-	static int fillWater(int[] b, int index, int sum, int X, int bottles) {
-		if(index >= b.length) {
-			return sum;
-		}
-		if(b[index] + sum == X) {
-			maxBotttle = Math.max(maxBotttle, bottles + 1);
-			return 0;
-		}
-		
-		if(b[index] + sum > X) {
-			return -2;
-		}
-		int c = fillWater(b, index + 1, sum + b[index], X, bottles + 1);
-		
-		if(c == -2) {
-			return index + 1;
-		} else if(c == 0) {
-			return index + 1;
-		} else {
-			return fillWater(b, c, sum + b[index], X, bottles + 1);
-		}
-	}
+
+    static int fillWater(long[] b, int index, long sum, int X, int bottles) {
+    	System.out.println(index);
+        if(index >= b.length) {
+            return -1;
+        }
+        if(b[index] + sum == X) {
+            maxBotttle = Math.max(maxBotttle, bottles);
+            return 0;
+        }
+
+        if(b[index] + sum > X) {
+            return -2;
+        }
+        for(int i = index + 1; i < b.length; i++) {
+        	int c = fillWater(b, i, sum + b[index], X, bottles + 1);
+            if(c == -2 || c == -1 || c == 0) {
+                return 1;
+            }
+        }
+        return 1;
+    }
 }
