@@ -13,5 +13,20 @@ Design an algorithm to find the maximum profit. You may complete as many transac
  *
  */
 public class BestTimetoBuyandSellStockII {
-
+	public int maxProfit(int[] prices) {
+		int curMin = Integer.MAX_VALUE;
+		int profit = 0;
+		for(int i = 0; i < prices.length; i++) {
+			curMin = Math.min(curMin, prices[i]);
+			if(prices[i] > curMin) {
+				if(i + 1 < prices.length && prices[i] > prices[i + 1]) {
+					profit += prices[i] - curMin;
+					curMin = Integer.MAX_VALUE;
+				} else if(i == prices.length - 1) {
+					profit += prices[i] - curMin;
+				}
+			}
+		}
+		return profit;
+	}
 }
