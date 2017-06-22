@@ -30,19 +30,11 @@ public class BestTimetoBuyandSellStock {
 	
 	public int maxProfit(int[] prices) {
 		int maxProfit = 0;
-		int buyingCost = Integer.MAX_VALUE;
-		int sellCost = 0;
-
-		for(int i = 0; i < prices.length; i++) {
-			if(buyingCost > prices[i]) {
-				buyingCost = prices[i];
-				sellCost = prices[i];
-			} else {
-				sellCost = Math.max(sellCost, prices[i]);
-			}
-			maxProfit = Math.max(maxProfit, (sellCost - buyingCost));
+		int min = Integer.MAX_VALUE;
+		for(int p : prices) {
+			min = Math.min(min, p);
+			maxProfit = Math.max(maxProfit, p - min);
 		}
-		
 		return maxProfit;
 	}
 }
