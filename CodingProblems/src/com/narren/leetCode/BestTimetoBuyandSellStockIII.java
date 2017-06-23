@@ -19,33 +19,14 @@ public class BestTimetoBuyandSellStockIII {
 		System.out.println(new BestTimetoBuyandSellStockIII().maxProfit(new int[]{12, 5}));
 	}
 	public int maxProfit(int[] prices) {
-		if(prices.length < 2) {
-			return 0;
-		}
-		return maxProfit(prices, 2);
+		/**
+		 * Formula
+		 * p[t][i] = max {p[t][i - 1] (no transaction),
+		 *                 
+		 *                max(p[i] - p[j] + p[t - 1][j]), where 0 <= j < i  
+		 *                            
+		 *               }
+		 */
 	}
 	
-	int maxProfit(int[] prices, int k) {
-		if(k > (prices.length / 2)) {
-			int maxProfit = 0;
-			for(int i = 1; i < prices.length; i++) {
-				if(prices[i] - prices[i - 1] > 0) {
-					maxProfit += prices[i] - prices[i - 1];
-				}
-			}
-			return maxProfit;
-		}
-
-		int[][] T = new int[k + 1][prices.length];
-		
-		for(int i = 1; i <= k; i++) {
-			int maxDiff = Integer.MIN_VALUE;
-			for(int j = 1; j < prices.length; j++) {
-				maxDiff = Math.max(maxDiff, T[i - 1][j - 1] - prices[j - 1]);
-				T[i][j] = Math.max(T[i][j - 1], (maxDiff + prices[j]));
-			}
-		}
-		
-		return T[k][prices.length - 1];
-	}
 }
