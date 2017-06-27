@@ -18,13 +18,29 @@ Multiplication of any three numbers in the input won't exceed the range of 32-bi
  *
  */
 public class MaximumProductofThreeNumbers {
+	
 	public int maximumProduct(int[] nums) {
-		Arrays.sort(nums);
-		int res = 1;
-		for(int i = nums.length - 1; i >= 0; i--) {
-			res *= nums[i];
+			
+		if(nums.length == 3) {
+			return nums[0] * nums[1] * nums[2];
 		}
-
-		return res;
+		
+		if(nums.length < 6) {
+			int tres = Integer.MIN_VALUE;
+			for(int i = 0; i < nums.length; i++) {
+				for(int j = i + 1; j < nums.length; j++) {
+					for(int k = j + 1; k < nums.length; k++) {
+						tres = Math.max(tres, nums[i] * nums[j] * nums[k]);
+					}
+				}
+			}
+			return tres;
+		} else {
+			Arrays.sort(nums);
+			
+			int n1 = nums[0] * nums[1] * nums[nums.length - 1];
+			int n2 = nums[nums.length - 3] * nums[nums.length - 2] * nums[nums.length - 1];
+			return Math.max(n1, n2);
+		}
 	}
 }
