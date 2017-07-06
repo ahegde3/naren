@@ -19,29 +19,31 @@ Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer 
  *
  */
 public class LongestSubstringWithoutRepeatingCharacters {
-	public int lengthOfLongestSubstring(String s) {
-		if(s == null || s.isEmpty()) {
-			return 0;
-		}
-		char[] c = s.toCharArray();
-		int maxLen = 1;
-		Map<Character, Integer> chars;
+	public int lengthOfLongestSubstring(String str) {
+		int s = 0;
+        int e = 0;
+        if(str == null || str.isEmpty()) {
+            return 0;
+        }
+        char[] charArray = str.toCharArray();
+        int maxLen = 1;
+        Map<Character, Integer> chars = new HashMap<Character, Integer>();
+        for(char c : charArray) {
+            if(chars.containsKey(c)) {
+                maxLen = Math.max(maxLen, e - s);
+                s++;
+                while(chars.get(charArray[s]) > 1 && s < e) {
+                    chars.put(c, chars.get(c) - 1);
+                    s++;
+                }
 
-		for(int i = 0; i < c.length; i++) {
-			chars = new HashMap<Character, Integer>();
-			chars.put(c[i], 1);
-			for(int j = i + 1; j < c.length; j++) {
-				if(chars.containsKey(c[j])) {
-					maxLen = Math.max(maxLen, j - i);
-					break;
-				}
-				if(j == c.length - 1) {
-					return Math.max(maxLen,j - i + 1);
-				}
-				chars.put(c[j], 1);
-			}
-		}
-
-		return maxLen;
+                e++;
+            } else {
+                chars.put(c, chars.get(c) + 1);
+                e++;
+            }
+        }
+        maxLen = Math.max(maxLen, e - s);
+        return maxLen;
 	}
 }
