@@ -19,31 +19,42 @@ Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer 
  *
  */
 public class LongestSubstringWithoutRepeatingCharacters {
+	
+	public static void main(String[] args) {
+		LongestSubstringWithoutRepeatingCharacters lcr = new LongestSubstringWithoutRepeatingCharacters();
+		System.out.println(lcr.lengthOfLongestSubstring("aab"));
+	}
 	public int lengthOfLongestSubstring(String str) {
 		int s = 0;
-        int e = 0;
-        if(str == null || str.isEmpty()) {
-            return 0;
-        }
-        char[] charArray = str.toCharArray();
-        int maxLen = 1;
-        Map<Character, Integer> chars = new HashMap<Character, Integer>();
-        for(char c : charArray) {
-            if(chars.containsKey(c)) {
-                maxLen = Math.max(maxLen, e - s);
-                s++;
-                while(chars.get(charArray[s]) > 1 && s < e) {
-                    chars.put(c, chars.get(c) - 1);
-                    s++;
-                }
+		int e = 0;
+		if(str == null || str.isEmpty()) {
+			return 0;
+		}
+		char[] charArray = str.toCharArray();
+		int maxLen = 1;
+		int maxChar = 1;
+		Map<Character, Integer> chars = new HashMap<Character, Integer>();
+		for(char c : charArray) {
+			if(chars.containsKey(c)) {
+				chars.put(c, chars.getOrDefault(c, 0) + 1);
+				maxChar = Math.max(maxChar, chars.get(c));
+				maxLen = Math.max(maxLen, e - s);
+				s++;
+				while(chars.get(charArray[s]) > 1 && s < e) {
+					chars.put(c, chars.get(c) - 1);
+					maxChar -= 1;
+					s++;
+				}
+				e++;
+			} else {
+				chars.put(c, chars.getOrDefault(c, 0) + 1);
+				e++;
+			}
+		}
+		if(maxChar < 2) {
+			maxLen = Math.max(maxLen, e - s);	
+		}
 
-                e++;
-            } else {
-                chars.put(c, chars.get(c) + 1);
-                e++;
-            }
-        }
-        maxLen = Math.max(maxLen, e - s);
-        return maxLen;
+		return maxLen;
 	}
 }
