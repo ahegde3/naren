@@ -25,47 +25,47 @@ public class LongestPalindromicSubstring {
 		System.out.println(lps.longestPalindrome("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
 	}
 	public String longestPalindrome(String s) {
-		int[] index = new int[2];
 		char[] chars = s.toCharArray();
+		boolean[][] table = new boolean[chars.length][chars.length];
+		int longestPalindrome = 0;
+		int longestPalindromeStart = -1;
+		String longestPalindromeStr = "";
+		
 		for(int i = 0; i < chars.length; i++) {
-			for(int j = chars.length - 1; j > i; j--) {
-				if(isPalindrome(chars, i, j)) {
-					if(i == 0 && j == chars.length - 1) {
-						return s;
-					}
-					if(j - i > index[1] - index[0]) {
-						index[0] = i;
-						index[1] = j;
-						if(j == chars.length - 1) {
-							String ret = "";
-							for(int k = index[0]; k <= index[1]; k++) {
-								ret += chars[k];
-							}
-							return ret;		
-						}
-						break;
-					}
+			table[i][i] = true;
+			if(1 > longestPalindrome) {
+				longestPalindrome = 1;
+				longestPalindromeStart = i;
+			}
+		}
+		for(int i = 0; i < chars.length - 1; i++) {
+			if(chars[i] == chars[i + 1]) {
+				table[i][i + 1] = true;
+				if((i + 1 - i + 1) > longestPalindrome) {
+					longestPalindrome = 2;
+					longestPalindromeStart = i;
+				}	
+			}
+			
+		}
+		
+		for(int k = 2; k < chars.length; k++) {
+			for(int i = 0; i + k < chars.length; i++) {
+				int j = i + k;
+				if(chars[i] == chars[j] && table[i + 1][j - 1]) {
+					table[i][j] = true;
+					if((j - i + 1) > longestPalindrome) {
+						longestPalindrome = j - i + 1;
+						longestPalindromeStart = i;
+					}	
 				}
-
 			}
 		}
-
-		String ret = "";
-		for(int i = index[0]; i <= index[1]; i++) {
-			ret += chars[i];
+		for(int i = longestPalindromeStart; i < longestPalindromeStart + longestPalindrome; i++) {
+			longestPalindromeStr += chars[i];
 		}
-		return ret;
+		return longestPalindromeStr;
 	}
 
 
-	boolean isPalindrome(char[] c, int s, int e) {
-		while(s < e) {
-			if(c[s] != c[e]) {
-				return false;
-			}
-			s++;
-			e--;
-		}
-		return true;
-	}
 }
