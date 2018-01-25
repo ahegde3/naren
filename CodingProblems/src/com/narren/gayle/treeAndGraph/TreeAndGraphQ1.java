@@ -8,7 +8,7 @@ public class TreeAndGraphQ1 {
 	 * @param b
 	 * @return
 	 */
-	GraphNode getRoute(GraphNode a, GraphNode b) {
+	Graph getRoute(Graph a, Graph b) {
 		if(a == null || b == null || a.visited) {
 			return null;
 		}
@@ -18,9 +18,9 @@ public class TreeAndGraphQ1 {
 		
 		a.visited = true;
 		
-		GraphNode ret = null;
+		Graph ret = null;
 		
-		for(GraphNode n : a.neighbors) {
+		for(Graph n : a.neighbors) {
 			ret = getRoute(n, b);
 		}
 		
