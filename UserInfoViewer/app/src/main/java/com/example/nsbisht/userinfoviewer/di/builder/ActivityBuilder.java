@@ -1,7 +1,8 @@
 package com.example.nsbisht.userinfoviewer.di.builder;
 
-import com.example.nsbisht.userinfoviewer.list.UserListActivity;
-import com.example.nsbisht.userinfoviewer.list.UserListActivityModule;
+
+import com.example.nsbisht.userinfoviewer.ui.list.UserListActivity;
+import com.example.nsbisht.userinfoviewer.ui.list.UserListActivityModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.nsbisht.userinfoviewer.list.UserViewModel" />
+            type="com.example.nsbisht.userinfoviewer.ui.list.UserViewModel" />
 
     </data>
     <android.support.design.widget.CoordinatorLayout

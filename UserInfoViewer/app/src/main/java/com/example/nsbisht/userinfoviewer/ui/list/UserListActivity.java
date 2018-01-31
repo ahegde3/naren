@@ -1,4 +1,4 @@
-package com.example.nsbisht.userinfoviewer.list;
+package com.example.nsbisht.userinfoviewer.ui.list;
 
 import android.os.Bundle;
 

@@ -1,4 +1,4 @@
-package com.example.nsbisht.userinfoviewer.list;
+package com.example.nsbisht.userinfoviewer.ui.list;
 
 import com.example.nsbisht.userinfoviewer.base.BaseViewModel;
 import com.example.nsbisht.userinfoviewer.data.local.db.DataManager;
