@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="card_height">100dp</dimen>
+    <dimen name="md_keylines">16dp</dimen>
+    <dimen name="md_less_margin">6dp</dimen>
+</resources>
