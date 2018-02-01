@@ -35,6 +35,7 @@ public class TinyUrl {
 		turl.encodeUrl("https://twitter.com/IISuperwomanII?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor");
 		turl.encodeUrl("https://twitter.com/IISuperwomanII?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Euthor");
 		turl.encodeUrl("https://twitter.com/IISuperwomanII?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eathor");
+		turl.encodeUrl("https://twitter.com/IISuperwomanII?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eathor");
 		turl.encodeUrl("https://twitter.com");
 	}
 
