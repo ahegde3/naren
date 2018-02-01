@@ -11,7 +11,7 @@ public class TinyUrl {
 			md = MessageDigest.getInstance("MD5");
 			byte[] thedigest = md.digest(url.getBytes());
 			long value = 0;
-			for (int i = 0; i < 6; i++) {
+			for (int i = 0; i < 5; i++) {
 			   value = (value << 8) + (thedigest[i] & 0xff);
 			}
 //			System.out.println(value);
