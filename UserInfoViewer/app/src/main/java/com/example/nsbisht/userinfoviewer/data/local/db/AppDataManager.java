@@ -20,12 +20,10 @@ import io.reactivex.Observable;
 public class AppDataManager implements DataManager {
 
     private final DBHelper mDBHelper;
-    private final Context mContext;
 
     @Inject
-    public AppDataManager(DBHelper mDBHelper, Context mContext) {
+    public AppDataManager(DBHelper mDBHelper) {
         this.mDBHelper = mDBHelper;
-        this.mContext = mContext;
     }
 
 

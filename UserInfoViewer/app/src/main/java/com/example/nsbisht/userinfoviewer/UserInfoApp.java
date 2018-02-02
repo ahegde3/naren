@@ -3,6 +3,8 @@ package com.example.nsbisht.userinfoviewer;
 import android.app.Activity;
 import android.app.Application;
 
+import com.example.nsbisht.userinfoviewer.di.component.DaggerAppComponent;
+import com.example.nsbisht.userinfoviewer.di.module.AppModule;
 
 import javax.inject.Inject;
 
@@ -24,6 +26,7 @@ public class UserInfoApp extends Application implements HasActivityInjector {
         super.onCreate();
 
         DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
                 .build()
                 .inject(this);
     }

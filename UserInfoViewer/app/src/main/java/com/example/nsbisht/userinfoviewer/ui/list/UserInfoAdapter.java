@@ -63,4 +63,13 @@ public class UserInfoAdapter extends RecyclerView.Adapter<UserInfoAdapter.ViewHo
 
         }
     }
+
+    public void clearItems() {
+        mUserInfoList.clear();
+    }
+
+    public void addItems(List<UserInfo> userInfo) {
+        mUserInfoList.addAll(userInfo);
+        notifyDataSetChanged();
+    }
 }
