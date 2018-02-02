@@ -31,7 +31,7 @@ public class UserViewModel extends BaseViewModel<UserNavigator> {
     }
 
     public void onFabButtonClicked() {
-
+        getNavigator().openDetailView();
     }
 
     public MutableLiveData<List<UserInfo>> getUserInfoListLiveData() {

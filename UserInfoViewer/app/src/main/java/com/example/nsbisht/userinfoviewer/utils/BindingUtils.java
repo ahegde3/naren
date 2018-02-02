@@ -1,6 +1,7 @@
 package com.example.nsbisht.userinfoviewer.utils;
 
 import android.databinding.BindingAdapter;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.nsbisht.userinfoviewer.data.local.db.entity.UserInfo;
@@ -22,5 +23,10 @@ public class BindingUtils {
             adapter.clearItems();
             adapter.addItems(userInfos);
         }
+    }
+
+    @BindingAdapter("integertext")
+    public static void setText(TextInputEditText view, int value) {
+        view.setText(Integer.toString(value));
     }
 }

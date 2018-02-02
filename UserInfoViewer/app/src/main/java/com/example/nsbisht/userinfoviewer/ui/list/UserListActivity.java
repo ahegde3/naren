@@ -1,6 +1,7 @@
 package com.example.nsbisht.userinfoviewer.ui.list;
 
 import android.arch.lifecycle.Observer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,6 +11,7 @@ import com.example.nsbisht.userinfoviewer.R;
 import com.example.nsbisht.userinfoviewer.base.BaseActivity;
 import com.example.nsbisht.userinfoviewer.data.local.db.entity.UserInfo;
 import com.example.nsbisht.userinfoviewer.databinding.ActivityMainBinding;
+import com.example.nsbisht.userinfoviewer.ui.user.UserInfoActivity;
 
 import java.util.List;
 
@@ -50,7 +52,10 @@ public class UserListActivity extends BaseActivity<ActivityMainBinding, UserView
 
     @Override
     public void openDetailView() {
-
+        Intent intent = new Intent();
+        intent.setClass(this, UserInfoActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void setUp() {

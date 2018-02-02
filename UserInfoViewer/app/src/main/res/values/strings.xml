@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">UserInfoViewer</string>
     <string name="action_settings">Settings</string>
+    <string name="add_info">Add User</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="age">Add Age</string>
+    <string name="address">Address</string>
+    <string name="save">Save</string>
 </resources>
