@@ -1,7 +1,8 @@
-package com.example.nsbisht.userinfoviewer.data.local.db;
+package com.example.nsbisht.userinfoviewer.data;
 
 import android.content.Context;
 
+import com.example.nsbisht.userinfoviewer.data.local.db.DBHelper;
 import com.example.nsbisht.userinfoviewer.data.local.db.entity.UserInfo;
 
 import java.util.List;
