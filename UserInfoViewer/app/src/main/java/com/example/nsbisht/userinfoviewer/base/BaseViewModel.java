@@ -31,4 +31,8 @@ public class BaseViewModel <N> extends ViewModel {
         super.onCleared();
     }
 
+    public DataManager getDataManager() {
+        return mDataManager;
+    }
+
 }

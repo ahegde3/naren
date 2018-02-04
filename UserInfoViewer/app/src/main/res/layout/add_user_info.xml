@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.nsbisht.userinfoviewer.ui.user.UserAddViewModel" />
+
+    </data>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="120dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="120dp"
+                app:cardCornerRadius="7dp"
+                app:cardElevation="22dp">
+
+                <TextView
+                    android:id="@+id/auth_page_heading"
+                    style="@style/TextStyle.Heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/add_info"
+                    android:textColor="@color/colorPrimary"
+                    android:textAllCaps="true"
+                    android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/gray"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/first_name_text"
+                                style="@style/TextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:background="@drawable/input_border_bottom"
+                                android:cursorVisible="true"
+                                android:gravity="center|left|bottom"
+                                android:hint="@string/first_name"
+                                android:inputType="textEmailAddress"
+                                android:maxLength="50"
+                                android:text="@={viewModel.firstName}"
+                                android:paddingBottom="10dp"
+                                android:textColor="@color/black_effective"
+                                android:textSize="18sp" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/last_name_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/last_name"
+                            android:textColorHint="@color/gray"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                            app:passwordToggleEnabled="true">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/last_name_edit_text"
+                                style="@style/TextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="30dp"
+                                android:background="@drawable/input_border_bottom"
+                                android:cursorVisible="true"
+                                android:gravity="center|left|bottom"
+                                android:maxLength="50"
+                                android:paddingBottom="10dp"
+                                android:text="@={viewModel.lastName}"
+                                android:textColor="@color/black_effective"
+                                android:textSize="18sp" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/age_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/age"
+                            android:textColorHint="@color/gray"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                            app:passwordToggleEnabled="true">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/age_edit_text"
+                                style="@style/TextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="30dp"
+                                android:background="@drawable/input_border_bottom"
+                                android:cursorVisible="true"
+                                android:gravity="center|left|bottom"
+                                android:maxLength="50"
+                                android:paddingBottom="10dp"
+                                android:inputType="number"
+                                app:integertext="@={viewModel.age}"
+                                android:textColor="@color/black_effective"
+                                android:textSize="18sp" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/address_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/address"
+                            android:textColorHint="@color/gray"
+                            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout"
+                            app:passwordToggleEnabled="true">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/address_edit_text"
+                                style="@style/TextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="30dp"
+                                android:background="@drawable/input_border_bottom"
+                                android:cursorVisible="true"
+                                android:gravity="center|left|bottom"
+                                android:maxLength="50"
+                                android:text="@={viewModel.address}"
+                                android:paddingBottom="10dp"
+                                android:textColor="@color/black_effective"
+                                android:textSize="18sp" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/save_user_info"
+                            style="@style/Button.Primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="15dp"
+                            android:layout_marginTop="15dp"
+                            android:text="@string/save"
+                            android:textAllCaps="true"
+                            android:onClick="@{() -> viewModel.saveUserInfo()}"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+    </FrameLayout>
+</layout>
