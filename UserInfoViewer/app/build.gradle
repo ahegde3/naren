@@ -71,3 +71,4 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.lifecycle"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycle"
 }
+apply plugin: 'com.google.gms.google-services'
