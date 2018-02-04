@@ -1,58 +1,27 @@
 {
   "project_info": {
-    "project_number": "34307893967",
-    "firebase_url": "https://park-smart-and-locate.firebaseio.com",
-    "project_id": "park-smart-and-locate",
-    "storage_bucket": "park-smart-and-locate.appspot.com"
+    "project_number": "43536804828",
+    "firebase_url": "https://userinfoviewer.firebaseio.com",
+    "project_id": "userinfoviewer",
+    "storage_bucket": "userinfoviewer.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:34307893967:android:a6904437212bf193",
-        "android_client_info": {
-          "package_name": "com.bishtlabs.app.parksmartandlocate"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "34307893967-vslfendlhnvqg6fs80hv32djfjhi5qmu.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBsLmEmOD2CBxlj5IjMzKCNPUUkPoWBRjY"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:34307893967:android:52d2730c8e13a3a6",
+        "mobilesdk_app_id": "1:43536804828:android:52d2730c8e13a3a6",
         "android_client_info": {
           "package_name": "com.example.nsbisht.userinfoviewer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "34307893967-vslfendlhnvqg6fs80hv32djfjhi5qmu.apps.googleusercontent.com",
+          "client_id": "43536804828-78igfvp359eq7i0qp5m3knp8n80mie5o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBsLmEmOD2CBxlj5IjMzKCNPUUkPoWBRjY"
+          "current_key": "AIzaSyDg9j6ZL5DY5IsNC5WQePzipm80BHssSHg"
         }
       ],
       "services": {
