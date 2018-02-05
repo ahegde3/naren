@@ -12,8 +12,8 @@ For example, with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6,
 public class RotateArray {
 
 	public static void main(String[] args) {
-		int nums[] = new int[]{1,2,3,4,5};
-		/*int[] res = */rotateArray(nums, 3);
+		int nums[] = new int[]{1,2,3};
+		/*int[] res = */rotateArray(nums, 2);
 		for(int i : nums) {
 			System.out.print(i + " ");			
 		}
@@ -52,17 +52,43 @@ public class RotateArray {
 			k %= nums.length;
 		}
 
-		for(int i = 0; i < nums.length; i++) {
-			if(i - k < 0 || i + k >= nums.length) {
-				int replaceIndex = k + i;
-				if(replaceIndex >= nums.length) {
-					replaceIndex -= nums.length;
-				}
-				if(i == 0 || k % i != 0) {
-					swap(nums, i, replaceIndex);    
-				} 
-			} 
-		}
+		
+        if(k <= nums.length / 2) {
+            //forward
+            
+            for(int i = 1; i <= k; i++) {
+                int temp1 = nums[nums.length - 1];
+                int temp2;
+                for(int j = 0; j < nums.length; j++) {
+                    temp2 = nums[j];
+                    nums[j] = temp1;
+                    temp1 = temp2;
+                }
+            }
+        } else {
+        	k -= nums.length;
+            for(int i = k; i <= 0; i++) {
+                int temp1 = nums[0];
+                int temp2;
+                for(int j = nums.length - 1; j >= 0; j--) {
+                    temp2 = nums[j];
+                    nums[j] = temp1;
+                    temp1 = temp2;
+                }
+            }
+        }
+        
+//		for(int i = 0; i < nums.length; i++) {
+//			if(i - k < 0 || i + k >= nums.length) {
+//				int replaceIndex = k + i;
+//				if(replaceIndex >= nums.length) {
+//					replaceIndex -= nums.length;
+//				}
+//				if(i == 0 || k % i != 0) {
+//					swap(nums, i, replaceIndex);    
+//				} 
+//			} 
+//		}
 
 	}
 
