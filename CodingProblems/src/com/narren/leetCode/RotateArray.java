@@ -12,8 +12,8 @@ For example, with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6,
 public class RotateArray {
 
 	public static void main(String[] args) {
-		int nums[] = new int[]{1,2,3};
-		/*int[] res = */rotateArray(nums, 2);
+		int nums[] = new int[]{1,2,3,4,5,6,7,8};
+		/*int[] res = */rotateArray(nums, 8);
 		for(int i : nums) {
 			System.out.print(i + " ");			
 		}
@@ -67,7 +67,7 @@ public class RotateArray {
             }
         } else {
         	k -= nums.length;
-            for(int i = k; i <= 0; i++) {
+            for(int i = k; i < 0; i++) {
                 int temp1 = nums[0];
                 int temp2;
                 for(int j = nums.length - 1; j >= 0; j--) {
