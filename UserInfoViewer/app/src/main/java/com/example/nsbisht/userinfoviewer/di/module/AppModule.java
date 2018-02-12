@@ -3,10 +3,10 @@ package com.example.nsbisht.userinfoviewer.di.module;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
+import com.example.nsbisht.userinfoviewer.data.AppDataManager;
+import com.example.nsbisht.userinfoviewer.data.DataManager;
 import com.example.nsbisht.userinfoviewer.data.local.db.AppDBHelper;
-import com.example.nsbisht.userinfoviewer.data.local.db.AppDataManager;
 import com.example.nsbisht.userinfoviewer.data.local.db.DBHelper;
-import com.example.nsbisht.userinfoviewer.data.local.db.DataManager;
 import com.example.nsbisht.userinfoviewer.data.local.db.database.AppDatabase;
 
 import javax.inject.Singleton;

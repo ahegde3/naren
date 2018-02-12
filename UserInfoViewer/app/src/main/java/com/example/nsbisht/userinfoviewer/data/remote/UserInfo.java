@@ -11,6 +11,9 @@ public class UserInfo {
     private String address;
     private int age;
 
+    public UserInfo() {
+
+    }
     public String getFirstName() {
         return firstName;
     }

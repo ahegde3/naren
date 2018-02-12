@@ -8,5 +8,7 @@ import io.reactivex.Single;
 
 public interface FirebaseHelper {
 
-    Single<UserInfo> getUserIfo(String user);
+    Single<UserInfo> getUserInfo(String user);
+
+    Single<Void> createUserInfo(UserInfo userInfo);
 }
