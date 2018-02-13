@@ -16,9 +16,20 @@ public class AppFirebaseHelper implements FirebaseHelper {
     private FirebaseDatabase mFirebaseInstance;
 
 
+    @Inject
+    public AppFirebaseHelper(FirebaseDatabase firebaseDatabase) {
+        this.mFirebaseInstance = firebaseDatabase;
+    }
+
+
     @Override
-    public Single<UserInfo> getUserIfo(String user) {
+    public Single<UserInfo> getUserInfo(String user) {
         mFirebaseInstance.getReference(user).child("firstName");
+        return null;
+    }
+
+    @Override
+    public Single<Void> createUserInfo(UserInfo userInfo) {
         return null;
     }
 }
