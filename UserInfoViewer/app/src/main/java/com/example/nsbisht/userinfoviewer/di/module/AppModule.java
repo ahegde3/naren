@@ -8,6 +8,7 @@ import com.example.nsbisht.userinfoviewer.data.DataManager;
 import com.example.nsbisht.userinfoviewer.data.local.db.AppDBHelper;
 import com.example.nsbisht.userinfoviewer.data.local.db.DBHelper;
 import com.example.nsbisht.userinfoviewer.data.local.db.database.AppDatabase;
+import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Singleton;
 
@@ -50,6 +51,12 @@ public class AppModule {
     @Singleton
     DataManager provideDataManager(AppDataManager dataManager) {
         return dataManager;
+    }
+
+    @Provides
+    @Singleton
+    FirebaseDatabase provideFirebaseDatabase() {
+        return FirebaseDatabase.getInstance();
     }
 
 
