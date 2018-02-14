@@ -1,7 +1,7 @@
 package com.example.nsbisht.userinfoviewer.data.remote;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by naren on 2/4/18.
@@ -13,6 +13,6 @@ public interface FirebaseHelper {
 
     Single<Void> createUserInfo(UserInfo userInfo, String userId);
 
-    Observable<UserInfo> valueEventListener();
+    PublishSubject<UserInfo> valueEventListener();
 
 }

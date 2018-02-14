@@ -7,10 +7,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import javax.inject.Inject;
 
-import io.reactivex.Emitter;
-import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.functions.Cancellable;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by naren on 2/4/18.
@@ -41,31 +39,23 @@ public class AppFirebaseHelper implements FirebaseHelper {
     }
 
     @Override
-    public Observable<UserInfo> valueEventListener() {
-        return Observable.fromEmitter(new Action1<Emitter<UserInfo>>() {
-            @Override
-            public void call(final Emitter<UserInfo> userInfoEmitter) {
-                final ValueEventListener listener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        UserInfo userInfo = dataSnapshot.getValue(UserInfo.class);
-                        userInfoEmitter.onNext(userInfo);
-                    }
+    public PublishSubject<UserInfo> valueEventListener() {
+        final PublishSubject<UserInfo> latestUserInfo = PublishSubject.create();
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        userInfoEmitter.onError(new Throwable(databaseError.getMessage()));
-                        mFirebaseDatabase.getReference().removeEventListener(this);
-                    }
-                };
-                mFirebaseDatabase.getReference().addValueEventListener(listener);
-                userInfoEmitter.setCancellation(new Cancellable() {
-                    @Override
-                    public void cancel() throws Exception {
-                        mFirebaseDatabase.getReference().removeEventListener(listener);
-                    }
-                });
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserInfo userInfo = dataSnapshot.getValue(UserInfo.class);
+                latestUserInfo.onNext(userInfo);
             }
-        }, Emitter.BackpressureMode.BUFFER);
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                latestUserInfo.onError(new Throwable(databaseError.getMessage()));
+            }
+        };
+
+        mFirebaseDatabase.getReference().addValueEventListener(listener);
+        return latestUserInfo;
     }
 }
