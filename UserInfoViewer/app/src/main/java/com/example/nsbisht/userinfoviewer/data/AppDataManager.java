@@ -1,9 +1,8 @@
 package com.example.nsbisht.userinfoviewer.data;
 
-import android.content.Context;
-
 import com.example.nsbisht.userinfoviewer.data.local.db.DBHelper;
 import com.example.nsbisht.userinfoviewer.data.local.db.entity.UserInfo;
+import com.example.nsbisht.userinfoviewer.data.remote.FirebaseHelper;
 
 import java.util.List;
 
@@ -12,6 +11,8 @@ import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by nsbisht on 1/31/18.
@@ -21,10 +22,12 @@ import io.reactivex.Observable;
 public class AppDataManager implements DataManager {
 
     private final DBHelper mDBHelper;
+    private final FirebaseHelper mFirebaseHelper;
 
     @Inject
-    public AppDataManager(DBHelper mDBHelper) {
+    public AppDataManager(DBHelper mDBHelper, FirebaseHelper mFirebaseHelper) {
         this.mDBHelper = mDBHelper;
+        this.mFirebaseHelper = mFirebaseHelper;
     }
 
 
@@ -51,5 +54,20 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<Boolean> updateUserInfo(UserInfo userInfo) {
         return updateUserInfo(userInfo);
+    }
+
+    @Override
+    public Single<com.example.nsbisht.userinfoviewer.data.remote.UserInfo> getUserInfo(String user) {
+        return mFirebaseHelper.getUserInfo(user);
+    }
+
+    @Override
+    public Single<Void> createUserInfo(com.example.nsbisht.userinfoviewer.data.remote.UserInfo userInfo, String userId) {
+        return mFirebaseHelper.createUserInfo(userInfo, userId);
+    }
+
+    @Override
+    public PublishSubject<com.example.nsbisht.userinfoviewer.data.remote.UserInfo> valueEventListener() {
+        return mFirebaseHelper.valueEventListener();
     }
 }
