@@ -5,7 +5,7 @@ import android.databinding.ObservableArrayList;
 
 import com.example.nsbisht.userinfoviewer.base.BaseViewModel;
 import com.example.nsbisht.userinfoviewer.data.DataManager;
-import com.example.nsbisht.userinfoviewer.data.local.db.entity.UserInfo;
+import com.example.nsbisht.userinfoviewer.data.remote.UserInfo;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class UserViewModel extends BaseViewModel<UserNavigator> {
 
     public void fetchUserInfoList() {
         getDataManager()
-                .getAllUsers()
+                .valueEventListener()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<UserInfo>>() {

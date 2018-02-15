@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.example.nsbisht.userinfoviewer.data.local.db.entity.UserInfo;
+import com.example.nsbisht.userinfoviewer.data.remote.UserInfo;
 import com.example.nsbisht.userinfoviewer.databinding.UserListCardViewBinding;
 
 import java.util.List;

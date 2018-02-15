@@ -2,7 +2,8 @@ package com.example.nsbisht.userinfoviewer.ui.list;
 
 import android.databinding.ObservableField;
 
-import com.example.nsbisht.userinfoviewer.data.local.db.entity.UserInfo;
+import com.example.nsbisht.userinfoviewer.data.remote.UserInfo;
+
 
 /**
  * Created by nsbisht on 1/31/18.

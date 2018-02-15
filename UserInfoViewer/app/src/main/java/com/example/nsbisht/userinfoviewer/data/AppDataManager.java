@@ -67,7 +67,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public PublishSubject<com.example.nsbisht.userinfoviewer.data.remote.UserInfo> valueEventListener() {
+    public PublishSubject<List<com.example.nsbisht.userinfoviewer.data.remote.UserInfo>> valueEventListener() {
         return mFirebaseHelper.valueEventListener();
     }
 }

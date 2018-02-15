@@ -5,6 +5,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.Single;
@@ -39,14 +42,19 @@ public class AppFirebaseHelper implements FirebaseHelper {
     }
 
     @Override
-    public PublishSubject<UserInfo> valueEventListener() {
-        final PublishSubject<UserInfo> latestUserInfo = PublishSubject.create();
+    public PublishSubject<List<UserInfo>> valueEventListener() {
+        final PublishSubject<List<UserInfo>> latestUserInfo = PublishSubject.create();
 
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                UserInfo userInfo = dataSnapshot.getValue(UserInfo.class);
-                latestUserInfo.onNext(userInfo);
+                List<UserInfo> userInfos = new ArrayList<UserInfo>();
+                for(DataSnapshot data : dataSnapshot.getChildren()) {
+                    UserInfo userInfo = data.getValue(UserInfo.class);
+                    userInfos.add(userInfo);
+                }
+                latestUserInfo.onNext(userInfos);
+
             }
 
             @Override

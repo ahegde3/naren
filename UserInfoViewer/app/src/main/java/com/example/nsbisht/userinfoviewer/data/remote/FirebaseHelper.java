@@ -1,5 +1,7 @@
 package com.example.nsbisht.userinfoviewer.data.remote;
 
+import java.util.List;
+
 import io.reactivex.Single;
 import io.reactivex.subjects.PublishSubject;
 
@@ -13,6 +15,6 @@ public interface FirebaseHelper {
 
     Single<Void> createUserInfo(UserInfo userInfo);
 
-    PublishSubject<UserInfo> valueEventListener();
+    PublishSubject<List<UserInfo>> valueEventListener();
 
 }

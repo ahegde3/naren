@@ -9,7 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import com.example.nsbisht.userinfoviewer.BR;
 import com.example.nsbisht.userinfoviewer.R;
 import com.example.nsbisht.userinfoviewer.base.BaseActivity;
-import com.example.nsbisht.userinfoviewer.data.local.db.entity.UserInfo;
+import com.example.nsbisht.userinfoviewer.data.remote.UserInfo;
 import com.example.nsbisht.userinfoviewer.databinding.ActivityMainBinding;
 import com.example.nsbisht.userinfoviewer.ui.user.UserInfoActivity;
 

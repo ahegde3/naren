@@ -5,7 +5,7 @@ import android.databinding.ObservableField;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.nsbisht.userinfoviewer.data.local.db.entity.UserInfo;
+import com.example.nsbisht.userinfoviewer.data.remote.UserInfo;
 import com.example.nsbisht.userinfoviewer.ui.list.UserInfoAdapter;
 
 import java.util.ArrayList;
