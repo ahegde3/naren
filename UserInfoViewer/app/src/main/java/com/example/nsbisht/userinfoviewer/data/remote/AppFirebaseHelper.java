@@ -31,8 +31,9 @@ public class AppFirebaseHelper implements FirebaseHelper {
     }
 
     @Override
-    public Single<Void> createUserInfo(UserInfo userInfo, String userId) {
-        mFirebaseDatabase.getReference().child("users").child(userId).setValue(userInfo);
+    public Single<Void> createUserInfo(UserInfo userInfo) {
+        String userId = mFirebaseDatabase.getReference().push().getKey();
+        mFirebaseDatabase.getReference().child(userId).setValue(userInfo);
 
         return null;
     }

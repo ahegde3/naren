@@ -4,10 +4,9 @@ import android.databinding.ObservableField;
 
 import com.example.nsbisht.userinfoviewer.base.BaseViewModel;
 import com.example.nsbisht.userinfoviewer.data.DataManager;
-import com.example.nsbisht.userinfoviewer.data.local.db.entity.UserInfo;
+import com.example.nsbisht.userinfoviewer.data.remote.UserInfo;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -36,15 +35,10 @@ public class UserAddViewModel extends BaseViewModel<AddUserNavigator> {
 
     public void addUserInfo(UserInfo userInfo) {
         getDataManager()
-                .insertUserInfo(userInfo)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-
-                    }
-                });
+                .createUserInfo(userInfo);
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe();
     }
 
     public ObservableField<String> getFirstName() {

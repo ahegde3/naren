@@ -62,8 +62,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Single<Void> createUserInfo(com.example.nsbisht.userinfoviewer.data.remote.UserInfo userInfo, String userId) {
-        return mFirebaseHelper.createUserInfo(userInfo, userId);
+    public Single<Void> createUserInfo(com.example.nsbisht.userinfoviewer.data.remote.UserInfo userInfo) {
+        return mFirebaseHelper.createUserInfo(userInfo);
     }
 
     @Override

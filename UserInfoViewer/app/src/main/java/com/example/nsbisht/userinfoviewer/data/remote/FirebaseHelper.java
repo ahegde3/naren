@@ -11,7 +11,7 @@ public interface FirebaseHelper {
 
     Single<UserInfo> getUserInfo(String user);
 
-    Single<Void> createUserInfo(UserInfo userInfo, String userId);
+    Single<Void> createUserInfo(UserInfo userInfo);
 
     PublishSubject<UserInfo> valueEventListener();
 
