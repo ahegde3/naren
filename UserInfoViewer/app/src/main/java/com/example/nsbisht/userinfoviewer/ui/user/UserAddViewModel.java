@@ -3,7 +3,7 @@ package com.example.nsbisht.userinfoviewer.ui.user;
 import android.databinding.ObservableField;
 
 import com.example.nsbisht.userinfoviewer.base.BaseViewModel;
-import com.example.nsbisht.userinfoviewer.data.local.db.DataManager;
+import com.example.nsbisht.userinfoviewer.data.DataManager;
 import com.example.nsbisht.userinfoviewer.data.local.db.entity.UserInfo;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

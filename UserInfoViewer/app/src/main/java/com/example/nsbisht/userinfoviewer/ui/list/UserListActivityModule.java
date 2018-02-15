@@ -1,6 +1,6 @@
 package com.example.nsbisht.userinfoviewer.ui.list;
 
-import com.example.nsbisht.userinfoviewer.data.local.db.DataManager;
+import com.example.nsbisht.userinfoviewer.data.DataManager;
 import com.example.nsbisht.userinfoviewer.data.local.db.entity.UserInfo;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package com.example.nsbisht.userinfoviewer.ui.user;
 
-import com.example.nsbisht.userinfoviewer.data.local.db.DataManager;
+import com.example.nsbisht.userinfoviewer.data.DataManager;
 
 import dagger.Module;
 import dagger.Provides;

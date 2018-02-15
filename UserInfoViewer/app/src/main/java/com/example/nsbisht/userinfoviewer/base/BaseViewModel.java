@@ -2,7 +2,7 @@ package com.example.nsbisht.userinfoviewer.base;
 
 import android.arch.lifecycle.ViewModel;
 
-import com.example.nsbisht.userinfoviewer.data.local.db.DataManager;
+import com.example.nsbisht.userinfoviewer.data.DataManager;
 
 /**
  * Created by nsbisht on 1/30/18.

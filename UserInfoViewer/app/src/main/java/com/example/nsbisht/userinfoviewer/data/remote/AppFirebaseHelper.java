@@ -18,10 +18,9 @@ public class AppFirebaseHelper implements FirebaseHelper {
 
     private FirebaseDatabase mFirebaseDatabase;
 
-
     @Inject
-    public AppFirebaseHelper(FirebaseDatabase firebaseDatabase) {
-        this.mFirebaseDatabase = firebaseDatabase;
+    public AppFirebaseHelper() {
+        this.mFirebaseDatabase = FirebaseDatabase.getInstance();
     }
 
 
