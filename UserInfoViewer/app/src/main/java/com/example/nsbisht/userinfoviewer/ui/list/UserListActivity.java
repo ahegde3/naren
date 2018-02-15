@@ -71,7 +71,7 @@ public class UserListActivity extends BaseActivity<ActivityMainBinding, UserView
     }
 
     private void subscribeToLiveData() {
-        mUserViewModel.getUserInfoListLiveData().observe(this, new Observer<List<UserInfo>>() {
+        mUserViewModel.getUserInfoListLiveData().observeForever(new Observer<List<UserInfo>>() {
             @Override
             public void onChanged(@Nullable List<UserInfo> userInfo) {
                 mUserViewModel.addUserInfoItemsToList(userInfo);
