@@ -29,6 +29,7 @@ public class UserInfoAdapter extends RecyclerView.Adapter<UserInfoAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(UserInfoAdapter.ViewHolder holder, int position) {
+        holder.mUserListCardBinding.userAge.setText(mUserInfoList.get(position).getAge());
         holder.onBind(position);
     }
 
