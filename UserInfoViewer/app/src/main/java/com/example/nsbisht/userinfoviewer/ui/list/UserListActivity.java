@@ -1,10 +1,13 @@
 package com.example.nsbisht.userinfoviewer.ui.list;
 
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 
 import com.example.nsbisht.userinfoviewer.BR;
 import com.example.nsbisht.userinfoviewer.R;
@@ -19,23 +22,30 @@ import javax.inject.Inject;
 
 public class UserListActivity extends BaseActivity<ActivityMainBinding, UserViewModel> implements UserNavigator {
 
+
     @Inject
+    ViewModelProvider.Factory mViewModelFactory;
+
     UserViewModel mUserViewModel;
 
     @Inject
     UserInfoAdapter mAdapter;
+
+    @Inject
+    LinearLayoutManager mLayoutManager;
 
     ActivityMainBinding mActivityMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivityMainBinding = getViewDataBinding();
+
         mUserViewModel.setNavigator(this);
     }
 
     @Override
     public UserViewModel getViewModel() {
+        mUserViewModel = ViewModelProviders.of(this, mViewModelFactory).get(UserViewModel.class);
         return mUserViewModel;
     }
 
@@ -59,6 +69,9 @@ public class UserListActivity extends BaseActivity<ActivityMainBinding, UserView
     }
 
     private void setUp() {
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mActivityMainBinding.userInfoListView.recycleView.setLayoutManager(mLayoutManager);
+        mActivityMainBinding.userInfoListView.recycleView.setHasFixedSize(true);
         mActivityMainBinding.userInfoListView.recycleView.setItemAnimator(new DefaultItemAnimator());
         mActivityMainBinding.userInfoListView.recycleView.setAdapter(mAdapter);
     }
@@ -66,16 +79,17 @@ public class UserListActivity extends BaseActivity<ActivityMainBinding, UserView
     @Override
     protected void onResume() {
         super.onResume();
+        mActivityMainBinding = getViewDataBinding();
         setUp();
         subscribeToLiveData();
     }
 
     private void subscribeToLiveData() {
-        mUserViewModel.getUserInfoListLiveData().observeForever(new Observer<List<UserInfo>>() {
+        mUserViewModel.getUserInfoListLiveData().observe(this, new Observer<List<UserInfo>>() {
             @Override
             public void onChanged(@Nullable List<UserInfo> userInfo) {
                 mUserViewModel.addUserInfoItemsToList(userInfo);
-                mAdapter.addItems(userInfo);
+//                mAdapter.addItems(userInfo);
             }
         });
     }
