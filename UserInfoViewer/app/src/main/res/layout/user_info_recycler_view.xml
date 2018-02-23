@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="userViewModel"
+            name="viewModel"
             type="com.example.nsbisht.userinfoviewer.ui.list.UserViewModel" />
 
     </data>
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/recycle_view"
             tools:listitem="@layout/user_list_card_view"
-            app:adapter="@{userViewModel.userInfoObservableArrayList}"/>
+            app:adapter="@{viewModel.userInfoObservableArrayList}"/>
 
     </RelativeLayout>
 </layout>

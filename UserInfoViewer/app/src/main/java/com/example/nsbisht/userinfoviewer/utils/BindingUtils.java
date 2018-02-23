@@ -1,9 +1,8 @@
 package com.example.nsbisht.userinfoviewer.utils;
 
 import android.databinding.BindingAdapter;
-import android.databinding.ObservableField;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.example.nsbisht.userinfoviewer.data.remote.UserInfo;
 import com.example.nsbisht.userinfoviewer.ui.list.UserInfoAdapter;
@@ -27,7 +26,7 @@ public class BindingUtils {
     }
 
     @BindingAdapter({"integertext"})
-    public static void setAgeField(TextInputEditText view, Integer value) {
+    public static void setAgeField(TextView view, Integer value) {
         view.setText(Integer.toString(value));
     }
 }

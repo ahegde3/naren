@@ -29,9 +29,20 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include
-            android:id="@+id/user_info_list_view"
-            layout="@layout/user_info_recycler_view" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:background="@color/white"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycle_view"
+                tools:listitem="@layout/user_list_card_view"
+                app:adapter="@{viewModel.userInfoObservableArrayList}"/>
+
+        </RelativeLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

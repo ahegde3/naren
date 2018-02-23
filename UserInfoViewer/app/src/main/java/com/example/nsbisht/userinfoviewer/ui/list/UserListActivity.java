@@ -14,6 +14,7 @@ import com.example.nsbisht.userinfoviewer.R;
 import com.example.nsbisht.userinfoviewer.base.BaseActivity;
 import com.example.nsbisht.userinfoviewer.data.remote.UserInfo;
 import com.example.nsbisht.userinfoviewer.databinding.ActivityMainBinding;
+import com.example.nsbisht.userinfoviewer.databinding.UserInfoRecyclerViewBinding;
 import com.example.nsbisht.userinfoviewer.ui.user.UserInfoActivity;
 
 import java.util.List;
@@ -70,10 +71,10 @@ public class UserListActivity extends BaseActivity<ActivityMainBinding, UserView
 
     private void setUp() {
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mActivityMainBinding.userInfoListView.recycleView.setLayoutManager(mLayoutManager);
-        mActivityMainBinding.userInfoListView.recycleView.setHasFixedSize(true);
-        mActivityMainBinding.userInfoListView.recycleView.setItemAnimator(new DefaultItemAnimator());
-        mActivityMainBinding.userInfoListView.recycleView.setAdapter(mAdapter);
+        mActivityMainBinding.recycleView.setLayoutManager(mLayoutManager);
+        mActivityMainBinding.recycleView.setHasFixedSize(true);
+        mActivityMainBinding.recycleView.setItemAnimator(new DefaultItemAnimator());
+        mActivityMainBinding.recycleView.setAdapter(mAdapter);
     }
 
     @Override
