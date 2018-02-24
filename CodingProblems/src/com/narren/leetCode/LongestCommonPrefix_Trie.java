@@ -18,7 +18,12 @@ public class LongestCommonPrefix_Trie {
 			}
 			Character key = null;
 			for(Map.Entry<Character, TrieNode> entry : node.charMap.entrySet()) {
-				key = entry.getKey();
+				if(!node.isEnd) {
+					key = entry.getKey();	
+				} else {
+					return lcp;
+				}
+				
 			}
 			lcp += key;
 			node = node.charMap.get(key);
@@ -28,7 +33,7 @@ public class LongestCommonPrefix_Trie {
 	
 	TrieNode formTrieTree(String[] strs) {
 		Map<Character, TrieNode> rootMap = new HashMap<>();
-		TrieNode mainNode = new TrieNode(null, true);
+		TrieNode mainNode = new TrieNode(null, false);
 		rootMap.put('!', mainNode);
 		
 		TrieNode rootNode = new TrieNode(rootMap, false);
@@ -40,18 +45,27 @@ public class LongestCommonPrefix_Trie {
 			if(chars.length < 1) {
 				return null;
 			}
-			for(char c : chars) {
-				currNode.isEnd = false;
+			for(int i = 0; i < chars.length; i++) {
 				Map<Character, TrieNode> map = currNode.charMap;
 				if(map == null) {
 					map = new HashMap<>();
 				}
-				if(!map.containsKey(c)) {
-					map.put(c, new TrieNode(null, true));	
+				if(!map.containsKey(chars[i])) {
+					TrieNode t = null;
+					if(i == chars.length - 1 ) {
+						t = new TrieNode(null, true);
+					} else {
+						t = new TrieNode(null, false);
+					}
+					map.put(chars[i], t);	
+				}
+				
+				if(i == chars.length - 1 && !map.get(chars[i]).isEnd) {
+					map.get(chars[i]).isEnd = true;
 				}
 				
 				currNode.charMap = map;
-				currNode = currNode.charMap.get(c);
+				currNode = currNode.charMap.get(chars[i]);
 				
 			}
 		}
@@ -60,7 +74,7 @@ public class LongestCommonPrefix_Trie {
 	}
 	
 	public static void main(String[] args) {
-		String[] strs = new String[]{"aa", "a"};
+		String[] strs = new String[]{"a", "aaaaaa"};
 		System.out.println(new LongestCommonPrefix_Trie().longestCommonPrefix(strs));
 	}
 
