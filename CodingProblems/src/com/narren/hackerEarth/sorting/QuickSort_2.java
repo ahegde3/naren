@@ -4,7 +4,7 @@ public class QuickSort_2 {
 
 	
 	public static void main(String[] args) {
-		int[] arr = new int[]{4,3,2,1};
+		int[] arr = new int[]{9,8,7,6,5,4,3,2,1,0};
 		QuickSort_2 qs = new QuickSort_2();
 		qs.quickSort(arr, 0, arr.length - 1);
 		
@@ -13,8 +13,13 @@ public class QuickSort_2 {
 		}
 	}
 	void quickSort(int[] arr, int l, int r) {
-		while(l < r) {
+		if(l < r) {
 			int index = getPartitionIndex(arr, l, r);
+			System.out.println(index);
+			for(int i : arr) {
+				System.out.print(i);
+			}
+			System.out.println();
 			quickSort(arr, l, index - 1);
 			quickSort(arr, index + 1, r);
 		}
