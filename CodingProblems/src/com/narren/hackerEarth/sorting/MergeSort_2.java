@@ -12,6 +12,19 @@ public class MergeSort_2 {
 	}
 	
 	void merge(int[] arr, int s, int e, int mid) {
-		
+		int ps = mid;
+		while(e > ps) {
+			if(arr[e] < arr[mid]) {
+				swap(arr, e, mid);
+				e--;
+			}
+		}
 	}
+	
+	void swap(int[] arr, int i, int k) {
+		int t = arr[i];
+		arr[i] = arr[k];
+		arr[k] = t;
+	}
+	
 }
