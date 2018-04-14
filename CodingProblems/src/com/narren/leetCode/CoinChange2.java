@@ -1,4 +1,8 @@
 package com.narren.leetCode;
+
+import java.util.HashMap;
+import java.util.Map.Entry;
+
 /**
  * https://leetcode.com/problems/coin-change-2/description/
  * @author naren
