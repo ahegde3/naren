@@ -14,7 +14,6 @@ import com.example.nsbisht.userinfoviewer.R;
 import com.example.nsbisht.userinfoviewer.base.BaseActivity;
 import com.example.nsbisht.userinfoviewer.data.remote.UserInfo;
 import com.example.nsbisht.userinfoviewer.databinding.ActivityMainBinding;
-import com.example.nsbisht.userinfoviewer.databinding.UserInfoRecyclerViewBinding;
 import com.example.nsbisht.userinfoviewer.ui.user.UserInfoActivity;
 
 import java.util.List;
@@ -90,7 +89,6 @@ public class UserListActivity extends BaseActivity<ActivityMainBinding, UserView
             @Override
             public void onChanged(@Nullable List<UserInfo> userInfo) {
                 mUserViewModel.addUserInfoItemsToList(userInfo);
-//                mAdapter.addItems(userInfo);
             }
         });
     }
