@@ -8,23 +8,31 @@ public class ValidateBinarySearchTree {
 	public boolean isValidBST(TreeNode root) {
 		ArrayList<Integer> list = new ArrayList<Integer>();
 
-		inOrder(root, list);
-
-		for(int i = 1; i < list.size(); i++) {
-			if(list.get(i) <= list.get(i - 1)) {
-				return false;
-			}
-		}
-
-		return true;
+		return inOrder(root, list) >= 0 ? true : false;
 	}
 
-	void inOrder(TreeNode root, ArrayList<Integer> list) {
+	int inOrder(TreeNode root, ArrayList<Integer> list) {
 		if(root == null) {
-			return;
+			return = 0;
 		}
-		inOrder(root.left, list);
+		int l = inOrder(root.left, list);
+		if(l == -1) {
+			return -1;
+		}
+		if(list.size() > 0) {
+            int lastElement = list.get(list.size() - 1);
+		    if(lastElement >= root.val) {
+                return -1;
+		    }
+		}
+		
 		list.add(root.val);
-		inOrder(root.right, list);
+		
+		int r = inOrder(root.right, list);
+		if(r == -1) {
+			return -1;
+		}
+
+        return 0;
 	}
 }
