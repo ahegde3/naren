@@ -8,55 +8,38 @@ public class SubtreeofAnotherTree {
 		TreeNode s3 = new TreeNode(1);
 		TreeNode s4 = new TreeNode(2);
 		TreeNode s5 = new TreeNode(0);
-//		s.left = s1;
-//		s.right = s2;
-//		s1.left = s3;
-//		s1.right = s4;
-//		s4.left = s5;
-		
+		//		s.left = s1;
+		//		s.right = s2;
+		//		s1.left = s3;
+		//		s1.right = s4;
+		//		s4.left = s5;
+
 		TreeNode t = new TreeNode(3);
 		TreeNode t1 = new TreeNode(1);
 		TreeNode t2 = new TreeNode(2);
-//		t.left = t1;
-//		t.right = t2;
-		
+		//		t.left = t1;
+		//		t.right = t2;
+
 		SubtreeofAnotherTree sat = new SubtreeofAnotherTree();
 		System.out.println(sat.isSubtree(s, t));
-		
+
 	}
 	public boolean isSubtree(TreeNode s, TreeNode t) {
-		int[] st = new int[10000];
-		int[] tt = new int[10000];
-
-		int[] index1 = new int[]{0};
-		int[] index2 = new int[]{0};
-		st = getArray(s, st, index1);
-		tt = getArray(t, tt, index2);
-
-		for(int i = 0; i < index1[0]; i++) {
-			if(tt[0] == st[i]) {
-				int index = i;
-				for(int j = 0; j < index2[0]; j++) {
-					if(tt[j] != st[index++]) {
-						break;
-					}
-				}
-				if(index -1  == index2[0]) {
-					return true;
-				}
-			}
-		}
-		return false;
+		return traverse(s, t);
 	}
-	int[] getArray(TreeNode node, int[] arr, int[] index) {
-		if(node == null) {
-			arr[index[0]++] = Integer.MAX_VALUE;
-				return arr;
+	boolean traverse(TreeNode r, TreeNode l) {
+		return (r != null) && (equals(r, l) || traverse(r.left, l) || traverse(r.right, l));
+	}
+
+	boolean equals(TreeNode r, TreeNode l) {
+		if(r == null && l == null) {
+			return true;
+		}
+		if(r == null || l == null) {
+			return false;
 		}
 
-		arr[index[0]++] = node.val;
-		getArray(node.left, arr, index);
-		getArray(node.right, arr, index);
-		return arr;
+		return r.val == l.val && equals(r.left, l.left) && equals(r.right, l.right);
+
 	}
 }
