@@ -40,6 +40,5 @@ public class SubtreeofAnotherTree {
 		}
 
 		return r.val == l.val && equals(r.left, l.left) && equals(r.right, l.right);
-
 	}
 }

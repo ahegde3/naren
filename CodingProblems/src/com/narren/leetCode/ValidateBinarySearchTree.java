@@ -1,7 +1,6 @@
 package com.narren.leetCode;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ValidateBinarySearchTree {
 
@@ -13,7 +12,7 @@ public class ValidateBinarySearchTree {
 
 	int inOrder(TreeNode root, ArrayList<Integer> list) {
 		if(root == null) {
-			return = 0;
+			return 0;
 		}
 		int l = inOrder(root.left, list);
 		if(l == -1) {
