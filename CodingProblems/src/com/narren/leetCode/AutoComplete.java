@@ -11,7 +11,19 @@ public class AutoComplete {
 		HashMap<Character, Trie> map;
 	}
 	
+	Trie root;
 	
+	void insert(String word) {
+		Trie node = root;
+		for(char c : word.toCharArray()) {
+			node.isEnd = false;
+			Trie next = new Trie();
+			node.map.put(c, next);
+			node = next;
+		}
+		node.isEnd = true;
+	}
+
 	List<String> getSugesstions(String input, Trie root) {
 		
 		if(input == null || root == null) {
