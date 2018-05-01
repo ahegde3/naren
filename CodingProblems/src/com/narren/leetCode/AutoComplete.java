@@ -3,6 +3,7 @@ package com.narren.leetCode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 public class AutoComplete {
 
@@ -10,43 +11,69 @@ public class AutoComplete {
 		boolean isEnd;
 		HashMap<Character, Trie> map;
 	}
-	
-	Trie root;
-	
-	void insert(String word) {
+
+
+	public static void main(String[] args) {
+		AutoComplete ac = new AutoComplete();
+		Trie root = ac.new Trie();
+		ac.insert("Alice", root);
+		ac.insert("Alison", root);
+		ac.insert("Bob", root);
+		ac.insert("Boby", root);
+		ac.insert("Narendra", root);
+
+		System.out.println(ac.getSugesstions("Na", root));
+	}
+
+	void insert(String word, Trie root) {
 		Trie node = root;
 		for(char c : word.toCharArray()) {
-			node.isEnd = false;
-			Trie next = new Trie();
-			node.map.put(c, next);
-			node = next;
+			if(node.map == null) {
+				node.map = new HashMap<>();
+			}
+			if(!node.map.containsKey(c)) {
+				Trie next = new Trie();
+				node.map.put(c, next);	
+				node = next;
+			} else {
+				node = node.map.get(c);
+			}
+
+
 		}
 		node.isEnd = true;
 	}
 
-	List<String> getSugesstions(String input, Trie root) {
-		
-		if(input == null || root == null) {
-			return null;
-		}
-		
-		char[] inputChars = input.toCharArray();
-		
-		for(char c : inputChars) {
-			if(root.map.containsKey(c)) {
-				root = root.map.get(c);
+		List<String> getSugesstions(String input, Trie root) {
+			
+			if(input == null || root == null || root.map == null) {
+				return null;
 			}
-		}		
-	}
-	
-	StringBuilder traverse(ArrayList<String> list, Trie root, StringBuilder str) {
-		if(root == null) {
-			return str;
+			
+			for(char c : input.toCharArray()) {
+				if(root.map.containsKey(c)) {
+					root = root.map.get(c);
+				}
+			}
+			ArrayList<String> list = new ArrayList<>();
+			
+			traverse(list, root, "");
+			
+			return list;
 		}
-		
-		if(root.isEnd) {
-			str.append(b);
+	//	
+		void traverse(ArrayList<String> list, Trie root, String s) {
+			if(root == null || root.map == null) {
+				return;
+			}
+			
+			
+			for(Entry<Character, Trie> entry : root.map.entrySet()) {
+				if(entry.getValue().isEnd) {
+					list.add(s + entry.getKey());
+				}
+				traverse(list, entry.getValue(), s + entry.getKey().toString());
+			}
+			
 		}
-		
-	}
 }
