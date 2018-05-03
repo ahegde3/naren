@@ -23,6 +23,10 @@ public class AutoComplete {
 		ac.insert("Narendra", root);
 
 		System.out.println(ac.getSugesstions("Na", root));
+		System.out.println(ac.getSugesstions("Al", root));
+		
+		System.out.println(ac.isPresent("Bob", root));
+		System.out.println(ac.isPresent("Narend", root));
 	}
 
 	void insert(String word, Trie root) {
@@ -44,36 +48,53 @@ public class AutoComplete {
 		node.isEnd = true;
 	}
 
-		List<String> getSugesstions(String input, Trie root) {
-			
-			if(input == null || root == null || root.map == null) {
-				return null;
-			}
-			
-			for(char c : input.toCharArray()) {
-				if(root.map.containsKey(c)) {
-					root = root.map.get(c);
-				}
-			}
-			ArrayList<String> list = new ArrayList<>();
-			
-			traverse(list, root, "");
-			
-			return list;
+	boolean isPresent(String word, Trie root) {
+		if(root == null) {
+			return false;
 		}
+		
+		for(char c : word.toCharArray()) {
+			if(root != null && root.map != null && root.map.containsKey(c)) {
+				root = root.map.get(c);
+			} else {
+				return false;
+			}
+		}
+		
+		return root.isEnd;
+	}
+
+
+	List<String> getSugesstions(String input, Trie root) {
+
+		if(input == null || root == null || root.map == null) {
+			return null;
+		}
+
+		for(char c : input.toCharArray()) {
+			if(root.map.containsKey(c)) {
+				root = root.map.get(c);
+			}
+		}
+		ArrayList<String> list = new ArrayList<>();
+
+		traverse(list, root, "");
+
+		return list;
+	}
 	//	
-		void traverse(ArrayList<String> list, Trie root, String s) {
-			if(root == null || root.map == null) {
-				return;
-			}
-			
-			
-			for(Entry<Character, Trie> entry : root.map.entrySet()) {
-				if(entry.getValue().isEnd) {
-					list.add(s + entry.getKey());
-				}
-				traverse(list, entry.getValue(), s + entry.getKey().toString());
-			}
-			
+	void traverse(ArrayList<String> list, Trie root, String s) {
+		if(root == null || root.map == null) {
+			return;
 		}
+
+
+		for(Entry<Character, Trie> entry : root.map.entrySet()) {
+			if(entry.getValue().isEnd) {
+				list.add(s + entry.getKey());
+			}
+			traverse(list, entry.getValue(), s + entry.getKey().toString());
+		}
+
+	}
 }
