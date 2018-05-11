@@ -23,7 +23,7 @@ public class AutoComplete {
 
 		System.out.println(ac.getSugesstions("Na", root));
 		System.out.println(ac.getSugesstions("Al", root));
-		
+
 		System.out.println(ac.isPresent("Bob", root));
 		System.out.println(ac.isPresent("Narend", root));
 	}
@@ -47,13 +47,11 @@ public class AutoComplete {
 		node.isEnd = true;
 	}
 
-<<<<<<< HEAD
-=======
 	boolean isPresent(String word, Trie root) {
 		if(root == null) {
 			return false;
 		}
-		
+
 		for(char c : word.toCharArray()) {
 			if(root != null && root.map != null && root.map.containsKey(c)) {
 				root = root.map.get(c);
@@ -61,12 +59,11 @@ public class AutoComplete {
 				return false;
 			}
 		}
-		
+
 		return root.isEnd;
 	}
 
 
->>>>>>> 874f0991ae9de0108abf3937c16ef78c8f628fe1
 	List<String> getSugesstions(String input, Trie root) {
 
 		if(input == null || root == null || root.map == null) {
