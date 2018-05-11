@@ -12,7 +12,6 @@ public class AutoComplete {
 		HashMap<Character, Trie> map;
 	}
 
-
 	public static void main(String[] args) {
 		AutoComplete ac = new AutoComplete();
 		Trie root = ac.new Trie();
@@ -44,36 +43,36 @@ public class AutoComplete {
 		node.isEnd = true;
 	}
 
-		List<String> getSugesstions(String input, Trie root) {
-			
-			if(input == null || root == null || root.map == null) {
-				return null;
-			}
-			
-			for(char c : input.toCharArray()) {
-				if(root.map.containsKey(c)) {
-					root = root.map.get(c);
-				}
-			}
-			ArrayList<String> list = new ArrayList<>();
-			
-			traverse(list, root, "");
-			
-			return list;
+	List<String> getSugesstions(String input, Trie root) {
+
+		if(input == null || root == null || root.map == null) {
+			return null;
 		}
+
+		for(char c : input.toCharArray()) {
+			if(root.map.containsKey(c)) {
+				root = root.map.get(c);
+			}
+		}
+		ArrayList<String> list = new ArrayList<>();
+
+		traverse(list, root, "");
+
+		return list;
+	}
 	//	
-		void traverse(ArrayList<String> list, Trie root, String s) {
-			if(root == null || root.map == null) {
-				return;
-			}
-			
-			
-			for(Entry<Character, Trie> entry : root.map.entrySet()) {
-				if(entry.getValue().isEnd) {
-					list.add(s + entry.getKey());
-				}
-				traverse(list, entry.getValue(), s + entry.getKey().toString());
-			}
-			
+	void traverse(ArrayList<String> list, Trie root, String s) {
+		if(root == null || root.map == null) {
+			return;
 		}
+
+
+		for(Entry<Character, Trie> entry : root.map.entrySet()) {
+			if(entry.getValue().isEnd) {
+				list.add(s + entry.getKey());
+			}
+			traverse(list, entry.getValue(), s + entry.getKey().toString());
+		}
+
+	}
 }
