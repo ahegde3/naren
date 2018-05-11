@@ -6,7 +6,9 @@ public class HeapSort {
 		HeapSort hs = new HeapSort();
 		int[] array = new int[]{4, 5, 8, 3, 2, 9, 1};
 		hs.heapSort(array);
-		System.out.println("");
+		for(int i : array) {
+			System.out.print(i + " ");
+		}
 	}
 	
 	void heapSort(int[] array) {
@@ -32,13 +34,15 @@ public class HeapSort {
 		}
 	}
 	
-	void heapify(int[] array, int i) {
+	void heapify(int[] array, int i, int j) {
 		
-		while(i >= 0) {
-			int pi = i / 2;
-			if(array[pi] < array[i]) {
-				swap(array, i, pi);
-				i--;
+		while(i <= j) {
+			int lc = 2 * i + 1;
+			int rc = 2 * i + 2;
+			int bc = array[lc] > array[rc] ? lc : rc;
+			if(bc <= j && array[i] < array[bc]) {
+				swap(array, i, bc);
+				i++;
 			} else {
 				return;
 			}
