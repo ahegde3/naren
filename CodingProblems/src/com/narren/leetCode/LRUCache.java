@@ -3,128 +3,118 @@ package com.narren.leetCode;
 import java.util.HashMap;
 
 public class LRUCache {
-	final int CACHE_CAPACITY;
-	int currentCapacity = 0;
-	HashMap<Integer, Node> hashMap;
-	Node head;
-	Node tail;
+
+	HashMap<Integer, DLList> map;
+	int capacity;
+	int curCapacity;
+
+	DLList head;
+	DLList tail;
 
 	public LRUCache(int capacity) {
-		CACHE_CAPACITY = capacity;
-		hashMap = new HashMap<Integer, Node>(CACHE_CAPACITY);
-	}
-
-	void setHead(Node node) {
-		if(head == null) {
-			head = node;
-			tail = node;
-			return;
-		}
-		if(head == node) {
-			return;
-		}
-		if(node.previous == null && node.next == null) {
-			// New node
-			node.next = head;
-			head.previous = node;
-			head = node;
-			return;
-		}
-
-		if(node == tail) {
-			// If its a tail
-			node.previous.next = null;
-			tail = node.previous;
-			node.previous = null;
-			node.next = head;
-			head.previous = node;
-			head = node;
-			return;
-		}
-		if(node.previous != null)
-			node.previous.next = node.next;
-		if(node.next != null)
-			node.next.previous = node.previous;
-		node.previous = null;
-		node.next = head;
-		head.previous = node;
-		head = node;
-		return;
-
-	}
-
-	void removeTail() {
-		if(tail == null) {
-			return;
-		}
-		hashMap.remove(tail.key);
-		if(head == tail) {
-			head = null;
-			tail = null;
-			return;
-		}
+		this.capacity = capacity;
+		map = new HashMap<>();
 		
-		tail.previous.next = null;
-		Node temp = tail.previous;
-		tail.previous = null;
-		tail = temp;
+		head = new DLList();
+		tail = new DLList();
+		
+		head.after = tail;
+		tail.before = head;
+	}
+
+	// Moves this node to starting of the list
+	void moveToFirst(DLList node) {
+		head.after.before = node;
+		node.after = head.after;
+		node.before = head;
+		head.after = node;
+	}
+
+	// Removes the current connection of this node
+	void remove(DLList node) {
+		node.before.after = node.after;
+		node.after.before = node.before;
+	}    
+
+	// Remove this node, because we ran out of space
+	void removeTail() {
+		map.remove(tail.before.key, tail.before);
+		remove(tail.before);
+		curCapacity--;
+	}
+
+	// Insert a new node, and make it head
+	void insertNode(DLList node) {		
+		moveToFirst(node);
+		map.put(node.key, node);
+
+		curCapacity++;
 	}
 
 	public int get(int key) {
-		Node node = hashMap.get(key);
-		if(node == null) {
+		if(!map.containsKey(key))
 			return -1;
+
+		DLList node = map.get(key);
+		int retVal = node.val;
+
+		if(node.before != head) {
+			remove(node);
+			moveToFirst(node);    
 		}
-		if(head == node) {
-			// Already on top, no need to do anything
-			return node.value;
-		}
-		setHead(node);
-		return node.value;
+
+
+		return retVal;
 	}
 
-	public void set(int key, int value) {
-		Node node = hashMap.get(key);
-		if(node != null) {
-			node.value = value;
-			setHead(node);
-			return;
-		}
-		// No node found
-		Node newNode = new Node(null, null, key, value);
-		if(currentCapacity == CACHE_CAPACITY) {
-			// Need to remove the tail and add this one to head
-			removeTail();
-			setHead(newNode);
+	public void put(int key, int value) {
+		if(map.containsKey(key)) {
+			// Existing item
+			DLList node = map.get(key);
+			node.val = value;
+
+			remove(node);
+			moveToFirst(node);
 
 		} else {
-			setHead(newNode);
-			currentCapacity++;
+			// New item
+			DLList node = new DLList();
+			node.key = key;
+			node.val = value;
+
+			if(curCapacity >= capacity)
+				removeTail();
+
+			insertNode(node);
+
 		}
-		newNode.value = value;
-		hashMap.put(key, newNode);
 	}
 
+
 	public static void main(String[] args) {
-		LRUCache cache = new LRUCache(1);
-		cache.set(2, 1);
-		cache.set(2, 2);
-		int i = cache.get(2);
-		cache.set(1, 1);
-		cache.set(4, 1);
-		i = cache.get(2);
+		LRUCache cache = new LRUCache(2);
+
+		cache.put(1,  1);
+		cache.put(2,  2);
+
+		System.out.println(cache.get(1));
+		cache.put(3,  3);
+
+		System.out.println(cache.get(2));
+		cache.put(4,  4);
+
+		System.out.println(cache.get(1));
+		System.out.println(cache.get(3));
+		System.out.println(cache.get(4));
+
+
 	}
 }
 
-class Node {
-	Node previous;
-	Node next;
-	int value;
+class DLList {
 	int key;
-	Node(Node p, Node n, int k, int v) {
-		previous = p;
-		next = n;
-		key = k;
-		value = v;
-	}
+	int val;
+	DLList before;
+	DLList after;
+
 }
