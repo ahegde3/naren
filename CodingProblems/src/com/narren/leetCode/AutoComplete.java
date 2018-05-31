@@ -12,7 +12,6 @@ public class AutoComplete {
 		HashMap<Character, Trie> map;
 	}
 
-
 	public static void main(String[] args) {
 		AutoComplete ac = new AutoComplete();
 		Trie root = ac.new Trie();
@@ -24,7 +23,7 @@ public class AutoComplete {
 
 		System.out.println(ac.getSugesstions("Na", root));
 		System.out.println(ac.getSugesstions("Al", root));
-		
+
 		System.out.println(ac.isPresent("Bob", root));
 		System.out.println(ac.isPresent("Narend", root));
 	}
@@ -52,7 +51,7 @@ public class AutoComplete {
 		if(root == null) {
 			return false;
 		}
-		
+
 		for(char c : word.toCharArray()) {
 			if(root != null && root.map != null && root.map.containsKey(c)) {
 				root = root.map.get(c);
@@ -60,7 +59,7 @@ public class AutoComplete {
 				return false;
 			}
 		}
-		
+
 		return root.isEnd;
 	}
 
