@@ -40,4 +40,8 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.lifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycleVersion"
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+
+    //Retrofit
+    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
 }

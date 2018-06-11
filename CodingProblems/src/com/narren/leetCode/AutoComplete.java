@@ -15,8 +15,8 @@ public class AutoComplete {
 	public static void main(String[] args) {
 		AutoComplete ac = new AutoComplete();
 		Trie root = ac.new Trie();
-		ac.insert("Alice", root);
-		ac.insert("Alison", root);
+		ac.insert("Apple", root);
+		ac.insert("Applesa", root);
 		ac.insert("Bob", root);
 		ac.insert("Boby", root);
 		ac.insert("Narendra", root);

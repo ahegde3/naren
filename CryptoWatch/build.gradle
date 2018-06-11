@@ -32,6 +32,8 @@ ext {
     dagger2Version = "2.13"
 
     lifecycleVersion = "1.1.1"
+
+    retrofitVersion = "2.0.2"
 }
 task clean(type: Delete) {
     delete rootProject.buildDir
