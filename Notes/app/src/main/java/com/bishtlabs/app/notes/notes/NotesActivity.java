@@ -1,4 +1,4 @@
-package com.bishtlabs.app.notes.list;
+package com.bishtlabs.app.notes.notes;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.bishtlabs.app.notes.R;
 
-public class NotesListActivity extends AppCompatActivity {
+public class NotesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
