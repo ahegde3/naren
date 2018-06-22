@@ -10,8 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.bishtlabs.app.notes.R;
+import com.bishtlabs.app.notes.base.BaseActivity;
+import com.bishtlabs.app.notes.data.Note;
 
-public class NotesActivity extends AppCompatActivity {
+import java.util.List;
+
+public class NotesActivity extends BaseActivity<NotesPresenter> implements NotesContract.View {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,16 @@ public class NotesActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_notes_list;
+    }
+
+    @Override
+    protected NotesPresenter getPresenter() {
+        return new NotesPresenter(getRepository());
     }
 
     @Override
@@ -50,5 +65,30 @@ public class NotesActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void showNotes(List<Note> notes) {
+
+    }
+
+    @Override
+    public void showToast(String message) {
+
+    }
+
+    @Override
+    public void showAddNote() {
+
     }
 }

@@ -25,3 +25,15 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    minSdkVersion = 23
+    targetSdkVersion = 26
+    compileSdkVersion = 26
+
+    supportLibraryVersion = '27.1.1'
+    jUnitVersion = '4.12'
+    mockitoVersion = '1.10.19'
+    hamcrestVersion = '1.3'
+
+}

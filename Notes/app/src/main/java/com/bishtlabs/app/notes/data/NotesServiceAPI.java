@@ -14,5 +14,5 @@ public interface NotesServiceAPI {
 
     void getAllNotes(NotesServiceCallback<List<Note>> notes);
 
-    void saveNote(NotesServiceCallback<Note> note);
+    void saveNote(Note note);
 }

@@ -14,4 +14,6 @@ public interface NotesRepository {
     }
 
     void getNotes(GetNotesCallback callback);
+
+    void saveNote(Note note);
 }

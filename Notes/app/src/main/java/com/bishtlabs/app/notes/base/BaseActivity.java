@@ -12,11 +12,12 @@ import com.bishtlabs.app.notes.data.NotesRepository;
 
 public abstract class BaseActivity <P extends BasePresenter> extends AppCompatActivity {
 
-    private P mPresenter;
+    protected P mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
     }
 
 

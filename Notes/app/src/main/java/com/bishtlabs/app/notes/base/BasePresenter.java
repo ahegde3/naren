@@ -22,7 +22,7 @@ public abstract class BasePresenter <V> {
         view = null;
     }
 
-    protected V getView() {
+    public V getView() {
         return view;
     }
 
