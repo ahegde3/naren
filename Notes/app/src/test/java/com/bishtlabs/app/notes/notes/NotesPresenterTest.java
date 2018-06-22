@@ -30,6 +30,9 @@ public class NotesPresenterTest {
 
     private NotesPresenter mNotesPresenter;
 
+    @Mock
+    private NotesActivity mView;
+
     @Captor
     ArgumentCaptor<NotesRepository.GetNotesCallback> mGetNotesCallbackCaptor;
 
@@ -40,19 +43,21 @@ public class NotesPresenterTest {
         mNotesPresenter = new NotesPresenter(mNotesRepository);
         NOTES.add(new Note("Title1", "Description1"));
         NOTES.add(new Note("Title2", "Description2"));
+
+        mNotesPresenter.bindView(mView);
     }
     @Test
     public void notesPresenter_getNotes_sucess() {
         mNotesPresenter.getNotes();
 
-        verify(mNotesPresenter.getView()).showProgress();
+        verify(mView).showProgress();
 
         verify(mNotesRepository).getNotes(mGetNotesCallbackCaptor.capture());
         mGetNotesCallbackCaptor.getValue().onSuccess(NOTES);
 
-        verify(mNotesPresenter.getView()).hideProgress();
+        verify(mView).hideProgress();
 
-        verify(mNotesPresenter.getView()).showNotes(NOTES);
+        verify(mView).showNotes(NOTES);
 
     }
 
@@ -60,14 +65,14 @@ public class NotesPresenterTest {
     public void notesPresenter_getNotes_error() {
         mNotesPresenter.getNotes();
 
-        verify(mNotesPresenter.getView()).showProgress();
+        verify(mView).showProgress();
 
         verify(mNotesRepository).getNotes(mGetNotesCallbackCaptor.capture());
         mGetNotesCallbackCaptor.getValue().onError(ERROR_MSG);
 
-        verify(mNotesPresenter.getView()).hideProgress();
+        verify(mView).hideProgress();
 
-        verify(mNotesPresenter.getView()).showToast(ERROR_MSG);
+        verify(mView).showToast(ERROR_MSG);
 
     }
 
@@ -75,7 +80,7 @@ public class NotesPresenterTest {
     public void notesPresenter_addNewNote() {
         mNotesPresenter.addNewNote();
 
-        verify(mNotesPresenter.getView()).showAddNote();
+        verify(mView).showAddNote();
     }
 
 }

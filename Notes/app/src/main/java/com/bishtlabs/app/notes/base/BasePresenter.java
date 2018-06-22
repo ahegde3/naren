@@ -14,7 +14,7 @@ public abstract class BasePresenter <V> {
         this.repository = repo;
     }
 
-    protected void bindView(V v) {
+    public void bindView(V v) {
         this.view = v;
     }
 
@@ -24,6 +24,10 @@ public abstract class BasePresenter <V> {
 
     public V getView() {
         return view;
+    }
+
+    protected NotesRepository getRepository() {
+        return repository;
     }
 
 }

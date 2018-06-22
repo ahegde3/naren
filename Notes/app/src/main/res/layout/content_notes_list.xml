@@ -10,8 +10,10 @@
     tools:showIn="@layout/activity_notes_list">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/tv_no_notes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="No notes yet" />
 
 </RelativeLayout>

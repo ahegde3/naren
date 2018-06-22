@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,11 +20,13 @@ import java.util.List;
 
 public class NotesActivity extends BaseActivity<NotesPresenter> implements NotesContract.View {
 
+    private RecyclerView mRecycleView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private NotesAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notes_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -33,6 +38,18 @@ public class NotesActivity extends BaseActivity<NotesPresenter> implements Notes
                         .setAction("Action", null).show();
             }
         });
+
+        mRecycleView = findViewById(R.id.rv_notes_list);
+
+        mLayoutManager = new LinearLayoutManager(this);
+
+        mRecycleView.setHasFixedSize(true);
+        mRecycleView.setLayoutManager(mLayoutManager);
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+
+        mRecycleView.addItemDecoration(itemDecoration);
+        mPresenter.getNotes();
     }
 
     @Override
@@ -79,7 +96,8 @@ public class NotesActivity extends BaseActivity<NotesPresenter> implements Notes
 
     @Override
     public void showNotes(List<Note> notes) {
-
+        mAdapter = new NotesAdapter(notes);
+        mRecycleView.setAdapter(mAdapter);
     }
 
     @Override

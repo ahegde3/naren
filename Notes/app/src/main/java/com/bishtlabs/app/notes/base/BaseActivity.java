@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.bishtlabs.app.notes.data.NotesRepository;
+import com.bishtlabs.app.notes.util.InjectionUtils;
 
 /**
  * Created by nsbisht on 6/21/18.
@@ -38,6 +39,6 @@ public abstract class BaseActivity <P extends BasePresenter> extends AppCompatAc
     }
 
     protected NotesRepository getRepository() {
-        return null;
+        return InjectionUtils.injectNotesRepository();
     }
 }

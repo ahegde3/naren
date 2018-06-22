@@ -6,7 +6,7 @@ import java.util.List;
  * Created by nsbisht on 6/21/18.
  */
 
-public interface NotesServiceAPI {
+public interface NotesServiceApi {
 
     interface NotesServiceCallback<T> {
         void onLoaded(T notes);

@@ -20,6 +20,9 @@ public class AddNotePresenterTest {
 
     private AddNotePresenter mAddNotePresenter;
 
+    @Mock
+    private AddNoteContract.View mView;
+
     @Before
     public void setupAddNotePresenter() {
         MockitoAnnotations.initMocks(this);
@@ -31,21 +34,21 @@ public class AddNotePresenterTest {
     public void addNotePresenter_saveNote_sucess() {
         mAddNotePresenter.saveNote(new Note("Title", "Description"));
 
-        verify(mAddNotePresenter.getView()).noteSaved();
+        verify(mView).noteSaved();
     }
 
     @Test
     public void addNotePresenter_saveNote_failed_null() {
         mAddNotePresenter.saveNote(null);
 
-        verify(mAddNotePresenter.getView()).showError("Could not save");
+        verify(mView).showError("Could not save");
     }
 
     @Test
     public void addNotePresenter_saveNote_failed_empty() {
         mAddNotePresenter.saveNote(new Note("", ""));
 
-        verify(mAddNotePresenter.getView()).showError("Can not save empty note");
+        verify(mView).showError("Can not save empty note");
     }
 
 }
